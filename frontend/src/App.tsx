@@ -1,11 +1,13 @@
-import Home from './components/Home';
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 
 function App() {
-    return (
-        <>
-            <Home />
-        </>
-    );
+  return (
+    <>
+      <Home />
+      <Footer />
+    </>
+  );
 }
 
 export default App;
