@@ -1,4 +1,5 @@
 import HomeRoute from "./routes/HomeRoute";
+import Searchbar from "./components/Searchbar";
 import {
   createHashRouter,
   Link,
@@ -19,6 +20,9 @@ function App() {
       element: (
         <>
           {/* Här skulle man t.ex kunna lägga Searchbar komponenten */}
+          <header>
+            <Searchbar />
+          </header>
           <main>
             {/* Outlet motsvarar RouterView i Vue. Det är alltså här vi kommer visa upp våra olika route-komponenter beroende på url:en. T.ex kommer <HomeRoute /> komponenten synas här. */}
             <Outlet />
