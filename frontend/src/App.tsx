@@ -1,4 +1,15 @@
 
+import Home from "./routes/HomeRoute";
+import Footer from "./components/Footer";
+
+function App() {
+  return (
+    <>
+      <Home />
+      <Footer />
+    </>
+  );
+
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import DropdownProducts from './components/DropdownProducts';
@@ -45,6 +56,7 @@ function App() {
   ]);
   // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
   return <RouterProvider router={router} />;
+
 }
 
 export default App;

@@ -66,7 +66,11 @@ const Logo = styled.img`
   height: 100px;
 `;
 
+
+export default function Home() {
+=======
 export default function HomeRoute() {
+
   return (
     <>
       {/* Gör en href i väntan på react router */}
