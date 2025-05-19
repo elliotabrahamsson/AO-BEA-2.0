@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-// Wrapper för hela länken
+// Wrapper for the entire link
 const SectionLink = styled.a`
     text-decoration: none;
 `;
 
-// Del för dammode
+// Section for women's fashion
 const Women = styled.div`
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ const Women = styled.div`
     }
 `;
 
-// Del för herrmode
+// Section for men's fashion
 const Men = styled.div`
     display: flex;
     flex-direction: column;
@@ -51,14 +51,14 @@ const Men = styled.div`
     }
 `;
 
-// Centrering för loggan
+// Styles for centering the logo
 const MainContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
-// Loggan i mitten
+// Logo centered in the middle
 const Logo = styled.img`
     position: absolute;
     z-index: 2;
@@ -66,7 +66,7 @@ const Logo = styled.img`
     height: 100px;
 `;
 
-export default function Home() {
+function Home() {
     return (
         <>
             {/* Gör en href i väntan på react router */}
@@ -90,3 +90,4 @@ export default function Home() {
         </>
     );
 }
+export default Home;
