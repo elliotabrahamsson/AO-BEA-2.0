@@ -66,7 +66,11 @@ const Logo = styled.img`
   height: 100px;
 `;
 
+
 export default function Home() {
+=======
+export default function HomeRoute() {
+
   return (
     <>
       {/* Gör en href i väntan på react router */}
@@ -75,7 +79,10 @@ export default function Home() {
           <h2>Dammode</h2>
         </Women>
         <MainContainer>
-          <Logo src="/footer/Icons/Ao-bea-icon2.png" alt="Ao Bea logotype" />
+          <Logo
+            src="/src/assets/footer/Icons/Ao-bea-icon2.png"
+            alt="Ao Bea logotype"
+          />
         </MainContainer>
       </SectionLink>
 
