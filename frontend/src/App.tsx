@@ -1,4 +1,8 @@
 
+function App() {
+    return <></>;
+
+
 import Home from "./routes/HomeRoute";
 import Footer from "./components/Footer";
 
