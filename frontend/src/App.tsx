@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import DropdownProducts from './components/DropdownProducts';
 import DropdownCare from './components/DropdownCare';
 import HomeRoute from "./routes/HomeRoute";
+import Searchbar from "./components/Searchbar";
 import {
   createHashRouter,
   Link,
@@ -29,6 +30,9 @@ function App() {
             <DropdownCare/>
             <Navbar/>
           {/* Här skulle man t.ex kunna lägga Searchbar komponenten */}
+          <header>
+            <Searchbar />
+          </header>
           <main>
             {/* Outlet motsvarar RouterView i Vue. Det är alltså här vi kommer visa upp våra olika route-komponenter beroende på url:en. T.ex kommer <HomeRoute /> komponenten synas här. */}
             <Outlet />
