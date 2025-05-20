@@ -1,4 +1,3 @@
-/* import React from 'react' */
 import homeOutline from '../assets/navbar/home_outline.svg'
 import homeSolid from '../assets/navbar/home_solid.svg'
 import searchOutline from '../assets/navbar/search_outline.svg'

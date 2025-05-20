@@ -2,6 +2,9 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomeRoute from "./routes/HomeRoute";
 import Searchbar from "./components/Searchbar";
+import DropdownProducts from "./components/DropdownProducts";
+import DropdownCare from "./components/DropdownCare";
+import ShoppingCartRoute from "./routes/ShoppingCartRoute";
 import {
   createHashRouter,
   Link,
@@ -17,6 +20,7 @@ function App() {
         // Exempel på en route, element är det som ska visas, path är url:en.
         { element: <HomeRoute />, path: "/" },
         { element: <HomeRoute />, path: "/exempel" }, // Detta är enbart en exempel route.
+        { element: <ShoppingCartRoute/>, path: "/shoppingcart"}
       ],
       // Det som finns i element under denna mening är vad som alltid ska synas på sidan oavsett route, t.ex searchbar, footer, navbar.
       element: (
@@ -29,6 +33,8 @@ function App() {
           <main>
             {/* Outlet motsvarar RouterView i Vue. Det är alltså här vi kommer visa upp våra olika route-komponenter beroende på url:en. T.ex kommer <HomeRoute /> komponenten synas här. */}
             <Outlet />
+            {/* <DropdownProducts/>
+            <DropdownCare/> */}
           </main>
 
           {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}

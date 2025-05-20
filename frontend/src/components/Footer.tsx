@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
   // Footer-komponenten
   return (
     <FooterContainer>
-      <footer className="bg-white mb-20">
+      <footer className="bg-white">
         <div className="mx-auto w-full max-w-screen-xl">
           <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
             <div>
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
                 src="/footer/Icons/Ao-bea-icon2.png"
                 alt="Brand icon"
               />
-              <ul className="text-black-500 text-gray-400 font-medium">
+              <ul className="text-black-500 font-medium">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Om Ao Bea
