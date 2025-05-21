@@ -8,12 +8,12 @@ app.use(express.json());
 
 app.get("/products", async (req: Request, res: Response) => {
   try {
-    const result = await pool.query(`  SELECT 
-    "Products".id AS product_id,  
+    const result = await pool.query(`  SELECT
+    "Products".id AS product_id,
     "Products".product_name AS product_name,
-    "Products".product_description AS product_description, 
-    "Products".product_img AS product_img, 
-    "Products".price, 
+    "Products".product_description AS product_description,
+    "Products".product_img AS product_img,
+    "Products".price,
     "Products".size AS size,
     "Products".colors AS color,
     "Products".gender as gender,
@@ -34,7 +34,7 @@ app.get("/products", async (req: Request, res: Response) => {
           </style>
         </head>
         <body>
-          <h1>Produktlista</h1>  
+          <h1>Produktlista</h1>
   `;
     result.rows.forEach((row) => {
       html += `

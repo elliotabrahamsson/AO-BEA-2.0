@@ -1,17 +1,17 @@
+// Säkerställ så cart är korrekt definierad i app.tsx //
+
 import React from "react";
-// import { Link } from "react-router-dom"; // aktivera när Router är på plats
+import { Link } from "react-router-dom";
 
 const CheckoutButton: React.FC = () => {
   return (
-    <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
-      {/* <Link to="/cart"> */}
-      <a href="#">
+    <Link to="/#/shoppingcart">
+      <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
         <h3 className="text-white whitespace-nowrap text-[10px]">
           Lägg till i varukorg
         </h3>
-      </a>
-      {/* </Link> */}
-    </div>
+      </div>
+    </Link>
   );
 };
 
