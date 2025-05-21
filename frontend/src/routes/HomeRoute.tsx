@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 
 // Del för dammode
 const Women = styled.div`
@@ -63,6 +64,7 @@ const Logo = styled.img`
 `;
 
 export default function HomeRoute() {
+
     return (
         <>
             <Link to="/shop/dammode">
@@ -83,4 +85,5 @@ export default function HomeRoute() {
             </Link>
         </>
     );
+
 }
