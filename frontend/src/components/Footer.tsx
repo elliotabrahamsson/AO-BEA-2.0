@@ -1,7 +1,7 @@
 // npm run startar både frontend och backend
 import React from "react";
 import styled from "styled-components";
-// import { Link } from "react-router-dom"; //
+import { Link } from "react-router-dom";
 
 // Wrapper
 const FooterContainer = styled.div`
@@ -54,11 +54,15 @@ const Footer: React.FC = () => {
         <div className="mx-auto w-full max-w-screen-xl">
           <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
             <div>
-              <FooterIcon
-                src="/footer/Icons/Ao-bea-icon2.png"
-                alt="Brand icon"
-              />
+
+              <Link to="/">
+                <FooterIcon
+                  src="/footer/Icons/Ao-bea-icon2.png"
+                  alt="Brand icon"
+                />
+              </Link>
               <ul className="text-black-500 font-medium">
+
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Om Ao Bea
@@ -111,7 +115,7 @@ const Footer: React.FC = () => {
             ))}
           </SocialMediaList>
           <CopyrightBar>
-            © 2025 <a href="#">Ao Bea™</a>. Alla rättigheter förbehållna.
+            © 2025 <Link to="/">Ao Bea™</Link>. Alla rättigheter förbehållna.
           </CopyrightBar>
         </div>
       </footer>

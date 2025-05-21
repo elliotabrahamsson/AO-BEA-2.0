@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import xMark from '../assets/dropdown/x-mark.svg'
-import arrowDown from '../assets/dropdown/arrow-down.svg'
+import React from "react";
+import { useState } from "react";
+import xMark from "../assets/dropdown/x-mark.svg";
+import arrowDown from "../assets/dropdown/arrow-down.svg";
+/* import styled from 'styled-components' */
+
 
 function DropdownProducts() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
 /*Funktion för toggle dropdownmeny*/
   const toggleDropdown = () => {
+
     setIsOpen((prev) => (!prev))
   }
 
@@ -29,9 +33,12 @@ function DropdownProducts() {
                 <span className="id-no"> 1263785001 </span>
             </div>
             {/* Rendera ut data */}
+
         </div>
+        {/* Rendera ut data */}
+      </div>
     </div>
-  )
+  );
 }
 
-export default DropdownProducts
+export default DropdownProducts;
