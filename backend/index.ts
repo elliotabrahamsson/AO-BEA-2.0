@@ -9,37 +9,9 @@ app.use(express.json());
 app.get("/products", async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`SELECT * FROM "Products"`);
+    const products = result.rows;
 
-    let html = `
-    <html>
-        <head>
-          <title>Produkter</title>
-          <style>
-            body { font-family: sans-serif; }
-            .produkt { margin-bottom: 20px; }
-            img { max-width: 200px; height: auto; }
-          </style>
-        </head>
-        <body>
-          <h1>Produktlista</h1>  
-  `;
-    result.rows.forEach((row) => {
-      html += `
-        <div class="produkt">
-          <h2>${row.product_name}</h2>
-          <img src="${row.product_img}" alt="${row.name}">
-          <p>${row.product_description}</p>
-          <p>Price: ${row.price} kr</p>
-        </div>
-      `;
-    });
-
-    html += `
-        </body>
-      </html>
-    `;
-
-    res.send(html);
+    res.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Internal Server Error" });
