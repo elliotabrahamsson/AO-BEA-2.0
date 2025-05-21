@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-// Wrapper för hela länken
-const SectionLink = styled.a`
-  text-decoration: none;
-`;
+import { Link } from "react-router-dom";
 
 // Del för dammode
 const Women = styled.div`
@@ -69,8 +65,7 @@ const Logo = styled.img`
 export default function HomeRoute() {
   return (
     <>
-      {/* Gör en href i väntan på react router */}
-      <SectionLink href="/shop/womens_fashion">
+      <Link to="/shop/dammode">
         <Women>
           <h2>Dammode</h2>
         </Women>
@@ -80,13 +75,13 @@ export default function HomeRoute() {
             alt="Ao Bea logotype"
           />
         </MainContainer>
-      </SectionLink>
+      </Link>
 
-      <SectionLink href="/shop/mens_fashion">
+      <Link to="/shop/herrmode">
         <Men>
           <h2>Herrmode</h2>
         </Men>
-      </SectionLink>
+      </Link>
     </>
   );
 }
