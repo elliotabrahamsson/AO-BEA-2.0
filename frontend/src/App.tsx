@@ -2,6 +2,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomeRoute from "./routes/HomeRoute";
 import Searchbar from "./components/Searchbar";
+import CategoryRoute from "./routes/CategoryRoute";
 import {
   createHashRouter,
   Link,
@@ -17,6 +18,7 @@ function App() {
         // Exempel på en route, element är det som ska visas, path är url:en.
         { element: <HomeRoute />, path: "/" },
         { element: <HomeRoute />, path: "/exempel" }, // Detta är enbart en exempel route.
+        { element: <CategoryRoute />, path: "/shop/:store_type" },
       ],
       // Det som finns i element under denna mening är vad som alltid ska synas på sidan oavsett route, t.ex searchbar, footer, navbar.
       element: (
