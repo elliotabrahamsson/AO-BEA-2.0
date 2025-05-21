@@ -4,7 +4,7 @@ const OrderConfirmation: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center pt-4 mt-7">
       <img
-        className="w-1/2 h-1/2"
+        className="w-1/4 h-1/4"
         src="/footer/Icons/Ao-bea-icon2.png"
         alt="Ao Bea logotype"
       />
@@ -17,7 +17,7 @@ const OrderConfirmation: React.FC = () => {
           JFK25521177133L
         </p>
         <p className="mt-5 text-[20px]">
-          Har skickat till :<br />
+          Har skickats till :<br />
           test@mailto.com
         </p>
       </div>

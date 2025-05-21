@@ -12,6 +12,7 @@ app.get("/products", async (req: Request, res: Response) => {
     const products = result.rows;
 
     res.json(products);
+
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Internal Server Error" });

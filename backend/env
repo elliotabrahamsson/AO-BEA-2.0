@@ -1,0 +1,5 @@
+DB_PASSWORD = 2eGqyAqkMT1q4Ku4IKhsJj0N6WmfDErk
+DB_USERNAME = ao_bea_2_0_user
+DB_HOST = dpg-d0i82t3uibrs73a1of9g-a.frankfurt-postgres.render.com
+DB_DB = ao_bea_2_0 
+DB_PORT = 5432
