@@ -5,7 +5,6 @@ function ShoppingCartRoute() {
   return (
     <div>
         <h1 className='ml-4 mt-10 mb-10'>Varukorg</h1>
-
         <section className='product'>
             {/* Bild på varan i kundkorg */}
             <img src="" alt="" className='w-[115px] h-[164px] ml-[1rem]' />
