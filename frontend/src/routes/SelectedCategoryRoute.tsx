@@ -50,6 +50,12 @@ function SelectedCategoryRoute() {
           return false;
         });
         setProducts(filteredProducts);
+      })
+      .catch((error) => {
+        console.error(
+          "Något gick fel med hämtningen eller filtreringen",
+          error
+        );
       });
   }, [store_type, selected_category]);
 

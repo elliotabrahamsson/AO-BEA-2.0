@@ -15,6 +15,7 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import DropdownProducts from "./components/DropdownProducts";
 function App() {
   const router = createHashRouter([
     {
@@ -25,9 +26,14 @@ function App() {
         { element: <AboutRoute />, path: "/about" },
         { element: <CategoryRoute />, path: "/shop/:store_type" },
         { element: <ShoppingCartRoute />, path: "/shoppingcart" },
-        { element: <SelectedCategoryRoute />, path: "/shop/:store_type/:selected_category"},
-        { element: <ProductPageRoute />, path: "/shop/:store_type/:selected_category/:id"},
-
+        {
+          element: <SelectedCategoryRoute />,
+          path: "/shop/:store_type/:selected_category",
+        },
+        {
+          element: <ProductPageRoute />,
+          path: "/shop/:store_type/:selected_category/:id",
+        },
         // Detta är enbart en exempel route.
       ],
       // Det som finns i element under denna mening är vad som alltid ska synas på sidan oavsett route, t.ex searchbar, footer, navbar.
