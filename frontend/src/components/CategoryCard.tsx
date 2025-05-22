@@ -1,18 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 type Props = {
   category: string;
   clothingImage: string;
-  shopType: string;
 };
 
-export default function CategoryCard({
-  category,
-  clothingImage,
-  shopType,
-}: Props) {
+export default function CategoryCard({ category, clothingImage }: Props) {
+  const { store_type } = useParams();
+
   return (
-    <Link to={"/shop/" + shopType + "/" + category}>
+    <Link to={"/shop/" + store_type + "/" + category}>
       <section
         id="card"
         className={`flex justify-center items-center min-w-[190px] min-h-[240px] bg-cover bg-center mx-auto shadow-md`}
