@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 
 export default function CategoryRoute() {
@@ -58,22 +58,118 @@ export default function CategoryRoute() {
           return uniqueCategoryData;
         });
         setProducts(uniqueCategoryData);
+        console.log(filteredData);
       });
   }, []);
 
   return (
     <>
-      <section className="bg-amber-100 p-[1em]">
+      <section className="bg-[var(--bright1)] p-[1em]">
         {store_type === "dammode" ? (
           <h1 className="text-center">Dammode</h1>
         ) : (
           <h1 className="text-center">Herrmode</h1>
         )}
 
-        <section id="categories_section">
-          <h2 className="text-center my-[1.5em]">KATEGORIER</h2>
+        {/* Produkterna här är hårdkodade. */}
+        {/* NOTERA att jag länkade till produkterna via deras id, om vi vill använda en annan nyckel än id behöver detta ändras. */}
+        <section id="new_arrivals">
+          <div
+            id="upper-new-arrivals-container"
+            className="grid grid-cols-2 mt-10 gap-[1rem] justify-center"
+          >
+            {store_type === "dammode" ? (
+              <>
+                <Link
+                  to="/shop/dammode/Outerware/16"
+                  className="mx-auto shadow-md"
+                >
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/82/c4/82c477c8e32273fa02d2fac24f257cf61066578e_lg-1.jpg"
+                    alt="Dubbelknäppt kavaj i bomull"
+                  ></img>
+                </Link>
+                <Link to="/shop/dammode/Pants/18" className="mx-auto shadow-md">
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/b4/16/b416338c0a0cd3b1c0ea09749fff402818193ced_lg-1.jpg"
+                    alt="SNOW raka jeans"
+                  ></img>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/shop/herrmode/Skjorta/2"
+                  className="mx-auto shadow-md"
+                >
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/29/37/29378d0c252a52a4b11b23c92e9b74393ac245b1_lg-1.jpg"
+                    alt="Manchesterskjorta"
+                  ></img>
+                </Link>
+                <Link
+                  to="/shop/herrmode/Skjorta/4"
+                  className="mx-auto shadow-md"
+                >
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/4f/2e/4f2e3e6e0f9f58e674c24f244569291ad2fac638_lg-1.jpg"
+                    alt="Overshirt i canvas"
+                  ></img>
+                </Link>
+              </>
+            )}
+          </div>
 
-          <div className="grid grid-cols-2 justify-items-center">
+          <h2 className="text-center my-4">NEW ARRIVALS</h2>
+
+          <div
+            id="lower-new-arrivals-container"
+            className="grid grid-cols-2 mb-10 gap-[1rem] justify-center"
+          >
+            {store_type === "dammode" ? (
+              <>
+                <Link to="/shop/dammode/Tröja/17" className="mx-auto shadow-md">
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/bd/a8/bda89898702cf7007e3fa898ce324cf8c54fbb88_lg-1.jpg"
+                    alt="LILY T-shirt i lätt bomullstrikå"
+                  ></img>
+                </Link>
+                <Link to="/shop/dammode/Tröja/19" className="mx-auto shadow-md">
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/b7/fe/b7fee7dff4db821b4749d60437dd10d3086c0130_lg-1.jpg"
+                    alt="Tröja i alpacka och ull"
+                  ></img>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/shop/herrmode/Skjorta/1"
+                  className="mx-auto shadow-md"
+                >
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/32/27/322715c179eb482ac12d859844e98642c48c17bd_lg-1.jpg"
+                    alt="Overshirt i bomull"
+                  ></img>
+                </Link>
+                <Link
+                  to="/shop/herrmode/Skjorta/3"
+                  className="mx-auto shadow-md"
+                >
+                  <img
+                    src="https://public.assets.hmgroup.com/assets/006/9d/54/9d54e68c932f1c67c63cfaa31587b455a8216841_lg-1.jpg"
+                    alt="Poplinskjorta med avslappnad passform"
+                  ></img>
+                </Link>
+              </>
+            )}
+          </div>
+        </section>
+
+        <section id="categories_section" className="mb-20">
+          <h2 className="text-center mt-20 mb-14">KATEGORIER</h2>
+
+          <div className="grid grid-cols-2 justify-items-center gap-[1rem]">
             {products.map((product) => (
               <CategoryCard
                 category={product.category_type}
@@ -86,47 +182,4 @@ export default function CategoryRoute() {
       </section>
     </>
   );
-}
-
-{
-  /*
-<template>
-
-  <h2 class="text-center">CATEGORIES</h2>
-
-  <div
-    v-if="filteredCategories.length"
-    class="grid grid-cols-2 justify-items-center"
-  >
-    <CategoryCard
-      v-for="(item, index) in filteredCategories"
-      :key="index"
-      :category="item.category"
-      :clothingImg="item.img"
-      :shopType="route.params.shoptype"
-    />
-  </div>
-  <Footer></Footer>
-  <Navbar></Navbar>
-</template>
-<style scoped>
-h1 {
-  margin: 0.7em;
-  text-align: center;
-}
-
-li {
-  font-size: larger;
-}
-
-.upper-pictures-container img {
-  min-width: 190px;
-  min-height: 240px;
-}
-
-.lower-pictures-container img {
-  min-width: 190px;
-  min-height: 240px;
-}
-</style> */
 }

@@ -46,6 +46,7 @@ p {
   font-family: "Merriweather Sans", sans-serif;
   font-weight: lighter;
 }
+
 /* Swiper Styling */
 .swiper-button-prev,
 .swiper-button-next {
@@ -57,4 +58,9 @@ p {
 }
 .swiper-pagination-bullet-active {
   background-color: var(--dark1) !important;
+
+
+#product-name-bold {
+  font-weight: normal;
+
 }
