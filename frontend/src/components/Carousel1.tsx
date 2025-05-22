@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper/modules";
@@ -9,37 +10,38 @@ type Product = {
   product_name: string;
   product_img: string;
   category_type: string;
+  gender: string;
 };
 
-type Carousel1Props = {
-  category: string;
-};
-
-const Carousel1: React.FC<Carousel1Props> = ({ category }) => {
+const Carousel1 = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   // State för att lagra de filtrerade produkterna
+
+  const { store_type } = useParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
       // Fetcha produkterna som json från servern
       try {
         const res = await fetch("http://localhost:3000/products");
-        // Kontrollera om fetchen lyckades
-        console.log("Fetch status:", res.status);
-
         const products: Product[] = await res.json();
-        // Kontrollera om produkterna hämtades korrekt
-        console.log("Fetched products:", products);
-
-        // Hämta produkterna från servern
-        const byCategory = products.filter(
-          (product) =>
-            product.category_type.toLowerCase() === category.toLowerCase()
+        console.log("category-prop:");
+        console.log(
+          "Alla category_type i produkter:",
+          products.map((p) => p.category_type)
         );
-        // Shuffla produkterna och ta de första 4
-        const shuffled = byCategory.sort(() => Math.random() - 0.5).slice(0, 4);
 
-        // Uppdatera state med de shufflade produkterna
+        const filteredData = products.filter((product) => {
+          if (store_type === "herrmode") {
+            return product.gender === "Man";
+          } else {
+            return product.gender === "Woman";
+          }
+        });
+        const shuffled = filteredData
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 4);
+
         setFilteredProducts(shuffled);
       } catch (error) {
         console.error("Fel vid hämtning av produkter:", error);
@@ -47,8 +49,7 @@ const Carousel1: React.FC<Carousel1Props> = ({ category }) => {
     };
 
     fetchProducts();
-  }, [category]);
-  // Anropa fetchProducts när komponenten laddas eller category ändras
+  }, []);
 
   return (
     <div className="pb-[3vh]">

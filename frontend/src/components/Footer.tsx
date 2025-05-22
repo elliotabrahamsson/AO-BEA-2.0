@@ -54,7 +54,6 @@ const Footer: React.FC = () => {
         <div className="mx-auto w-full max-w-screen-xl">
           <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
             <div>
-
               <Link to="/">
                 <FooterIcon
                   src="/footer/Icons/Ao-bea-icon2.png"
@@ -62,16 +61,15 @@ const Footer: React.FC = () => {
                 />
               </Link>
               <ul className="text-black-500 font-medium">
-
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/about" className="hover:underline">
                     Om Ao Bea
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Kundtjänst
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
@@ -79,14 +77,14 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Leverans
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Returer
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
@@ -94,14 +92,14 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Mitt konto
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
