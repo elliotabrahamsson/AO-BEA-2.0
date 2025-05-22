@@ -1,3 +1,5 @@
+import DropdownProducts from "./components/DropdownProducts";
+import DropdownCare from "./components/DropdownCare";
 import ShoppingCartRoute from "./routes/ShoppingCartRoute";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -5,6 +7,7 @@ import HomeRoute from "./routes/HomeRoute";
 import Searchbar from "./components/Searchbar";
 import AboutRoute from "./routes/AboutRoute";
 import CategoryRoute from "./routes/CategoryRoute";
+
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import {
   createHashRouter,
@@ -12,8 +15,6 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
-
-
 function App() {
     const router = createHashRouter([
         {
