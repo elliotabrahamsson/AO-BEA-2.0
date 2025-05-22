@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-
 /*import SearchbarComp from "../components/Searchbar";
 import BreadCromb from "../components/BreadCromb";
 import DropdownColors from "../components/DropdownColors" */
@@ -9,18 +5,11 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Carousel1 from "../components/Carousel1";
 import Carousel2 from "../components/Carousel2";
-
-type Product = {
-  product_id: number;
-  product_name: string;
-  product_img: string;
-  product_description: string;
-  category_type: string;
-};
+import { Link } from "react-router-dom";
 
 export default function ProductPageRoute() {
   interface Product {
-    id: number;
+    product_id: number;
     category_type: string;
     product_name: string;
     brand_name: string;
@@ -84,8 +73,6 @@ export default function ProductPageRoute() {
         <Carousel1 />
         <Carousel2 />
       </div>
-      {/*<Footer />*/}
-      {/*<Navbar />*/}
     </div>
   );
 }

@@ -72,7 +72,9 @@ const Carousel1 = () => {
       >
         {filteredProducts.map((product) => (
           <SwiperSlide key={product.product_id}>
-            <Link to={`/product/${product.product_id}`}>
+            <Link
+              to={`/shop/${store_type}/${product.category_type}/${product.product_id}`}
+            >
               <img
                 src={product.product_img}
                 alt={product.product_name}

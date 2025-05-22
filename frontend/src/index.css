@@ -58,9 +58,8 @@ p {
 }
 .swiper-pagination-bullet-active {
   background-color: var(--dark1) !important;
-
+}
 
 #product-name-bold {
   font-weight: normal;
-
 }
