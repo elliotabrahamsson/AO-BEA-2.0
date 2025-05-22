@@ -34,9 +34,45 @@ app.get("/products", async (req: Request, res: Response) => {
     const products = result.rows;
 
     res.json(products);
-
   } catch (error) {
     console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/products/:id", async (req: Request, res: Response) => {
+  const productId = parseInt(req.params.id);
+
+  const query = `
+  SELECT
+    "Products".id AS product_id,
+    "Products".product_name AS product_name,
+    "Products".product_description AS product_description,
+    "Products".product_img AS product_img,
+    "Products".price,
+    "Products".size AS size,
+    "Products".colors AS color
+    FROM "Products"
+    WHERE "Products".id = $1
+    `;
+
+  /*const query2 = `
+  SELECT 
+  "Category".type AS category_type
+  FROM "Category"
+  WHERE "Category" = $1`; */
+
+  try {
+    const result = await pool.query(query, [productId]);
+
+    if (result.rows.length > 0) {
+      const product = result.rows[0];
+      res.json(product);
+    } else {
+      res.status(404).json({ error: "Product not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching product:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
