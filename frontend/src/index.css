@@ -46,3 +46,21 @@ p {
   font-family: "Merriweather Sans", sans-serif;
   font-weight: lighter;
 }
+
+/* Swiper Styling */
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--dark1) !important;
+}
+.swiper-pagination-bullet {
+  background-color: var(--dark3) !important;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--dark1) !important;
+
+
+#product-name-bold {
+  font-weight: normal;
+
+}
