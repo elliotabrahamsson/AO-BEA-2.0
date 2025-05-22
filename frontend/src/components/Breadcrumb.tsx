@@ -99,7 +99,7 @@ function Breadcrumb(): JSX.Element {
                         </>
                     )}
 
-                    {/* Dynamiskt breadcrumb för produkt om den finns */}
+                    {/* Dynamiskt breadcrumb för produkt  */}
                     {productName && (
                         <>
                             <li className="inline-flex items-center">
@@ -123,7 +123,7 @@ function Breadcrumb(): JSX.Element {
                             </li>
                             <li>
                                 <span className="inline-flex items-center ml-1 text-black">
-                                    <p>{id}</p>
+                                    <p>{productName}</p>
                                 </span>
                             </li>
                         </>

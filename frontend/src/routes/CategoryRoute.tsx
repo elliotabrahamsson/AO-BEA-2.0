@@ -185,7 +185,7 @@ export default function CategoryRoute() {
                             <CategoryCard
                                 category={product.category_type}
                                 clothingImage={product.product_img}
-                                shopType={product.gender}
+                                
                             />
                         ))}
                     </div>
