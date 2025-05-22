@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import xMark from "../assets/dropdown/x-mark.svg";
 import arrowDown from "../assets/dropdown/arrow-down.svg";
