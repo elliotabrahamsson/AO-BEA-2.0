@@ -76,7 +76,7 @@ export default function CategoryRoute() {
         <section id="new_arrivals">
           <div
             id="upper-new-arrivals-container"
-            className="grid grid-cols-2 mt-10 gap-2 justify-center"
+            className="grid grid-cols-2 mt-10 gap-[1rem] justify-center"
           >
             {store_type === "dammode" ? (
               <>
@@ -124,7 +124,7 @@ export default function CategoryRoute() {
 
           <div
             id="lower-new-arrivals-container"
-            className="grid grid-cols-2 mb-10 gap-2 justify-center"
+            className="grid grid-cols-2 mb-10 gap-[1rem] justify-center"
           >
             {store_type === "dammode" ? (
               <>
@@ -169,7 +169,7 @@ export default function CategoryRoute() {
         <section id="categories_section" className="mb-20">
           <h2 className="text-center mt-20 mb-14">KATEGORIER</h2>
 
-          <div className="grid grid-cols-2 justify-items-center">
+          <div className="grid grid-cols-2 justify-items-center gap-[1rem]">
             {products.map((product) => (
               <CategoryCard
                 category={product.category_type}
@@ -182,88 +182,4 @@ export default function CategoryRoute() {
       </section>
     </>
   );
-}
-
-{
-  /* <div
-    v-if="route.params.shoptype === 'womens_fashion'"
-    class="women-new-arrivals-container"
-  >
-    <div class="upper-pictures-container grid grid-cols-2 justify-center">
-      <router-link to="/shop/womens_fashion/Outerwear/1">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/women/dam1.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-      <router-link to="/shop/womens_fashion/Tröja/2">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/women/dam2.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-    </div>
-    <h2 class="text-center my-4">NEW ARRIVALS</h2>
-    <div
-      class="lower-pictures-container grid grid-cols-2 mb-10 gap-2 justify-center"
-    >
-      <router-link to="/shop/womens_fashion/Tröja/4">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/women/dam4.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-      <router-link to="/shop/womens_fashion/Pants/3">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/women/dam3.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-    </div>
-  </div>
-  <div
-    v-else-if="route.params.shoptype === 'mens_fashion'"
-    class="men-new-arrivals-container"
-  >
-    <div class="upper-pictures-container grid grid-cols-2 justify-center">
-      <router-link to="/shop/mens_fashion/Outerwear/9">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/men/Men3.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-      <router-link to="/shop/mens_fashion/Tröja/6">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/men/Men2.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-    </div>
-
-    <h2 class="text-center my-4">NEW ARRIVALS</h2>
-    <div
-      class="lower-pictures-container grid grid-cols-2 mb-10 gap-2 justify-center"
-    >
-      <router-link to="/shop/mens_fashion/Tröja/7">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/men/Men4.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-      <router-link to="/shop/mens_fashion/Skjorta/1">
-        <img
-          class="mx-auto shadow-md"
-          src="/src/assets/shop-new-arrivals/men/Men1.png"
-          alt="picture of product - new arrivals"
-        />
-      </router-link>
-    </div>
-  </div> */
 }
