@@ -5,6 +5,7 @@ import HomeRoute from "./routes/HomeRoute";
 import Searchbar from "./components/Searchbar";
 import AboutRoute from "./routes/AboutRoute";
 import CategoryRoute from "./routes/CategoryRoute";
+import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import {
   createHashRouter,
   Link,
@@ -12,16 +13,20 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+
 function App() {
-  const router = createHashRouter([
-    {
-      // Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
-      children: [
-        // Exempel på en route, element är det som ska visas, path är url:en.
-        { element: <HomeRoute />, path: "/" },
-        { element: <AboutRoute />, path: "/about" },
-        { element: <CategoryRoute />, path: "/shop/:store_type" },
-        { element: <ShoppingCartRoute />, path: "/shoppingcart" },
+    const router = createHashRouter([
+        {
+            // Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
+            children: [
+                // Exempel på en route, element är det som ska visas, path är url:en.
+                { element: <HomeRoute />, path: '/' },
+                { element: <AboutRoute />, path: '/about' },
+                { element: <CategoryRoute />, path: '/shop/:store_type' },
+                { element: <ShoppingCartRoute/>, path: "/shoppingcart"},
+                { element: <SelectedCategoryRoute/>, path: "/shop/:store_type/:selected_category"}
+
+            
 
         // Detta är enbart en exempel route.
       ],

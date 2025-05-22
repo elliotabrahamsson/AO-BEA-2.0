@@ -46,3 +46,7 @@ p {
   font-family: "Merriweather Sans", sans-serif;
   font-weight: lighter;
 }
+
+#product-name-bold {
+  font-weight: normal;
+}
