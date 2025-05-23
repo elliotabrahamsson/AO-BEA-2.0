@@ -51,13 +51,14 @@ app.get("/products/:id", async (req: Request, res: Response) => {
     "Products".product_img AS product_img,
     "Products".price,
     "Products".size AS size,
-    "Products".colors AS color
+    "Products".colors AS color,
+    "Products".gender AS gender
     FROM "Products"
     WHERE "Products".id = $1
     `;
 
   /*const query2 = `
-  SELECT 
+  SELECT
   "Category".type AS category_type
   FROM "Category"
   WHERE "Category" = $1`; */
