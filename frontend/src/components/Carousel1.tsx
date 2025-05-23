@@ -1,55 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import type { Product } from "../types/Product";
 
-type Product = {
-  product_id: number;
-  product_name: string;
-  product_img: string;
-  category_type: string;
-  gender: string;
+type Props = {
+  allProducts: Product[];
+  setSelectedProducts: (products: Product[]) => void;
+  currentGender: string;
 };
 
-const Carousel1 = () => {
+const Carousel1: React.FC<Props> = ({
+  allProducts,
+  setSelectedProducts,
+  currentGender,
+}) => {
+  const { store_type, id } = useParams();
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   // State för att lagra de filtrerade produkterna
 
-  const { store_type } = useParams();
+  const swiperRef = useRef<any>(null);
+  // Referens till Swiper-instansen
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      // Fetcha produkterna som json från servern
-      try {
-        const res = await fetch("http://localhost:3000/products");
-        const products: Product[] = await res.json();
-        console.log("category-prop:");
-        console.log(
-          "Alla category_type i produkter:",
-          products.map((p) => p.category_type)
-        );
+    if (!currentGender) return;
+    // Varje gång en ändring i useEffect sker, kommer den nollställa swiper slides till 0
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(0);
+    }
+    const filteredData = allProducts.filter((product) => {
+      const matchGender =
+        product.gender.toLowerCase() === currentGender?.toLowerCase();
 
-        const filteredData = products.filter((product) => {
-          if (store_type === "herrmode") {
-            return product.gender === "Man";
-          } else {
-            return product.gender === "Woman";
-          }
-        });
-        const shuffled = filteredData
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 4);
+      const notCurrent = product.product_id !== Number(id);
 
-        setFilteredProducts(shuffled);
-      } catch (error) {
-        console.error("Fel vid hämtning av produkter:", error);
-      }
-    };
+      return matchGender && notCurrent;
+    });
+    console.log("Antal produkter som matchar:", filteredData.length);
 
-    fetchProducts();
-  }, []);
+    const shuffled = filteredData.sort(() => Math.random() - 0.5).slice(0, 4);
+
+    setFilteredProducts(shuffled);
+    setSelectedProducts(shuffled);
+  }, [allProducts, currentGender, store_type, id]);
+  if (!currentGender) return null;
 
   return (
     <div className="pb-[3vh]">
@@ -58,6 +54,7 @@ const Carousel1 = () => {
       </p>
 
       <Swiper
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         modules={[Navigation, Pagination]}
         slidesPerView={1}
         centeredSlides={true}
@@ -73,7 +70,9 @@ const Carousel1 = () => {
         {filteredProducts.map((product) => (
           <SwiperSlide key={product.product_id}>
             <Link
-              to={`/shop/${store_type}/${product.category_type}/${product.product_id}`}
+              to={`/shop/${product.gender === "Man" ? "herrmode" : "dammode"}/${
+                product.category_type
+              }/${product.product_id}`}
             >
               <img
                 src={product.product_img}

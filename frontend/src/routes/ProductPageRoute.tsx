@@ -6,35 +6,49 @@ import { useEffect, useState } from "react";
 import Carousel1 from "../components/Carousel1";
 import Carousel2 from "../components/Carousel2";
 import { Link } from "react-router-dom";
+import type { Product } from "../types/Product";
 
 export default function ProductPageRoute() {
-  interface Product {
-    product_id: number;
-    category_type: string;
-    product_name: string;
-    brand_name: string;
-    product_description: string;
-    product_img: string;
-    price: number;
-    stock: number;
-    gender: string;
-    color: string[];
-    size: string[];
-  }
   const { id } = useParams<{ id: string }>();
-
   const [product, setProduct] = useState<Product>();
+  const [products, setProducts] = useState<Product[]>([]);
+  // State för att lagra de filtrerade produkterna i Carousel 1
+  const [carousel1Products, setCarousel1Products] = useState<Product[]>([]);
+  const [currentGender, setCurrentGender] = useState<string | undefined>();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
-      .then((response) => response.json())
-      .then((data: Product) => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/products/${id}`);
+        const data = await res.json();
         setProduct(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProducts();
   }, [id]);
+
+  useEffect(() => {
+    if (product?.gender) {
+      setCurrentGender(product.gender);
+    } else {
+      console.log("Ingen gender hittad i product:", product);
+    }
+  }, [product]);
+  // Hämtar alla produkter för att använda i Carousel1 och Carousel 2
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/products");
+        const data: Product[] = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching all products:", error);
+      }
+    };
+    fetchAllProducts();
+  }, []);
 
   return (
     /*<SearchbarComp />
@@ -49,7 +63,7 @@ export default function ProductPageRoute() {
       {/*<Dropdowncolors />*/}
 
       <div className="flex flex.wrap text-center justify-center items-center gap-4.5 p-2 ">
-        {product?.size.map((size) => (
+        {product?.size?.map((size) => (
           <p key={size} className="border w-[4.3rem] h-8 p-1 min-w-max">
             {size}
           </p>
@@ -70,8 +84,14 @@ export default function ProductPageRoute() {
         {/*DropdownProd*/}
         {/*DropdownCare*/}
 
-        <Carousel1 />
-        <Carousel2 />
+        {currentGender && (
+          <Carousel1
+            allProducts={products}
+            setSelectedProducts={setCarousel1Products}
+            currentGender={currentGender}
+          />
+        )}
+        <Carousel2 allProducts={products} excludeProducts={carousel1Products} />
       </div>
     </div>
   );

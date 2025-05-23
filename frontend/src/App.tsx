@@ -15,23 +15,32 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
   const router = createHashRouter([
-    {// Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
-            children: [
-                // Exempel på en route, element är det som ska visas, path är url:en.
-                { element: <HomeRoute />, path: '/' },
-                { element: <AboutRoute />, path: '/about' },
-                { element: <CategoryRoute />, path: '/shop/:store_type' },
-                { element: <ShoppingCartRoute/>, path: "/shoppingcart"},
-                { element: <SelectedCategoryRoute/>, path: "/shop/:store_type/:selected_category"},
-                { element: <ProductPageRoute />, path: "/shop/:store_type/:selected_category/:id"}
+    {
+      // Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
+      children: [
+        // Exempel på en route, element är det som ska visas, path är url:en.
+        { element: <HomeRoute />, path: "/" },
+        { element: <AboutRoute />, path: "/about" },
+        { element: <CategoryRoute />, path: "/shop/:store_type" },
+        { element: <ShoppingCartRoute />, path: "/shoppingcart" },
+        {
+          element: <SelectedCategoryRoute />,
+          path: "/shop/:store_type/:selected_category",
+        },
+        {
+          element: <ProductPageRoute />,
+          path: "/shop/:store_type/:selected_category/:id",
+        },
 
         // Detta är enbart en exempel route.
       ],
       // Det som finns i element under denna mening är vad som alltid ska synas på sidan oavsett route, t.ex searchbar, footer, navbar.
       element: (
         <>
+          <ScrollToTop />
           <Navbar />
           {/* Här skulle man t.ex kunna lägga Searchbar komponenten */}
           <header>
