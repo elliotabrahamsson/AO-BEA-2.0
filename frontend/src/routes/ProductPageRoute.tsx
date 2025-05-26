@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Carousel1 from "../components/Carousel1";
 import Carousel2 from "../components/Carousel2";
 import { Link } from "react-router-dom";
+import DropdownProducts from "../components/DropdownProducts";
+import DropdownCare from "../components/DropdownCare";
 
 export default function ProductPageRoute() {
   interface Product {
@@ -67,8 +69,8 @@ export default function ProductPageRoute() {
       </div>
 
       <div className="p-4">
-        {/*DropdownProd*/}
-        {/*DropdownCare*/}
+        <DropdownProducts />
+        <DropdownCare />
 
         <Carousel1 />
         <Carousel2 />
