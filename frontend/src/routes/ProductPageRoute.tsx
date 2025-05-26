@@ -6,10 +6,33 @@ import { useEffect, useState } from "react";
 import Carousel1 from "../components/Carousel1";
 import Carousel2 from "../components/Carousel2";
 import { Link } from "react-router-dom";
+
 import type { Product } from "../types/Product";
 
 export default function ProductPageRoute() {
   const { id } = useParams<{ id: string }>();
+import DropdownProducts from "../components/DropdownProducts";
+import DropdownCare from "../components/DropdownCare";
+
+export default function ProductPageRoute() {
+  interface Product {
+    product_id: number;
+    category_type: string;
+    product_name: string;
+    brand_name: string;
+    product_description: string;
+    product_img: string;
+    price: number;
+    stock: number;
+    gender: string;
+    color: string[];
+    size: string[];
+  }
+  const { id, selected_category } = useParams<{
+    id: string;
+    selected_category: string;
+  }>();
+
   const [product, setProduct] = useState<Product>();
   const [products, setProducts] = useState<Product[]>([]);
   // State för att lagra de filtrerade produkterna i Carousel 1
@@ -28,6 +51,17 @@ export default function ProductPageRoute() {
     };
     fetchProducts();
   }, [id]);
+
+    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
+      .then((response) => response.json())
+      .then((data: Product) => {
+        setProduct(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, [id, selected_category]);
+
 
   useEffect(() => {
     if (product?.gender) {
@@ -62,9 +96,11 @@ export default function ProductPageRoute() {
       </h3>
       {/*<Dropdowncolors />*/}
 
-      <div className="flex flex.wrap text-center justify-center items-center gap-4.5 p-2 ">
-        {product?.size?.map((size) => (
-          <p key={size} className="border w-[4.3rem] h-8 p-1 min-w-max">
+
+      <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
+        {product?.size.map((size) => (
+          <p key={size} className="border w-[4.3rem] h-[2rem] p-1 min-w-max">
+
             {size}
           </p>
         ))}
@@ -81,8 +117,8 @@ export default function ProductPageRoute() {
       </div>
 
       <div className="p-4">
-        {/*DropdownProd*/}
-        {/*DropdownCare*/}
+        <DropdownProducts />
+        <DropdownCare />
 
         {currentGender && (
           <Carousel1
