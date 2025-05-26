@@ -23,12 +23,15 @@ export default function ProductPageRoute() {
     color: string[];
     size: string[];
   }
-  const { id } = useParams<{ id: string }>();
+  const { id, selected_category } = useParams<{
+    id: string;
+    selected_category: string;
+  }>();
 
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
+    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
       .then((response) => response.json())
       .then((data: Product) => {
         setProduct(data);
@@ -36,7 +39,7 @@ export default function ProductPageRoute() {
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
-  }, [id]);
+  }, [id, selected_category]);
 
   return (
     /*<SearchbarComp />
@@ -50,9 +53,9 @@ export default function ProductPageRoute() {
       </h3>
       {/*<Dropdowncolors />*/}
 
-      <div className="flex flex.wrap text-center justify-center items-center gap-4.5 p-2 ">
+      <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
         {product?.size.map((size) => (
-          <p key={size} className="border w-[4.3rem] h-8 p-1 min-w-max">
+          <p key={size} className="border w-[4.3rem] h-[2rem] p-1 min-w-max">
             {size}
           </p>
         ))}
