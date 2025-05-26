@@ -9,6 +9,7 @@ import AboutRoute from "./routes/AboutRoute";
 import CategoryRoute from "./routes/CategoryRoute";
 import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
+import Breadcrumb from './components/Breadcrumb';
 import {
   createHashRouter,
   Link,
@@ -43,23 +44,24 @@ function App() {
           {/* Här skulle man t.ex kunna lägga Searchbar komponenten */}
           <header>
             <Searchbar />
+            <Breadcrumb />
           </header>
           <main>
             {/* Outlet motsvarar RouterView i Vue. Det är alltså här vi kommer visa upp våra olika route-komponenter beroende på url:en. T.ex kommer <HomeRoute /> komponenten synas här. */}
             <Outlet />
           </main>
 
-          {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}
-          {/* <Link to="/exempel">Exempel</Link> */}
-          <footer>
-            <Footer />
-          </footer>
-        </>
-      ),
-    },
-  ]);
-  // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
-  return <RouterProvider router={router} />;
+                    {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}
+                    {/* <Link to="/exempel">Exempel</Link> */}
+                    <footer>
+                        <Footer />
+                    </footer>
+                </>
+            )
+        }
+    ]);
+    // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
+    return <RouterProvider router={router} />;
 }
 
 export default App;
