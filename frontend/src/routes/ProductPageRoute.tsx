@@ -1,23 +1,16 @@
 /*import SearchbarComp from "../components/Searchbar";
 import BreadCromb from "../components/BreadCromb";
 import DropdownColors from "../components/DropdownColors" */
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Carousel1 from '../components/Carousel1';
-import Carousel2 from '../components/Carousel2';
-import { Link } from 'react-router-dom';
-import Dropdowncolors from '../components/Dropdowncolors';
-
-import type { Product } from "../types/Product";
-
-export default function ProductPageRoute() {
-  const { id } = useParams<{ id: string }>();
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Carousel1 from "../components/Carousel1";
+import Carousel2 from "../components/Carousel2";
+import { Link } from "react-router-dom";
+import Dropdowncolors from "../components/Dropdowncolors";
 import DropdownProducts from "../components/DropdownProducts";
 import DropdownCare from "../components/DropdownCare";
 
 export default function ProductPageRoute() {
-
-
   interface Product {
     product_id: number;
     category_type: string;
@@ -43,18 +36,6 @@ export default function ProductPageRoute() {
   const [currentGender, setCurrentGender] = useState<string | undefined>();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/products/${id}`);
-        const data = await res.json();
-        setProduct(data);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
-    fetchProducts();
-  }, [id]);
-
     fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
       .then((response) => response.json())
       .then((data: Product) => {
@@ -65,12 +46,10 @@ export default function ProductPageRoute() {
       });
   }, [id, selected_category]);
 
-
   useEffect(() => {
     if (product?.gender) {
       setCurrentGender(product.gender);
     } else {
-      console.log("Ingen gender hittad i product:", product);
     }
   }, [product]);
   // Hämtar alla produkter för att använda i Carousel1 och Carousel 2
@@ -87,9 +66,8 @@ export default function ProductPageRoute() {
     fetchAllProducts();
   }, []);
 
-
-    return (
-        /*<SearchbarComp />
+  return (
+    /*<SearchbarComp />
         <BreadCromb /> */
 
     <div>
@@ -99,13 +77,11 @@ export default function ProductPageRoute() {
       <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
         {product?.product_name}
       </h3>
-      {/*<Dropdowncolors />*/}
-
+      <Dropdowncolors />
 
       <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
         {product?.size.map((size) => (
           <p key={size} className="border w-[4.3rem] h-[2rem] p-1 min-w-max">
-
             {size}
           </p>
         ))}
@@ -117,29 +93,9 @@ export default function ProductPageRoute() {
             <h3 className="text-white whitespace-nowrap text-[10px]">
               Lägg till i varukorg
             </h3>
-            {/*<Dropdowncolors />*/}
-            <Dropdowncolors />
-            <div className="flex flex.wrap text-center justify-center items-center gap-4.5 p-2 ">
-                {product?.size.map((size) => (
-                    <p
-                        key={size}
-                        className="border w-[4.3rem] h-8 p-1 min-w-max"
-                    >
-                        {size}
-                    </p>
-                ))}
-            </div>
-
-
-            <div className="p-1">
-                <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
-                    <Link to={'/shoppingcart'}>
-                        <h3 className="text-white whitespace-nowrap text-[10px]">
-                            Lägg till i varukorg
-                        </h3>
-                    </Link>
-                </div>
-            </div>
+          </Link>
+        </div>
+      </div>
 
       <div className="p-4">
         <DropdownProducts />

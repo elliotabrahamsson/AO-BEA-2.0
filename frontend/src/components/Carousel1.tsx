@@ -4,7 +4,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import type { Product } from "../types/Product";
+
+export interface Product {
+  product_id: number;
+  category_type: string;
+  product_name: string;
+  brand_name: string; // Gör den INTE optional, om det är så Carousel1 förväntar sig
+  product_description: string;
+  product_img: string;
+  price: number;
+  stock: number;
+  gender: string;
+  color: string[];
+  size: string[];
+}
 
 type Props = {
   allProducts: Product[];
@@ -39,7 +52,6 @@ const Carousel1: React.FC<Props> = ({
 
       return matchGender && notCurrent;
     });
-    console.log("Antal produkter som matchar:", filteredData.length);
 
     const shuffled = filteredData.sort(() => Math.random() - 0.5).slice(0, 4);
 
@@ -78,7 +90,7 @@ const Carousel1: React.FC<Props> = ({
               <img
                 src={product.product_img}
                 alt={product.product_name}
-                className="rounded-md w-full h-auto max-w-[90%] mx-auto block"
+                className="rounded-md w-full h-auto mx-auto block"
               />
             </Link>
           </SwiperSlide>

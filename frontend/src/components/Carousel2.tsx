@@ -72,7 +72,7 @@ const Carousel2: React.FC<Props> = ({ allProducts, excludeProducts }) => {
               <img
                 src={product.product_img}
                 alt={product.product_name}
-                className="rounded-md w-full h-auto max-w-[90%] mx-auto block"
+                className="rounded-md w-full h-auto mx-auto block"
               />
             </Link>
           </SwiperSlide>

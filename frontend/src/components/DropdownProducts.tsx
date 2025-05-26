@@ -10,7 +10,10 @@ function DropdownProducts() {
   }
 
   const [isOpen, setIsOpen] = useState(false);
-  const { id } = useParams<{ id: string }>();
+  const { id, selected_category } = useParams<{
+    id: string;
+    selected_category: string;
+  }>();
   const [product, setProduct] = useState<Product | null>(null);
 
   /*Funktion för toggle dropdownmeny*/
@@ -20,7 +23,7 @@ function DropdownProducts() {
 
   /* Fetch av data från databasen */
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
+    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Något gick fel med hämtningen");
@@ -28,7 +31,6 @@ function DropdownProducts() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setProduct(data);
       })
       .catch((error) => {
