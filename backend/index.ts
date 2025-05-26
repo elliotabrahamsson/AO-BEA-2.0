@@ -40,8 +40,9 @@ app.get("/products", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/products/:id", async (req: Request, res: Response) => {
+app.get("/category/:type/products/:id", async (req: Request, res: Response) => {
   const productId = parseInt(req.params.id);
+  const categoryType = req.params.type;
 
   const query = `
   SELECT
@@ -51,19 +52,27 @@ app.get("/products/:id", async (req: Request, res: Response) => {
     "Products".product_img AS product_img,
     "Products".price,
     "Products".size AS size,
-    "Products".colors AS color
+    "Products".colors AS color,
+
+    "Products".gender AS gender
+
+    "Category".type AS type
+
     FROM "Products"
-    WHERE "Products".id = $1
+    JOIN "Category" ON "Products".category = "Category".id
+    WHERE "Products".id = $1 AND "Category".type = $2
     `;
 
+
   /*const query2 = `
-  SELECT 
+  SELECT
   "Category".type AS category_type
   FROM "Category"
   WHERE "Category" = $1`; */
 
+
   try {
-    const result = await pool.query(query, [productId]);
+    const result = await pool.query(query, [productId, categoryType]);
 
     if (result.rows.length > 0) {
       const product = result.rows[0];
