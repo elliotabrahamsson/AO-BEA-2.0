@@ -1,45 +1,33 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-//Interface
+// Interface
 interface PaymentMethod {
-    id: string; // Unique identifier for the payment method ( 'credit', 'klarna')
-    label: string; // Display label shown to the user ('Kredit', 'Klarna')
-    icons: string[]; // Array of icon file paths associated with the payment method
+    id: string;
+    label: string;
+    icons: string[];
 }
 
-// Array of available payment methods, each with an ID, label, and icons associated with it.
 const paymentMethods: PaymentMethod[] = [
-    {
-        id: 'credit',
-        label: 'Kredit',
-        icons: ['/visa.png', '/mastercard.png']
-    },
-    {
-        id: 'klarna',
-        label: 'Klarna',
-        icons: ['/klarna.png']
-    },
-    {
-        id: 'swish',
-        label: 'Swish',
-        icons: ['/swish.png']
-    }
+    { id: 'credit', label: 'Kredit', icons: ['/visa.png', '/mastercard.png'] },
+    { id: 'klarna', label: 'Klarna', icons: ['/klarna.png'] },
+    { id: 'swish', label: 'Swish', icons: ['/swish.png'] }
 ];
+
 interface PaymentMethodName {
-    name: string; // Name of the payment method ( 'mastercard', 'visa')
+    name: string;
 }
 
 const paymentMethodNames: PaymentMethodName[] = [
     { name: 'mastercard' },
     { name: 'visa' },
-    { name: 'Klarna' },
+    { name: 'klarna' },
     { name: 'GooglePay' },
     { name: 'Paypal' },
     { name: 'ApplePay' }
 ];
 
-// Styled section component
+// Styled component med korrekt syntax
 const Section = styled.section`
     font-family: 'Merriweather Sans', sans-serif;
 
@@ -82,23 +70,26 @@ const Section = styled.section`
 `;
 
 const CheckoutForm = () => {
-    // Initial value: false = the payment section is hidden when the component first loads.
-    const [showPaymentSection, setShowPaymentSection] =
-        useState<boolean>(false);
-    const [selectedMethod, setSelectedMethod] = useState<string>('klarna'); // Stores the selected payment method; default is Klarna and the type to string for type safety.
+    const [showPaymentSection, setShowPaymentSection] = useState(false);
+    const [selectedMethod, setSelectedMethod] = useState('klarna');
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        alert('Köpet slutfört!');
+        // Här kan du lägga till vidare logik, t.ex. API-anrop, validering etc.
+    };
 
     return (
         <Section>
-            {/* Leverans */}
             <h1 className="ml-6 mt-4">LEVERANS</h1>
-            <div className="form-container">
-                <form>
-                    <div className="mb-5">
+            {/* Samma form för både leverans och betalning */}
+            <form onSubmit={handleSubmit}>
+                <div className="form-container">
+                    {/* Leveransformulär */}
+                    <div>
                         <div className="first-row-container">
                             <div className="form-group">
-                                <label // htmlFor associates the label with an input field so that clicking the text
-                                    // activates the corresponding field. This makes the form easier to use,
-                                    // especially for people using keyboards or assistive technologies.
+                                <label
                                     htmlFor="firstName"
                                     className="block mb-2 text-sm font-medium text-gray-900"
                                 >
@@ -108,6 +99,7 @@ const CheckoutForm = () => {
                                     type="text"
                                     id="firstName"
                                     className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                    required
                                 />
                             </div>
                             <div className="form-group">
@@ -121,6 +113,7 @@ const CheckoutForm = () => {
                                     type="text"
                                     id="lastName"
                                     className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                    required
                                 />
                             </div>
                         </div>
@@ -136,6 +129,7 @@ const CheckoutForm = () => {
                                 type="text"
                                 id="street"
                                 className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                required
                             />
                         </div>
 
@@ -152,6 +146,7 @@ const CheckoutForm = () => {
                                     id="zipcode"
                                     placeholder="112 12"
                                     className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                    required
                                 />
                             </div>
                             <div className="form-group">
@@ -165,6 +160,7 @@ const CheckoutForm = () => {
                                     type="text"
                                     id="city"
                                     className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                    required
                                 />
                             </div>
                         </div>
@@ -177,10 +173,11 @@ const CheckoutForm = () => {
                                 Telefonnummer
                             </label>
                             <input
-                                type="text"
+                                type="tel"
                                 id="phone"
                                 placeholder="+46"
                                 className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                required
                             />
                         </div>
 
@@ -195,30 +192,28 @@ const CheckoutForm = () => {
                                 type="email"
                                 id="email"
                                 className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                required
                             />
                         </div>
 
-                        <button
-                            type="button"
-                            onClick={() => setShowPaymentSection(true)} // When the button is clicked, the payment section becomes visible by setting 'showPaymentSection' to true.
-                            className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
-                        >
-                            <h2>Fortsätt till betalning</h2>
-                        </button>
+                        {/* Visa knapp för att gå vidare till betalning */}
+                        {!showPaymentSection && (
+                            <button
+                                type="button"
+                                onClick={() => setShowPaymentSection(true)}
+                                className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
+                            >
+                                <h2>Fortsätt till betalning</h2>
+                            </button>
+                        )}
                     </div>
-                </form>
-            </div>
 
-            {/* Betalningsmetod */}
-            {showPaymentSection && (
-                <>
-                    <h3 className="ml-6 mt-6">Välj Betalningsmetod</h3>
-                    <div className="pay-method-container">
-                        <ul className="space-y-2">
-                            {paymentMethods.map(
-                                (
-                                    method //Creates a li element for each payment method in the 'paymentMethods' array
-                                ) => (
+                    {/* Betalningsmetod, visas först när man klickat vidare */}
+                    {showPaymentSection && (
+                        <div className="pay-method-container">
+                            <h3 className="ml-6 mt-6">Välj Betalningsmetod</h3>
+                            <ul className="space-y-2">
+                                {paymentMethods.map((method) => (
                                     <li key={method.id} className="w-full">
                                         <div className="flex items-center p-2 ps-3">
                                             <input
@@ -230,7 +225,6 @@ const CheckoutForm = () => {
                                                 }
                                                 name="payment"
                                                 onChange={() =>
-                                                    // When the user changes their selection, the state is updated to the selected payment method's ID
                                                     setSelectedMethod(method.id)
                                                 }
                                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2"
@@ -252,50 +246,98 @@ const CheckoutForm = () => {
                                             </div>
                                         </div>
                                     </li>
-                                )
+                                ))}
+                            </ul>
+
+                            {/* Betalmetodsspecifika fält */}
+                            {selectedMethod === 'klarna' && (
+                                <div className="klarna-container mt-6">
+                                    <h4>Dina uppgifter:</h4>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="email"
+                                            placeholder="Ange din E-post"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="text"
+                                            placeholder="Postnummer"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
+                                </div>
                             )}
-                        </ul>
 
-                        {/* Klarna specific inputs */}
-                        {selectedMethod === 'klarna' && (
-                            <div className="klarna-container mt-6">
-                                <h4>Dina uppgifter:</h4>
-                                <div className="form-group mt-3">
-                                    <input
-                                        type="email"
-                                        placeholder="Ange din E-post"
-                                        className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
-                                    />
+                            {selectedMethod === 'credit' && (
+                                <div className="credit-container mt-6">
+                                    <h4>Kreditkort - Kortuppgifter</h4>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="text"
+                                            placeholder="Kortnummer"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="text"
+                                            placeholder="MM/YY"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="text"
+                                            placeholder="CVC"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                                <div className="form-group mt-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Postnummer"
-                                        className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
-                                    />
+                            )}
+
+                            {selectedMethod === 'swish' && (
+                                <div className="swish-container mt-6">
+                                    <h4>Swish - Telefonnummer</h4>
+                                    <div className="form-group mt-3">
+                                        <input
+                                            type="tel"
+                                            placeholder="+46"
+                                            className="bg-gray-50 border border-black text-sm rounded-[4px] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
                                 </div>
+                            )}
+
+                            {/* Ikoner för betalmetoder längst ner */}
+                            <div className="payment-methods-bar-container flex flex-row mt-12 mb-6 gap-4">
+                                {paymentMethodNames.map((method) => (
+                                    <img
+                                        key={method.name}
+                                        src={`/src/assets/checkout-icons/payment-bar/${method.name}.png`}
+                                        alt={`icon of ${method.name}`}
+                                    />
+                                ))}
                             </div>
-                        )}
 
-                        <div className="payment-methods-bar-container flex flex-row mt-12 mb-6 gap-4">
-                            {paymentMethodNames.map((method) => (
-                                <img
-                                    key={method.name}
-                                    src={`/src/assets/checkout-icons/payment-bar/${method.name}.png`} // Dynamically sets the image source and alt text based on the payment method name.
-                                    alt={`icon of ${method.name}`}
-                                />
-                            ))}
+                            {/* Slutför köp-knapp */}
+                            <button
+                                type="submit"
+                                className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
+                            >
+                                <h2>Slutför köp</h2>
+                            </button>
                         </div>
-
-                        <button
-                            type="submit"
-                            className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
-                        >
-                            <h2>Slutför köp</h2>
-                        </button>
-                    </div>
-                </>
-            )}
+                    )}
+                </div>
+            </form>
         </Section>
     );
 };
