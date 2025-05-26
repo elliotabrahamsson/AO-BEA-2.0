@@ -1,11 +1,12 @@
 /*import SearchbarComp from "../components/Searchbar";
 import BreadCromb from "../components/BreadCromb";
 import DropdownColors from "../components/DropdownColors" */
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Carousel1 from "../components/Carousel1";
-import Carousel2 from "../components/Carousel2";
-import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Carousel1 from '../components/Carousel1';
+import Carousel2 from '../components/Carousel2';
+import { Link } from 'react-router-dom';
+import Dropdowncolors from '../components/Dropdowncolors';
 
 import type { Product } from "../types/Product";
 
@@ -15,6 +16,8 @@ import DropdownProducts from "../components/DropdownProducts";
 import DropdownCare from "../components/DropdownCare";
 
 export default function ProductPageRoute() {
+
+
   interface Product {
     product_id: number;
     category_type: string;
@@ -84,9 +87,11 @@ export default function ProductPageRoute() {
     fetchAllProducts();
   }, []);
 
-  return (
-    /*<SearchbarComp />
+
+    return (
+        /*<SearchbarComp />
         <BreadCromb /> */
+
     <div>
       <div className="p-5">
         <img src={product?.product_img} alt="Main" />
@@ -112,9 +117,29 @@ export default function ProductPageRoute() {
             <h3 className="text-white whitespace-nowrap text-[10px]">
               Lägg till i varukorg
             </h3>
-          </Link>
-        </div>
-      </div>
+            {/*<Dropdowncolors />*/}
+            <Dropdowncolors />
+            <div className="flex flex.wrap text-center justify-center items-center gap-4.5 p-2 ">
+                {product?.size.map((size) => (
+                    <p
+                        key={size}
+                        className="border w-[4.3rem] h-8 p-1 min-w-max"
+                    >
+                        {size}
+                    </p>
+                ))}
+            </div>
+
+
+            <div className="p-1">
+                <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
+                    <Link to={'/shoppingcart'}>
+                        <h3 className="text-white whitespace-nowrap text-[10px]">
+                            Lägg till i varukorg
+                        </h3>
+                    </Link>
+                </div>
+            </div>
 
       <div className="p-4">
         <DropdownProducts />

@@ -1,11 +1,13 @@
-import { useState, type JSX } from 'react';
+import { useState, useEffect, type JSX } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import arrowDown from '/src/assets/dropdown/arrow-down.svg';
 import xMark from '/src/assets/dropdown/x-mark.svg';
 
-// Props interface
-interface ColorDropdownProps {
-    Colors: string[];
+//Props inteface
+interface Product {
+    product_id: number;
+    color: string[];
 }
 
 // Define styled components for layout and styling.
@@ -75,17 +77,60 @@ const DropdownContent = styled.div<{ isOpen: boolean }>`
     }
 `;
 //Create a functional component for the color dropdown menu
-function Dropdowncolors({ Colors }: ColorDropdownProps): JSX.Element {
+function Dropdowncolors() {
     // `JSX.Element` indicates that this function will return a JSX element
     const [isOpen, setIsOpen] = useState<boolean>(false); //Setting the type to boolean for type safety.
+    const [product, setColors] = useState<Product>();
+
+    const [selectedColor, setSelectedColor] = useState<string | null>(null);
+
+    const { id } = useParams<{ id: string }>();
 
     const toggleDropdown = () => setIsOpen((prev) => !prev);
+
+    //     useEffect(() => {
+    //         try {
+    //             fetch(
+    //                 `http://localhost:3000/products/${productId}`
+    //             )
+    //             .then ((res)=> res.json())
+    // .then ((data:Product)=>{setColors(data)})
+    //             const colorArray = productId
+    //                 ? productId.colors.split(',').map((c) => c.trim())
+    //                 : [];
+
+    //             setColors(colorArray);
+    //         } catch (error) {
+    //             console.error('Kunde inte hämta färger:', error);
+    //         }
+    //     }, [productId]);
+    useEffect(() => {
+        fetch(`http://localhost:3000/products/${id}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Något gick fel med hämtningen');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setColors(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        setIsOpen(false);
+    }, [id]);
 
     return (
         <DropdownWrapper>
             <DropdownButton onClick={toggleDropdown}>
                 <div className="button-content">
-                    <p>Välj färg</p>
+                    <p>
+                        {selectedColor
+                            ? `Vald färg: ${selectedColor}`
+                            : 'Välj färg'}
+                    </p>
                     <img
                         src={isOpen ? xMark : arrowDown}
                         alt="Dropdown arrow"
@@ -98,10 +143,13 @@ function Dropdowncolors({ Colors }: ColorDropdownProps): JSX.Element {
 
             <DropdownContent isOpen={isOpen}>
                 <ul>
-                    {Colors.map((color, index) => (
-                        <li key={index}>{color}</li>
+                    {product?.color.map((color) => (
+                        <li key={id} onClick={() => setSelectedColor(color)}>
+                            {color}
+                        </li>
                     ))}
                 </ul>
+                {selectedColor && <p>Vald färg: {selectedColor}</p>}
             </DropdownContent>
         </DropdownWrapper>
     );

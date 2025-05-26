@@ -10,14 +10,16 @@ import CategoryRoute from "./routes/CategoryRoute";
 import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import Breadcrumb from './components/Breadcrumb';
+import CheckoutRoute from './routes/CheckoutRoute';
 import {
-  createHashRouter,
-  Link,
-  Outlet,
-  RouterProvider,
-} from "react-router-dom";
+    createHashRouter,
+    Link,
+    Outlet,
+    RouterProvider
+} from 'react-router-dom';
 import ScrollToTop from "./components/ScrollToTop";
 import DropdownProducts from "./components/DropdownProducts";
+
 function App() {
   const router = createHashRouter([
     {
@@ -28,6 +30,7 @@ function App() {
         { element: <AboutRoute />, path: "/about" },
         { element: <CategoryRoute />, path: "/shop/:store_type" },
         { element: <ShoppingCartRoute />, path: "/shoppingcart" },
+        { element: <CheckoutRoute/> , path: '/checkout' },
         {
           element: <SelectedCategoryRoute />,
           path: "/shop/:store_type/:selected_category",
