@@ -59,6 +59,18 @@ p {
 .swiper-pagination-bullet-active {
   background-color: var(--dark1) !important;
 }
+/* Ändrar Swiper-pilarna till tjockare ikoner */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 80px !important;
+  font-weight: bold !important;
+}
+.swiper-button-next::after {
+  content: "❯" !important;
+}
+.swiper-button-prev::after {
+  content: "❮" !important;
+}
 
 #product-name-bold {
   font-weight: normal;

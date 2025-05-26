@@ -16,6 +16,7 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import DropdownProducts from "./components/DropdownProducts";
 function App() {
   const router = createHashRouter([
@@ -35,11 +36,14 @@ function App() {
           element: <ProductPageRoute />,
           path: "/shop/:store_type/:selected_category/:id",
         },
+
+
         // Detta är enbart en exempel route.
       ],
       // Det som finns i element under denna mening är vad som alltid ska synas på sidan oavsett route, t.ex searchbar, footer, navbar.
       element: (
         <>
+          <ScrollToTop />
           <Navbar />
           {/* Här skulle man t.ex kunna lägga Searchbar komponenten */}
           <header>
