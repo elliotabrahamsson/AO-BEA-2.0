@@ -1,15 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import xMark from "../assets/dropdown/x-mark.svg";
 import arrowDown from "../assets/dropdown/arrow-down.svg";
-/* import styled from 'styled-components' */
+import { useParams } from "react-router-dom";
 
 function DropdownProducts() {
+  interface Product {
+    product_id: number;
+    product_description: string;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
 
   /*Funktion för toggle dropdownmeny*/
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
+  /* Fetch av data från databasen */
+  useEffect(() => {
+    fetch(`http://localhost:3000/products/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Något gick fel med hämtningen");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setProduct(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    setIsOpen(false);
+  }, [id]);
 
   return (
     /* dropdown div */
@@ -37,14 +63,14 @@ function DropdownProducts() {
       </button>
       <div className={isOpen ? "block" : "hidden"}>
         {/* innehåll */}
-        <div className="id-container">
-          {/* Temporärt */}
-          <span className="id">ID </span>
-          <span className="id-no"> 1263785001 </span>
+        <div className="id-container p-4">
+          {/* Rendering */}
+          <p className="mb-6">{product?.product_description}</p>
+          <span className="id font-bold">
+            Produkt-ID: {product?.product_id}
+          </span>
         </div>
-        {/* Rendera ut data */}
       </div>
-      {/* Rendera ut data */}
     </div>
   );
 }
