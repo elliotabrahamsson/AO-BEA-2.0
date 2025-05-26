@@ -26,14 +26,14 @@ function SelectedCategoryRoute() {
       .then((data: Product[]) => {
         console.log("Hämtade produkter", data);
         const filteredProducts = data.filter((product) => {
-          if (store_type === "Man") {
+          if (store_type === "herrmode") {
             if (
               product.gender === "Man" &&
               product.category_type === selected_category
             ) {
               return true;
             }
-          } else if (store_type === "Woman") {
+          } else if (store_type === "dammode") {
             if (
               product.gender === "Woman" &&
               product.category_type === selected_category
@@ -62,7 +62,7 @@ function SelectedCategoryRoute() {
   return (
     <div>
       <h1 className="text-center mt-4">
-        {store_type === "Man" ? "Herrmode" : "Dammode"}
+        {store_type === "herrmode" ? "Herrmode" : "Dammode"}
       </h1>
       <h2 className="text-center">{selected_category}</h2>
       <section className="product-section-container grid grid-cols-2 min-w-[190px] min-h-[240px] gap-[1rem] m-4">

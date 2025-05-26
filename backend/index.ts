@@ -53,23 +53,18 @@ app.get("/category/:type/products/:id", async (req: Request, res: Response) => {
     "Products".price,
     "Products".size AS size,
     "Products".colors AS color,
-
-    "Products".gender AS gender
-
-    "Category".type AS type
-
+    "Products".gender AS gender,
+    "Category".type AS category_type
     FROM "Products"
     JOIN "Category" ON "Products".category = "Category".id
     WHERE "Products".id = $1 AND "Category".type = $2
     `;
-
 
   /*const query2 = `
   SELECT
   "Category".type AS category_type
   FROM "Category"
   WHERE "Category" = $1`; */
-
 
   try {
     const result = await pool.query(query, [productId, categoryType]);
