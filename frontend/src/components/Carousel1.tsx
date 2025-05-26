@@ -34,6 +34,7 @@ const Carousel1: React.FC<Props> = ({
       const matchGender =
         product.gender.toLowerCase() === currentGender?.toLowerCase();
 
+      // Kontrollera att swiper renderar produkter som inte är den aktuella produkten
       const notCurrent = product.product_id !== Number(id);
 
       return matchGender && notCurrent;
