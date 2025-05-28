@@ -9,16 +9,17 @@ import AboutRoute from "./routes/AboutRoute";
 import CategoryRoute from "./routes/CategoryRoute";
 import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
-import Breadcrumb from './components/Breadcrumb';
-import CheckoutRoute from './routes/CheckoutRoute';
+import Breadcrumb from "./components/Breadcrumb";
+import CheckoutRoute from "./routes/CheckoutRoute";
 import {
-    createHashRouter,
-    Link,
-    Outlet,
-    RouterProvider
-} from 'react-router-dom';
+  createHashRouter,
+  Link,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import DropdownProducts from "./components/DropdownProducts";
+import SearchedResultRoute from "./routes/SearchedResultRoute";
 
 function App() {
   const router = createHashRouter([
@@ -30,7 +31,7 @@ function App() {
         { element: <AboutRoute />, path: "/about" },
         { element: <CategoryRoute />, path: "/shop/:store_type" },
         { element: <ShoppingCartRoute />, path: "/shoppingcart" },
-        { element: <CheckoutRoute/> , path: '/checkout' },
+        { element: <CheckoutRoute />, path: "/checkout" },
         {
           element: <SelectedCategoryRoute />,
           path: "/shop/:store_type/:selected_category",
@@ -39,7 +40,10 @@ function App() {
           element: <ProductPageRoute />,
           path: "/shop/:store_type/:selected_category/:id",
         },
-
+        {
+          element: <SearchedResultRoute />,
+          path: "/searchedResult",
+        },
 
         // Detta är enbart en exempel route.
       ],
@@ -58,17 +62,17 @@ function App() {
             <Outlet />
           </main>
 
-                    {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}
-                    {/* <Link to="/exempel">Exempel</Link> */}
-                    <footer>
-                        <Footer />
-                    </footer>
-                </>
-            )
-        }
-    ]);
-    // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
-    return <RouterProvider router={router} />;
+          {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}
+          {/* <Link to="/exempel">Exempel</Link> */}
+          <footer>
+            <Footer />
+          </footer>
+        </>
+      ),
+    },
+  ]);
+  // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
+  return <RouterProvider router={router} />;
 }
 
 export default App;
