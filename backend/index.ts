@@ -3,6 +3,7 @@ import pool from "./db";
 import { stringify } from "uuid";
 import cors from "cors";
 import { get } from "http";
+const bcrypt = require("bcrypt");
 const app = express();
 const PORT = 3000;
 
@@ -81,8 +82,54 @@ app.get("/category/:type/products/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+app.post("/createUser", async (req: Request, res: Response) => {
+  const { id, name, email, password, created, newsletter } = req.body;
+
+  const query = `
+  INSERT INTO "Users" (id, name, email, password, created, newsletter)
+  VALUES ($1, $2, $3, $4, $5, $6)`;
+
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    await pool.query(query, [
+      id,
+      name,
+      email,
+      hashedPassword,
+      created,
+      newsletter,
+    ]);
+
+    res.status(201).json({ message: "User created successfully" });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/createOrder", async (req: Request, res: Response) => {
+  const { id, accountId, products, price, address, date, adminId } = req.body;
+  const query = `
+  INSERT INTO "Orders" (id, account_id, products, price, address, date, admin_id)
+  VALUES ($1, $2, $3, $4, $5, $6, $7)
+  `;
+  try {
+    await pool.query(query, [
+      id,
+      accountId,
+      JSON.stringify(products),
+      price,
+      address,
+      date,
+      adminId,
+    ]);
+    res.status(201).json({ message: "Order created successfully" });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(PORT, () => {
