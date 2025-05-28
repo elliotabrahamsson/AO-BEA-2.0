@@ -109,6 +109,18 @@ app.post("/createUser", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/usersId", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`SELECT id, email FROM "Users"`);
+    const users = result.rows;
+
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.post("/createOrder", async (req: Request, res: Response) => {
   const { id, accountId, products, price, address, date, adminId } = req.body;
   const query = `

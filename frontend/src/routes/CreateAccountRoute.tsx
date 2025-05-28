@@ -47,6 +47,29 @@ export default function CreateAccountRoute() {
     if (!termsAccepted || !matchPasswords || !isPasswordValid()) return;
     // Lägg till POST logik för att skapa konto
 
+    let userId = 0; // Placeholder för användar-ID
+    const created = new Date();
+    const createdWithZone = created
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " "); // Formatera datumet till YYYY-MM-DD HH:MM:SS
+    console.log(created);
+    console.log(createdWithZone);
+    try {
+      const getId = await fetch("http://localhost:3000/usersId");
+      const users: { id: number; email: string }[] = await getId.json();
+      console.log(userId);
+      userId =
+        users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1; // Enkelt sätt att generera unikt ID
+      if (users.some((user) => user.email === email)) {
+        console.error("E-postadressen är redan registrerad");
+        return;
+      }
+    } catch (error) {
+      console.error("Fel vid hämtning av användar-ID:", error);
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/createUser", {
         method: "POST",
@@ -54,10 +77,12 @@ export default function CreateAccountRoute() {
           "content-type": "application/json",
         },
         body: JSON.stringify({
+          id: userId,
           name: fullName,
           email,
           password,
           newsletter,
+          created: createdWithZone,
         }),
       });
       if (!response.ok) {
