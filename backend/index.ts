@@ -156,13 +156,25 @@ app.get("/usersId", async (req: Request, res: Response) => {
 });
 
 app.post("/createOrder", async (req: Request, res: Response) => {
-  const { id, accountId, products, price, address, date, adminId } = req.body;
+  let { id, accountId, products, price, address, date, adminId, phone, email } =
+    req.body;
+
+  const emailQuery = `SELECT * FROM "Users" WHERE email = $1`;
+  const emailResult = await pool.query(emailQuery, [email]);
+  if (emailResult.rows.length === 0) {
+    res.status(400).json({ error: "Email not found" });
+    return;
+  }
+
+  accountId = emailResult.rows[0].id;
+
   const query = `
-  INSERT INTO "Orders" (id, account_id, products, price, address, date, admin_id)
-  VALUES ($1, $2, $3, $4, $5, $6, $7)
+  INSERT INTO "Orders" (id, account_id, products, price, address, date, admin_id, phone)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   `;
+
   try {
-    const result = await pool.query(query, [
+    await pool.query(query, [
       id,
       accountId,
       JSON.stringify(products),
@@ -170,6 +182,7 @@ app.post("/createOrder", async (req: Request, res: Response) => {
       address,
       date,
       adminId,
+      phone,
     ]);
 
     const mailQuery = `SELECT email FROM "Users" WHERE id = $1`;

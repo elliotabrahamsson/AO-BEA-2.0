@@ -11,6 +11,8 @@ import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import Breadcrumb from "./components/Breadcrumb";
 import CheckoutRoute from "./routes/CheckoutRoute";
+import CreateAccountRoute from "./routes/CreateAccountRoute";
+import ProfilePageRoute from "./routes/ProfilePageRoute";
 import OrderConfirmationRoute from "./routes/OrderConfirmationRoute";
 import LogInRoute from "./routes/LogInRoute";
 import {
@@ -33,7 +35,11 @@ function App() {
         { element: <CategoryRoute />, path: "/shop/:store_type" },
         { element: <ShoppingCartRoute />, path: "/shoppingcart" },
         { element: <CheckoutRoute />, path: "/checkout" },
+        { element: <CreateAccountRoute />, path: "/create-account" },
+        { element: <ProfilePageRoute />, path: "/profile" },
         { element: <LogInRoute />, path: "/login" },
+        // Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
+        // Exempel på en route, element är det som ska visas, path är url:en.
         {
           element: <OrderConfirmationRoute />,
           path: "/orderconfirmation",
@@ -63,7 +69,6 @@ function App() {
             {/* Outlet motsvarar RouterView i Vue. Det är alltså här vi kommer visa upp våra olika route-komponenter beroende på url:en. T.ex kommer <HomeRoute /> komponenten synas här. */}
             <Outlet />
           </main>
-
           {/* Link fungerar som RouterLink i Vue, det är i princip en a-tag */}
           {/* <Link to="/exempel">Exempel</Link> */}
           <footer>
