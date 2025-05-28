@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from "react";
 import PrivacyModal from "../components/PrivacyModal";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../utils/auth";
 
 export default function CreateAccountRoute() {
+  const navigate = useNavigate();
+
+  // Redan inloggad - navigera till profilen istället.
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate("/profile");
+    }
+  }, []);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [newsletter, setNewsletter] = useState(false);
+  const [newsletter, setNewsletter] = useState(true);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
-
-  /*   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); */
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setFullName(`${firstName} ${lastName}`);
@@ -45,7 +54,8 @@ export default function CreateAccountRoute() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!termsAccepted || !matchPasswords || !isPasswordValid()) return;
-    // Lägg till POST logik för att skapa konto
+
+    setErrorMessage(""); // Nollställ felmeddelandet
 
     let userId = 0; // Placeholder för användar-ID
     const created = new Date();
@@ -59,9 +69,11 @@ export default function CreateAccountRoute() {
       const getId = await fetch("http://localhost:3000/usersId");
       const users: { id: number; email: string }[] = await getId.json();
       console.log(userId);
+
       userId =
         users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1; // Enkelt sätt att generera unikt ID
       if (users.some((user) => user.email === email)) {
+        setErrorMessage("E-postadressen är redan registrerad");
         console.error("E-postadressen är redan registrerad");
         return;
       }
@@ -85,6 +97,20 @@ export default function CreateAccountRoute() {
           created: createdWithZone,
         }),
       });
+
+      // Om svaret är OK, spara användardata i localStorage och navigera till profilen
+      if (response.ok) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: userId,
+            name: fullName,
+            email,
+          })
+        );
+        navigate("/profile");
+      }
+      // Om svaret inte är OK, kasta ett fel
       if (!response.ok) {
         throw new Error("Något gick fel vid skapandet av kontot");
       }
@@ -134,8 +160,13 @@ export default function CreateAccountRoute() {
         required
         className="w-full mb-4 px-4 py-2 border rounded"
       />
+      {/* Validering av e-postadress */}
       {!emailValid && email && (
         <p className="text-red-600 text-sm mb-4">Ange en giltig e-postadress</p>
+      )}
+      {/* Felmeddelande: e-postadress existerar redan */}
+      {errorMessage && (
+        <p className="text-red-600 text-sm mb-4">{errorMessage}</p>
       )}
 
       {/* Lösenord */}
@@ -168,24 +199,24 @@ export default function CreateAccountRoute() {
         </li>
       </ul>
       <input
+        className="w-full mb-4 px-4 py-2 border rounded"
         type="password"
         placeholder="Bekräfta lösenord"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
-        className="w-full mb-4 px-4 py-2 border rounded"
       />
       {!matchPasswords && confirmPassword && (
         <p className="text-red-600 text-sm mb-4">Lösenorden matchar inte</p>
       )}
 
       {/* Newsletter */}
-      <div className="flex items-start text-sm mb-2">
+      <div className="flex items-start text-sm mb-4">
         <input
           type="checkbox"
           checked={newsletter}
           onChange={() => setNewsletter(!newsletter)}
-          className="mr-2 mt-1"
+          className="w-7 h-7 mr-4 mt-1 accent-black"
           id="newsletter"
         />
         <p>
@@ -195,12 +226,12 @@ export default function CreateAccountRoute() {
       </div>
 
       {/* Terms and Conditions */}
-      <div className="flex items-start text-sm mb-4">
+      <div className="flex items-start text-sm mb-4 accent-black">
         <input
           type="checkbox"
           checked={termsAccepted}
           onChange={() => setTermsAccepted(!termsAccepted)}
-          className="mr-2 mt-1"
+          className="w-10 h-7 mr-4 mt-1"
           id="terms"
         />
         <p className="inline">
@@ -222,10 +253,19 @@ export default function CreateAccountRoute() {
       <button
         type="submit"
         disabled={!termsAccepted || !isPasswordValid() || !matchPasswords}
-        className="w-full bg-[#403d37] text-white py-2 rounded disabled:opacity-50"
+        className="w-full bg-[#403d37] text-white py-2 rounded disabled:opacity-50 mb-4"
       >
         SKAPA KONTO
       </button>
+      <p className="text-sm text-center mt-4">
+        Har du redan ett konto?{" "}
+        <span
+          onClick={() => navigate("/login")}
+          className="underline cursor-pointer text-blue-700 hover:text-blue-900"
+        >
+          Logga in här
+        </span>
+      </p>
     </form>
   );
 }
