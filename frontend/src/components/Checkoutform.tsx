@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; //// Hämtar auth-data från vår context
 
 // Interface
 interface PaymentMethod {
@@ -70,13 +73,18 @@ const Section = styled.section`
 `;
 
 const CheckoutForm = () => {
+    const navigate = useNavigate(); //En funktion från react som hjälper en att navigera programmatiskt
+    const { user } = useAuth(); //Hämtar den inloggade användaren
     const [showPaymentSection, setShowPaymentSection] = useState(false);
     const [selectedMethod, setSelectedMethod] = useState('klarna');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        alert('Köpet slutfört!');
-        // Här kan du lägga till vidare logik, t.ex. API-anrop, validering etc.
+        const orderNumber = uuidv4();
+        //Lägg en post här
+
+        navigate(`/orderconfirmation?orderNumber=${orderNumber}`);
+        //Navigerar till orderconfirmation samt skickar med det dynamiska uuid numret via URL:en
     };
 
     return (
@@ -325,6 +333,7 @@ const CheckoutForm = () => {
                                         alt={`icon of ${method.name}`}
                                     />
                                 ))}
+                                ;
                             </div>
 
                             {/* Slutför köp-knapp */}

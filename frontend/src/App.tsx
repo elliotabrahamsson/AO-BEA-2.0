@@ -11,8 +11,8 @@ import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import Breadcrumb from "./components/Breadcrumb";
 import CheckoutRoute from "./routes/CheckoutRoute";
-import CreateAccountRoute from "./routes/CreateAccountRoute";
-import ProfilePageRoute from "./routes/ProfilePageRoute";
+import OrderConfirmationRoute from "./routes/OrderConfirmationRoute";
+import LogInRoute from "./routes/LogInRoute";
 import {
   createHashRouter,
   Link,
@@ -33,8 +33,11 @@ function App() {
         { element: <CategoryRoute />, path: "/shop/:store_type" },
         { element: <ShoppingCartRoute />, path: "/shoppingcart" },
         { element: <CheckoutRoute />, path: "/checkout" },
-        { element: <CreateAccountRoute />, path: "/create-account" },
-        { element: <ProfilePageRoute />, path: "/profile" },
+        { element: <LogInRoute />, path: "/login" },
+        {
+          element: <OrderConfirmationRoute />,
+          path: "/orderconfirmation",
+        },
         {
           element: <SelectedCategoryRoute />,
           path: "/shop/:store_type/:selected_category",
