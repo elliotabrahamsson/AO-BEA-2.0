@@ -3,9 +3,38 @@ import pool from "./db";
 import { stringify } from "uuid";
 import cors from "cors";
 import { get } from "http";
-const bcrypt = require("bcrypt");
+import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 const app = express();
 const PORT = 3000;
+
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "noreply.aobea@gmail.com",
+    pass: process.env.EMAIL_PW,
+  },
+});
+
+export const sendConfirmationMail = async (
+  to: string,
+  subject: string,
+  text: string
+) => {
+  const mailOptions = {
+    from: "noreply.aobea@gmail.com",
+    to,
+    subject,
+    text,
+  };
+
+  try {
+    const info = await transport.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};
 
 app.use(
   cors({
@@ -103,6 +132,11 @@ app.post("/createUser", async (req: Request, res: Response) => {
     ]);
 
     res.status(201).json({ message: "User created successfully" });
+    await sendConfirmationMail(
+      email,
+      "Welcome to AOBEA!",
+      `Hello ${name},\n\nThank you for creating an account with us! We're excited to have you on board.\n\nBest regards,\nAOBEA Team`
+    );
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -128,7 +162,7 @@ app.post("/createOrder", async (req: Request, res: Response) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7)
   `;
   try {
-    await pool.query(query, [
+    const result = await pool.query(query, [
       id,
       accountId,
       JSON.stringify(products),
@@ -137,6 +171,18 @@ app.post("/createOrder", async (req: Request, res: Response) => {
       date,
       adminId,
     ]);
+
+    const mailQuery = `SELECT email FROM "Users" WHERE id = $1`;
+    const mailResult = await pool.query(mailQuery, [accountId]);
+    const email = mailResult.rows[0].email;
+
+    await sendConfirmationMail(
+      email,
+      "Order Confirmation",
+      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${JSON.stringify(
+        products
+      )}\nTotal Price: ${price}\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
+    );
     res.status(201).json({ message: "Order created successfully" });
   } catch (error) {
     console.error("Error creating order:", error);
