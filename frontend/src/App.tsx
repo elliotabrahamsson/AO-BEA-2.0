@@ -11,6 +11,7 @@ import ProductPageRoute from "./routes/ProductPageRoute";
 import SelectedCategoryRoute from "./routes/SelectedCategoryRoute";
 import Breadcrumb from "./components/Breadcrumb";
 import CheckoutRoute from "./routes/CheckoutRoute";
+
 import CreateAccountRoute from "./routes/CreateAccountRoute";
 import ProfilePageRoute from "./routes/ProfilePageRoute";
 import OrderConfirmationRoute from "./routes/OrderConfirmationRoute";
@@ -22,7 +23,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import DropdownProducts from "./components/DropdownProducts";
+import { ShoppingCartProvider } from "./components/ShoppingCartContext";
 
 function App() {
   const router = createHashRouter([
@@ -44,6 +45,7 @@ function App() {
           element: <OrderConfirmationRoute />,
           path: "/orderconfirmation",
         },
+
         {
           element: <SelectedCategoryRoute />,
           path: "/shop/:store_type/:selected_category",
@@ -79,6 +81,13 @@ function App() {
     },
   ]);
   // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
+
+  return (
+    /* Av att wrappa allt inom ShoppingCartProvider gör att alla dess children har tillgång till dess data globalt */
+    <ShoppingCartProvider>
+      <RouterProvider router={router} />
+    </ShoppingCartProvider>
+  );
   return <RouterProvider router={router} />;
 }
 
