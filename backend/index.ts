@@ -3,8 +3,38 @@ import pool from "./db";
 import { stringify } from "uuid";
 import cors from "cors";
 import { get } from "http";
+import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 const app = express();
 const PORT = 3000;
+
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "noreply.aobea@gmail.com",
+    pass: process.env.EMAIL_PW,
+  },
+});
+
+export const sendConfirmationMail = async (
+  to: string,
+  subject: string,
+  text: string
+) => {
+  const mailOptions = {
+    from: "noreply.aobea@gmail.com",
+    to,
+    subject,
+    text,
+  };
+
+  try {
+    const info = await transport.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};
 
 app.use(
   cors({
@@ -81,8 +111,96 @@ app.get("/category/:type/products/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+app.post("/createUser", async (req: Request, res: Response) => {
+  const { id, name, email, password, created, newsletter } = req.body;
+
+  const query = `
+  INSERT INTO "Users" (id, name, email, password, created, newsletter)
+  VALUES ($1, $2, $3, $4, $5, $6)`;
+
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    await pool.query(query, [
+      id,
+      name,
+      email,
+      hashedPassword,
+      created,
+      newsletter,
+    ]);
+
+    res.status(201).json({ message: "User created successfully" });
+    await sendConfirmationMail(
+      email,
+      "Welcome to AOBEA!",
+      `Hello ${name},\n\nThank you for creating an account with us! We're excited to have you on board.\n\nBest regards,\nAOBEA Team`
+    );
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/usersId", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`SELECT id, email FROM "Users"`);
+    const users = result.rows;
+
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/createOrder", async (req: Request, res: Response) => {
+  let { id, accountId, products, price, address, date, adminId, phone, email } =
+    req.body;
+
+  const emailQuery = `SELECT * FROM "Users" WHERE email = $1`;
+  const emailResult = await pool.query(emailQuery, [email]);
+  if (emailResult.rows.length === 0) {
+    res.status(400).json({ error: "Email not found" });
+    return;
+  }
+
+  accountId = emailResult.rows[0].id;
+
+  const query = `
+  INSERT INTO "Orders" (id, account_id, products, price, address, date, admin_id, phone)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  `;
+
+  try {
+    await pool.query(query, [
+      id,
+      accountId,
+      JSON.stringify(products),
+      price,
+      address,
+      date,
+      adminId,
+      phone,
+    ]);
+
+    const mailQuery = `SELECT email FROM "Users" WHERE id = $1`;
+    const mailResult = await pool.query(mailQuery, [accountId]);
+    const email = mailResult.rows[0].email;
+
+    await sendConfirmationMail(
+      email,
+      "Order Confirmation",
+      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${JSON.stringify(
+        products
+      )}\nTotal Price: ${price}\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
+    );
+    res.status(201).json({ message: "Order created successfully" });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(PORT, () => {
