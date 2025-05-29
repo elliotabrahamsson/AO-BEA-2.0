@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; //// Hämtar auth-data från vår context
+import { ShoppingCartContext } from "./ShoppingCartContext";
+import OrderConfirmation from "./OrderConfirmation";
 
 // Interface
 interface PaymentMethod {
@@ -87,6 +89,9 @@ export default function CheckoutForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
+  const { cartItems } = useContext(ShoppingCartContext);
+  //Hämtar cartItems, addItemToCart och removeItemFromCart från ShoppingCartContext
+
   useEffect(() => {
     setFullName(`${firstname} ${lastname}`);
   }, [firstname, lastname]);
@@ -104,6 +109,10 @@ export default function CheckoutForm() {
     //Lägg en post här
 
     console.log(date);
+    let price = cartItems
+      .map((item) => item.price * item.quantity)
+      .reduce((a, b) => a + b, 0);
+    console.log(price);
 
     try {
       const makeOrder = await fetch("http://localhost:3000/createOrder", {
@@ -118,14 +127,22 @@ export default function CheckoutForm() {
           address,
           date,
           phone,
-          price: 500,
+          price: price,
+          products: cartItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            size: item.size,
+            quantity: item.quantity,
+          })),
         }),
       });
       console.log(email, address, date, phone);
       if (!makeOrder.ok) {
         throw new Error("Failed to create order");
       }
-      navigate(`/orderconfirmation?orderNumber=${orderNumber}`);
+      navigate(`/orderconfirmation?orderNumber=${orderNumber}`, {
+        state: { email },
+      });
       //Navigerar till orderconfirmation samt skickar med det dynamiska uuid numret via URL:en
     } catch (error) {
       console.error("Error creating order:", error);

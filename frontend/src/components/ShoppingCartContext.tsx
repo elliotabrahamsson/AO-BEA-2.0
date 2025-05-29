@@ -9,6 +9,7 @@ type CartItem = {
   id: number;
   name: string;
   quantity: number;
+  color: string;
   /* color: string; */
   size: string;
   price: number;
@@ -20,6 +21,7 @@ type ShoppingCartContext = {
   addItemToCart: (
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -29,6 +31,7 @@ type ShoppingCartContext = {
   removeItemFromCart: (
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -38,6 +41,7 @@ type ShoppingCartContext = {
   quantityOfItemInCart: (
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -59,6 +63,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function addItemToCart(
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -70,6 +75,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         (item: CartItem) =>
           item.id === id &&
           item.name === name &&
+          item.color === color &&
           /* item.color === color && */
           item.size === size &&
           item.price === price &&
@@ -78,13 +84,14 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       if (!existingItem) {
         return [
           ...currentItems,
-          { id, name, quantity: 1, /* color,  */ size, image, price },
+          { id, name, quantity: 1, color, /* color,  */ size, image, price },
         ];
       } else {
         return currentItems.map((item: CartItem) => {
           if (
             item.id === id &&
             item.name === name &&
+            item.color === color &&
             /* item.color === color && */
             item.size === size &&
             item.price === price &&
@@ -103,6 +110,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function removeItemFromCart(
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -113,6 +121,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         (item: CartItem) =>
           item.id === id &&
           item.name === name &&
+          item.color === color &&
           /* item.color === color && */
           item.size === size &&
           item.price === price &&
@@ -125,6 +134,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
             !(
               item.id === id &&
               item.name === name &&
+              item.color === color &&
               /* item.color === color && */
               item.size === size &&
               item.price === price &&
@@ -136,6 +146,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
           if (
             item.id === id &&
             item.name === name &&
+            item.color === color &&
             /* item.color === color && */
             item.size === size &&
             item.price === price &&
@@ -154,6 +165,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function quantityOfItemInCart(
     id: number,
     name: string,
+    color: string,
     /* color: string, */
     size: string,
     price: number,
@@ -163,6 +175,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       (item) =>
         item.id === id &&
         item.name === name &&
+        item.color === color &&
         /*  item.color === color && */
         item.size === size &&
         item.price === price &&

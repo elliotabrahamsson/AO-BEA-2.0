@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { ShoppingCartContext } from "../components/ShoppingCartContext";
 
 function ShoppingCartRoute() {
@@ -48,6 +49,7 @@ function ShoppingCartRoute() {
                     removeItemFromCart(
                       item.id,
                       item.name,
+                      item.color,
                       /* item.color, */
                       item.size,
                       item.price,
@@ -69,6 +71,7 @@ function ShoppingCartRoute() {
                     addItemToCart(
                       item.id,
                       item.name,
+                      item.color,
                       /* item.color, */
                       item.size,
                       item.price,
@@ -106,11 +109,13 @@ function ShoppingCartRoute() {
           </div>
         )}
       </section>
-      <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] mt-20 mb-10 h-[44px] flex justify-center items-center rounded-[4px]">
-        <h3 className="text-white whitespace-nowrap text-[10px]">
-          Forsätt till kassan
-        </h3>
-      </div>
+      <Link to={"/checkout"}>
+        <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] mt-20 mb-10 h-[44px] flex justify-center items-center rounded-[4px]">
+          <h3 className="text-white whitespace-nowrap text-[10px]">
+            Fortsätt till kassan
+          </h3>
+        </div>
+      </Link>
     </div>
   );
 }

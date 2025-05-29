@@ -143,14 +143,28 @@ app.post("/createUser", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/usersId", async (req: Request, res: Response) => {
+app.post("/login", async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const query = `SELECT id, name, email, password FROM "Users" WHERE email = $1`;
   try {
-    const result = await pool.query(`SELECT id, email FROM "Users"`);
-    const users = result.rows;
+    const result = await pool.query(query, [email]);
 
-    res.json(users);
+    if (result.rows.length === 0) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const user = result.rows[0];
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      res.status(401).json({ error: "Invalid password" });
+      return;
+    }
+
+    res.status(200).json({ id: user.id, email: user.email, name: user.name });
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -189,12 +203,22 @@ app.post("/createOrder", async (req: Request, res: Response) => {
     const mailResult = await pool.query(mailQuery, [accountId]);
     const email = mailResult.rows[0].email;
 
+    const formattedProducts = products
+      .map(
+        (product: {
+          name: string;
+          size: string;
+          color: string;
+          quantity: number;
+        }) =>
+          `${product.name} Size: ${product.size}, Color: ${product.color}, Quantity: ${product.quantity}`
+      )
+      .join(", ");
+
     await sendConfirmationMail(
       email,
       "Order Confirmation",
-      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${JSON.stringify(
-        products
-      )}\nTotal Price: ${price}\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
+      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${formattedProducts}\nTotal Price: ${price}\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
     );
     res.status(201).json({ message: "Order created successfully" });
   } catch (error) {

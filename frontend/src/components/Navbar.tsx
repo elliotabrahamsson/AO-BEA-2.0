@@ -13,89 +13,69 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <div>
-      <div className="nav-container">
-        <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-400 shadow-md z-10">
-          <ul className="flex justify-between items-center m-5">
-            {/* #1 Home icon */}
+    <div className="nav-container">
+      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-400 shadow-md z-10">
+        <ul className="flex justify-between items-center m-5">
+          {/* #1 Home icon */}
+          <li>
             <Link to={"/"}>
-              <li>
-                <img
-                  src={homeOutline}
-                  alt="icon of home navigation"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
-                />
-                <img
-                  src={homeSolid}
-                  alt="icon of home navigation"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
-                />
-              </li>
-            </Link>
-
-            {/* #2 Cart icon */}
-            <Link to={"/shoppingcart"}>
-              <li>
-                <img
-                  src={cartOutline}
-                  alt="icon of cart navigation"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
-                />
-                <img
-                  src={cartSolid}
-                  alt="icon of cart navigation"
-            {/* #2 Search icon */}
-            <li>
               <img
-                src={searchOutline}
-                alt="icon of search navigation"
+                src={homeOutline}
+                alt="icon of home navigation"
                 className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
               />
               <img
-                src={searchSolid}
-                alt="icon of search navigation"
+                src={homeSolid}
+                alt="icon of home navigation"
                 className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
               />
-            </li>
-            {/* #3 Icon of AO BEA */}
-            <Link to={"/"}>
-              <li>
-                <img
-                  src={logo}
-                  alt="icon of AO BEA logo"
-                  className="h-14 w-auto"
-                />
-              </li>
             </Link>
-            {/* #4 Favorites icon */}
+          </li>
+
+          {/* #2 Cart icon */}
+          <li>
+            <Link to={"/shoppingcart"}>
+              <img
+                src={cartOutline}
+                alt="icon of cart navigation"
+                className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
+              />
+              <img
+                src={cartSolid}
+                alt="icon of cart navigation"
+                className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
+              />
+            </Link>
+          </li>
+
+          {/* #3 Search icon */}
+          <li>
+            <img
+              src={searchOutline}
+              alt="icon of search navigation"
+              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
+            />
+            <img
+              src={searchSolid}
+              alt="icon of search navigation"
+              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
+            />
+          </li>
+
+          {/* #4 AO BEA Logo */}
+          <li>
+            <Link to={"/"}>
+              <img
+                src={logo}
+                alt="icon of AO BEA logo"
+                className="h-14 w-auto"
+              />
+            </Link>
+          </li>
+
+          {/* #5 Favorites icon */}
+          <li>
             <Link to={"/profile"}>
-              <li>
-                <img
-                  src={favoritesOutline}
-                  alt="icon to navigate to favorites"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
-                />
-                <img
-                  src={favoritesSolid}
-                  alt="icon to navigate to favorites"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
-                />
-              </li>
-            </Link>
-
-
-            {/* #3 Icon of AO BEA */}
-            <Link to={"/"}>
-              <li>
-                <img
-                  src={logo}
-                  alt="icon of AO BEA logo"
-                  className="h-14 w-auto"
-                />
-              </li>
-            </Link>
-            {/* #4 Favorites icon */}
-            <li>
               <img
                 src={favoritesOutline}
                 alt="icon to navigate to favorites"
@@ -106,9 +86,12 @@ export default function Navbar() {
                 alt="icon to navigate to favorites"
                 className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
               />
-            </li>
-            {/* #5 User icon */}
-            <li>
+            </Link>
+          </li>
+
+          {/* #6 User icon */}
+          <li>
+            <Link to={"/create-account"}>
               <img
                 src={userOutline}
                 alt="icon of user"
@@ -119,25 +102,10 @@ export default function Navbar() {
                 alt="icon of user"
                 className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
               />
-            </li>
-            {/* #5 User icon */}
-            <Link to={"/create-account"}>
-              <li>
-                <img
-                  src={userOutline}
-                  alt="icon of user"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 group-hover:hidden"
-                />
-                <img
-                  src={userSolid}
-                  alt="icon of user"
-                  className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 transition duration-300 hidden group-hover:block"
-                />
-              </li>
             </Link>
-          </ul>
-        </nav>
-      </div>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
