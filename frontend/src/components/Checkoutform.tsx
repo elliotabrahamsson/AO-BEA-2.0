@@ -98,10 +98,12 @@ export default function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const orderNumber = uuidv4();
-    const date = new Date().toISOString().slice(0, 19).replace("T", " "); // Formaterar datumet till YYYY-MM-DD HH:MM:SS
+    const now = new Date();
+    now.setHours(now.getHours() + 2);
+    const date = now.toISOString().slice(0, 19).replace("T", " "); // Formaterar datumet till YYYY-MM-DD HH:MM:SS
     //Lägg en post här
 
-    console.log(orderNumber);
+    console.log(date);
 
     try {
       const makeOrder = await fetch("http://localhost:3000/createOrder", {
