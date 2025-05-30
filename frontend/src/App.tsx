@@ -1,5 +1,6 @@
 /* import DropdownProducts from "./components/DropdownProducts";
 import DropdownCare from "./components/DropdownCare"; */
+
 import ShoppingCartRoute from './routes/ShoppingCartRoute';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -24,6 +25,8 @@ import {
 } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import DropdownProducts from './components/DropdownProducts';
+import { ShoppingCartProvider } from "./components/ShoppingCartContext";
+
 
 function App() {
     const router = createHashRouter([
@@ -83,5 +86,4 @@ function App() {
     // RouterProvider gör att React Router fungerar, den ser till att alla routes leder till rätt komponenter etc.
     return <RouterProvider router={router} />;
 }
-
 export default App;

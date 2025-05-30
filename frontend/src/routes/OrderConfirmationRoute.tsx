@@ -1,6 +1,6 @@
-import OrderConfirmation from '../components/OrderConfirmation';
+import OrderConfirmation from "../components/OrderConfirmation";
 
 function OrderConfirmationRoute() {
-    return <OrderConfirmation />;
+  return <OrderConfirmation />;
 }
 export default OrderConfirmationRoute;
