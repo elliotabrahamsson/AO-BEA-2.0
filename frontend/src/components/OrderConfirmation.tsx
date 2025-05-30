@@ -1,6 +1,12 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-const OrderConfirmation: React.FC = () => {
+export default function OrderConfirmation() {
+  const location = useLocation(); //Hämtar och återger URLen som ett objekt
+  const queryParams = new URLSearchParams(location.search); //Läser URL-paramtetrar
+  const orderNumber = queryParams.get("orderNumber"); //Hämtar det som står bakom orderNumber i URL:en
+  const email = location.state?.email; //Hämtar e-post från state eller sätter en standardtext
+  console.log(email);
   return (
     <div className="flex flex-col items-center justify-center pt-4 mt-7">
       <img
@@ -14,11 +20,11 @@ const OrderConfirmation: React.FC = () => {
         <p className="mt-5 text-[20px]">
           Ditt ordernummer:
           <br />
-          JFK25521177133L
+          {orderNumber}
         </p>
         <p className="mt-5 text-[20px]">
           Har skickats till :<br />
-          test@mailto.com
+          {email}
         </p>
       </div>
 
@@ -40,6 +46,4 @@ const OrderConfirmation: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default OrderConfirmation;
+}

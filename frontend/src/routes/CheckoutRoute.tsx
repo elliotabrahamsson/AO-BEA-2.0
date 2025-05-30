@@ -1,5 +1,5 @@
-import CheckoutForm from '../components/Checkoutform';
+import CheckoutForm from "../components/CheckoutForm";
 
 export default function CheckoutRoute() {
-    return <CheckoutForm />;
+  return <CheckoutForm />;
 }
