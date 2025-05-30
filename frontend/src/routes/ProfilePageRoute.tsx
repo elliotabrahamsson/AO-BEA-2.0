@@ -43,7 +43,7 @@ export default function ProfilePageRoute() {
   // Funktion för att hantera utloggning
   const handleLogout = () => {
     logoutUser();
-    navigate("/create-account");
+    navigate("/login");
   };
 
   return (
