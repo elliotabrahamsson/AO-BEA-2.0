@@ -113,7 +113,7 @@ export default function SearchedResultRoute() {
         setUniqueMensCategories(Array.from(menUniqueCategories));
         setUniqueWomensCategories(Array.from(womenUniqueCategories));
       });
-  }, []);
+  }, [searchParams]);
 
   // console.log("womensUniqueCategories: ", womensUniqueCategories);
   // console.log("mensUniqueCategories: ", mensUniqueCategories);
