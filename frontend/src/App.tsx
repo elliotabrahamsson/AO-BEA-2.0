@@ -1,6 +1,5 @@
 /* import DropdownProducts from "./components/DropdownProducts";
 import DropdownCare from "./components/DropdownCare"; */
-
 import ShoppingCartRoute from './routes/ShoppingCartRoute';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -17,6 +16,7 @@ import ProfilePageRoute from './routes/ProfilePageRoute';
 import OrderConfirmationRoute from './routes/OrderConfirmationRoute';
 import LogInRoute from './routes/LogInRoute';
 import AdminformRoute from './routes/AdminformRoute';
+import SearchedResultRoute from './routes/SearchedResultRoute'
 import {
     createHashRouter,
     Link,
@@ -43,6 +43,7 @@ function App() {
                 { element: <ProfilePageRoute />, path: '/profile' },
                 { element: <LogInRoute />, path: '/login' },
                 { element: <AdminformRoute />, path: '/admin' },
+                { element: <SearchedResultRoute />, path: "/searchedResult" },
                 // Detta (children) är en array av route-objekt, dvs. våra routes (views i Vue).
                 // Exempel på en route, element är det som ska visas, path är url:en.
                 {
