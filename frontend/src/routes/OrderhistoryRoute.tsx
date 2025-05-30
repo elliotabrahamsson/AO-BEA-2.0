@@ -16,7 +16,7 @@ function OrderhistoryRoute() {
     useEffect(() => {
         if (!user) return;
 
-        fetch(`http://localhost:3000/orders/${user.id}`)
+        fetch(`http://localhost:3000/orders/`)
             .then((res) => {
                 if (!res.ok) throw new Error('Kunde inte hämta orderhistorik');
                 return res.json();

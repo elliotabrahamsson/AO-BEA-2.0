@@ -46,7 +46,7 @@ const AboutAntonia = styled.div`
 const AboutOliver = styled.div`
     .letter-overlay-oliver {
         position: absolute;
-        top: 616px;
+        top: 661px;
         right: 180px;
         z-index: 2;
         width: 100%;
@@ -64,7 +64,7 @@ const AboutOliver = styled.div`
 const AboutBrian = styled.div`
     .letter-overlay-brian {
         position: absolute;
-        top: 1254px;
+        top: 1297px;
         right: 180px;
         z-index: 2;
         width: 100%;
@@ -82,7 +82,7 @@ const AboutBrian = styled.div`
 const AboutElliot = styled.div`
     .letter-overlay-elliot {
         position: absolute;
-        top: 1936px;
+        top: 1981px;
         right: 180px;
         z-index: 2;
         width: 100%;
@@ -101,7 +101,7 @@ const AboutElliot = styled.div`
 const AboutAlexander = styled.div`
     .letter-overlay-alexander {
         position: absolute;
-        top: 2657px;
+        top: 2699px;
         right: 180px;
         z-index: 2;
         width: 100%;

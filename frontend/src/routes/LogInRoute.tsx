@@ -12,15 +12,6 @@ function LogIn() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        // Enkel hårdkodad kontroll för testsyfte, här ska det läggas in och testas från backend
-        if (email === 'test2@example.com' && password === '1234567') {
-            const fakeUser = { name: 'Testanvändare', email };
-            login(fakeUser); // Sparar användaren i context
-            navigate('/profilePage');
-        } else {
-            setError('Fel e-post eller lösenord. Försök igen.');
-        }
     };
 
     return (
@@ -68,9 +59,7 @@ function LogIn() {
                             aria-label={
                                 showPassword ? 'Dölj lösenord' : 'Visa lösenord'
                             }
-                        >
-                            {showPassword ? '🙈' : '👁️'}
-                        </button>
+                        ></button>
                     </div>
                     {error && (
                         <p className="text-red-600 text-center mb-4">{error}</p>
