@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; //// Hämtar auth-data från vår context
+/* import { useAuth } from "../context/AuthContext"; //// Hämtar auth-data från vår context */
 import { ShoppingCartContext } from "./ShoppingCartContext";
 import OrderConfirmation from "./OrderConfirmation";
 
@@ -76,7 +76,7 @@ const Section = styled.section`
 
 export default function CheckoutForm() {
   const navigate = useNavigate(); //En funktion från react som hjälper en att navigera programmatiskt
-  const { user } = useAuth(); //Hämtar den inloggade användaren
+  /* const { user } = useAuth(); //Hämtar den inloggade användaren */
   const [showPaymentSection, setShowPaymentSection] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState("klarna");
   const [firstname, setFirstName] = useState("");

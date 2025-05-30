@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import PrivacyModal from "../components/PrivacyModal";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ export default function CreateAccountRoute() {
   // Redan inloggad - navigera till profilen istället.
   useEffect(() => {
     if (isLoggedIn()) {
-      navigate("/profile");
+      navigate("/profilePage");
     }
   }, []);
 
@@ -26,22 +25,28 @@ export default function CreateAccountRoute() {
   const [emailValid, setEmailValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        setFullName(`${firstName} ${lastName}`);
-    }, [firstName, lastName]);
+  useEffect(() => {
+    setFullName(`${firstName} ${lastName}`);
+  }, [firstName, lastName]);
 
-    // useState hantering - E-postadressens giltighet (kontrollera "@” och ".")
-    useEffect(() => {
-        setEmailValid(email.includes('@') && email.includes('.'));
-    }, [email]);
+  // Email validity check (checks for "@" and ".")
+  useEffect(() => {
+    setEmailValid(email.includes("@") && email.includes("."));
+  }, [email]);
 
-    // useState hantering av lösenordets giltighet
-    const [passwordValid, setPasswordValid] = useState({
-        length: false,
-        uppercase: false,
-        number: false
+  // Password validity state and effect
+  const [passwordValid, setPasswordValid] = useState({
+    length: false,
+    uppercase: false,
+    number: false,
+  });
+
+  useEffect(() => {
+    setPasswordValid({
+      length: password.length >= 6,
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
     });
-
   }, [password]);
 
   // Hanterar formulärets inlämning om alla villkor är uppfyllda
@@ -102,7 +107,7 @@ export default function CreateAccountRoute() {
             email,
           })
         );
-        navigate("/profile");
+        navigate("/profilePage");
       }
       // Om svaret inte är OK, kasta ett fel
       if (!response.ok) {
@@ -113,19 +118,15 @@ export default function CreateAccountRoute() {
     }
   };
 
-   // Kontrollera om lösenordet är giltigt
-    const isPasswordValid = () => {
-        return (
-            passwordValid.length &&
-            passwordValid.uppercase &&
-            passwordValid.number
-        );
-    };
-
-    // Kontrollera om lösenordet matchar i båda fälten
-    const matchPasswords = password === confirmPassword;
+  // Kontrollera om lösenordet är giltigt
+  const isPasswordValid = () => {
+    return (
+      passwordValid.length && passwordValid.uppercase && passwordValid.number
+    );
   };
 
+  // Kontrollera om lösenordet matchar i båda fälten
+  const matchPasswords = password === confirmPassword;
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6">

@@ -49,7 +49,7 @@ function ShoppingCartRoute() {
                     removeItemFromCart(
                       item.id,
                       item.name,
-                      item.color,
+
                       /* item.color, */
                       item.size,
                       item.price,
@@ -71,7 +71,7 @@ function ShoppingCartRoute() {
                     addItemToCart(
                       item.id,
                       item.name,
-                      item.color,
+
                       /* item.color, */
                       item.size,
                       item.price,
