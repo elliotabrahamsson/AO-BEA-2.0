@@ -5,6 +5,17 @@ import cors from "cors";
 import { get } from "http";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+// Extend Express Request interface to include userId
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+    }
+  }
+}
+
 const app = express();
 const PORT = 3000;
 
@@ -35,6 +46,26 @@ export const sendConfirmationMail = async (
     console.error("Error sending email:", error);
   }
 };
+
+const JWT_SECRET = "process.env.JWT";
+
+function authenticateToken(req: Request, res: Response, next: Function) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // "Bearer TOKEN"
+
+  if (!token) {
+    res.sendStatus(401);
+    return;
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    if (user && typeof user === "object" && "id" in user) {
+      req.userId = (user as any).id; // antag att token payload har { id: ... }
+    }
+    next();
+  });
+}
 
 app.use(
   cors({
@@ -173,7 +204,11 @@ app.post("/login", async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({ id: user.id, email: user.email, name: user.name });
+    const token = jwt.sign(user, JWT_SECRET, { expiresIn: "1h" });
+
+    res
+      .status(200)
+      .json({ token: token, id: user.id, email: user.email, name: user.name });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -238,9 +273,17 @@ app.post("/createOrder", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/orders", async (req: Request, res: Response) => {
+app.get("/orders", authenticateToken, async (req: Request, res: Response) => {
+  let userId = req.query.id;
+
   try {
-    const result = await pool.query(`SELECT * FROM "Orders"`);
+    const result = await pool.query(
+      `SELECT "Orders".id, "Orders".date, "Orders".price, "Orders".products, "Orders".address, "Users".id AS user_id, "Users".email
+      FROM "Orders"
+      JOIN "Users" ON "Orders".account_id = "Users".id
+      WHERE "Users".id = $1`,
+      [userId]
+    );
     const orders = result.rows;
 
     // if (orders.length === 0) {

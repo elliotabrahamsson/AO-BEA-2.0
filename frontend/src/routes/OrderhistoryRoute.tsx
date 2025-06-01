@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 /* import { useAuth } from '../context/AuthContext'; */
 
+type Product = {
+  name: string;
+  size: string;
+  color: string;
+  quantity: number;
+};
+
 type Order = {
   id: string;
   date: string;
   price: number;
-  products: string;
+  products: Product[];
   address: string;
 };
 
@@ -16,10 +23,21 @@ function OrderhistoryRoute() {
   useEffect(
     () => {
       /* if (!user) return; */
+      const token = localStorage.getItem("token");
+      console.log("Token:", token);
 
-      fetch(`http://localhost:3000/orders/`)
+      fetch(`http://localhost:3000/orders/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((res) => {
-          if (!res.ok) throw new Error("Kunde inte hämta orderhistorik");
+          if (!res.ok)
+            throw (
+              (new Error("Kunde inte hämta orderhistorik"),
+              console.error("Error fetching order history:", res.statusText))
+            );
           return res.json();
         })
         .then((data) => {
@@ -60,6 +78,17 @@ function OrderhistoryRoute() {
                 <p>
                   <strong>Adress:</strong> {order.address}
                 </p>
+                <strong>Produkter:</strong>{" "}
+                {order.products.map((product, index) => (
+                  <div key={index} style={{ marginBottom: "8px" }}>
+                    <strong>{product.name}</strong>
+                    <div>
+                      Size: <em>{product.size}</em>, Color:{" "}
+                      <em>{product.color}</em>, Quantity:{" "}
+                      <em>{product.quantity}</em>
+                    </div>
+                  </div>
+                ))}
               </li>
             ))}
           </ul>
