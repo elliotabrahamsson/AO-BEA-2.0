@@ -23,11 +23,11 @@ function OrderhistoryRoute() {
   useEffect(
     () => {
       /* if (!user) return; */
-      const token = localStorage.getItem("token");
-      console.log("Token:", token);
+      const user = JSON.parse(localStorage.getItem("user") || "{}"); // Hämtar användaren från localStorage
+      console.log("Token:", user.token);
+      const token = user.token;
 
       fetch(`http://localhost:3000/orders/`, {
-        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },

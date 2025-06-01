@@ -51,7 +51,7 @@ const JWT_SECRET = "process.env.JWT";
 
 function authenticateToken(req: Request, res: Response, next: Function) {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // "Bearer TOKEN"
+  const token = authHeader?.split(" ")[1]; // "Bearer TOKEN"
 
   if (!token) {
     res.sendStatus(401);
@@ -61,9 +61,9 @@ function authenticateToken(req: Request, res: Response, next: Function) {
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     if (user && typeof user === "object" && "id" in user) {
-      req.userId = (user as any).id; // antag att token payload har { id: ... }
+      (req as any).userId = (user as any).id; // antag att token payload har { id: ... }
+      next();
     }
-    next();
   });
 }
 
@@ -274,7 +274,7 @@ app.post("/createOrder", async (req: Request, res: Response) => {
 });
 
 app.get("/orders", authenticateToken, async (req: Request, res: Response) => {
-  let userId = req.query.id;
+  let userId = (req as any).userId;
 
   try {
     const result = await pool.query(
