@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <div className="nav-container">
-      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-400 shadow-md z-10">
+      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-400 shadow-md z-100">
         <ul className="flex justify-between items-center m-5">
           {/* #1 Home icon */}
           <li>

@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 
 /* Definierar ShoppingCartProvider - Tar emot react element som ligger innanför providern. Tar emot children som props */
 type ShoppingCartProviderProps = {
@@ -9,7 +9,7 @@ type CartItem = {
   id: number;
   name: string;
   quantity: number;
-  /* color: string; */
+  color: string;
   size: string;
   price: number;
   image: string;
@@ -20,7 +20,7 @@ type ShoppingCartContext = {
   addItemToCart: (
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
@@ -29,7 +29,7 @@ type ShoppingCartContext = {
   removeItemFromCart: (
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
@@ -38,11 +38,13 @@ type ShoppingCartContext = {
   quantityOfItemInCart: (
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
   ) => number;
+
+  clearShoppingCart: () => void;
 
   cartItems: CartItem[];
 };
@@ -52,14 +54,28 @@ export const ShoppingCartContext = createContext({} as ShoppingCartContext);
 
 /* Ger all data, sköter renderingen */
 /* En provider behöver ha objekt och barnelement inuti sig själv */
+/* Adderat localStorage: */
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const storedCart = window.localStorage.getItem("shopping-cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  /* Denna useEffect håller ett öga på cartItems förändringar och sparar enligt ändringarna */
+  useEffect(() => {
+    localStorage.setItem("shopping-cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  /* Funktion för att återställa varukorgen, bra att ha i och med att localStorage är implementerat. */
+  function clearShoppingCart() {
+    setCartItems([]);
+  }
 
   /*Lägg till produkt  */
   function addItemToCart(
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
@@ -70,7 +86,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         (item: CartItem) =>
           item.id === id &&
           item.name === name &&
-          /* item.color === color && */
+          item.color === color &&
           item.size === size &&
           item.price === price &&
           item.image === image
@@ -78,14 +94,14 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       if (!existingItem) {
         return [
           ...currentItems,
-          { id, name, quantity: 1, /* color,  */ size, image, price },
+          { id, name, quantity: 1, color, size, image, price },
         ];
       } else {
         return currentItems.map((item: CartItem) => {
           if (
             item.id === id &&
             item.name === name &&
-            /* item.color === color && */
+            item.color === color &&
             item.size === size &&
             item.price === price &&
             item.image === image
@@ -103,7 +119,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function removeItemFromCart(
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
@@ -113,7 +129,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         (item: CartItem) =>
           item.id === id &&
           item.name === name &&
-          /* item.color === color && */
+          item.color === color &&
           item.size === size &&
           item.price === price &&
           item.image === image
@@ -125,7 +141,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
             !(
               item.id === id &&
               item.name === name &&
-              /* item.color === color && */
+              item.color === color &&
               item.size === size &&
               item.price === price &&
               item.image === image
@@ -136,7 +152,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
           if (
             item.id === id &&
             item.name === name &&
-            /* item.color === color && */
+            item.color === color &&
             item.size === size &&
             item.price === price &&
             item.image === image
@@ -154,7 +170,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function quantityOfItemInCart(
     id: number,
     name: string,
-    /* color: string, */
+    color: string,
     size: string,
     price: number,
     image: string
@@ -163,7 +179,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       (item) =>
         item.id === id &&
         item.name === name &&
-        /*  item.color === color && */
+        item.color === color &&
         item.size === size &&
         item.price === price &&
         item.image === image
@@ -178,6 +194,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         removeItemFromCart,
         quantityOfItemInCart,
         cartItems,
+        clearShoppingCart,
       }}
     >
       {children}

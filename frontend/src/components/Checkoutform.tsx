@@ -132,6 +132,8 @@ export default function CheckoutForm() {
             id: item.id,
             name: item.name,
             size: item.size,
+            price: item.price,
+            color: item.color,
             quantity: item.quantity,
           })),
         }),

@@ -2,13 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Carousel1 from "../components/Carousel1";
 import Carousel2 from "../components/Carousel2";
-import { Link } from "react-router-dom";
 import Dropdowncolors from "../components/Dropdowncolors";
 import DropdownProducts from "../components/DropdownProducts";
 import DropdownCare from "../components/DropdownCare";
 import { useContext } from "react";
 import { ShoppingCartContext } from "../components/ShoppingCartContext";
-import { Navigate } from "react-router-dom";
 
 export default function ProductPageRoute() {
   const navigate = useNavigate();
@@ -36,7 +34,7 @@ export default function ProductPageRoute() {
   const [carousel1Products, setCarousel1Products] = useState<Product[]>([]);
   const [currentGender, setCurrentGender] = useState<string | undefined>();
   const { addItemToCart } = useContext(ShoppingCartContext);
-  /* const [selectedColor, setSelectedColor] = useState<string>(""); */
+  const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
@@ -78,7 +76,12 @@ export default function ProductPageRoute() {
       <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
         {product?.product_name}
       </h3>
-      <Dropdowncolors />
+      {/* Props till Dropdowncolors */}
+      <Dropdowncolors
+        colors={product?.color ?? []}
+        selectedColor={selectedColor}
+        setSelectedColor={setSelectedColor}
+      />
 
       <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
         {product?.size.map((size) => (
@@ -102,16 +105,16 @@ export default function ProductPageRoute() {
               console.log(
                 "Lägg till i varukorg",
                 product?.product_id,
-                /* selectedColor, */
+                selectedColor,
                 selectedSize,
                 product?.price,
                 product?.product_img
               );
-              if (product /* && selectedColor */ && selectedSize) {
+              if (product && selectedColor && selectedSize) {
                 addItemToCart(
                   product.product_id,
                   product.product_name,
-                  /* selectedColor, */
+                  selectedColor,
                   selectedSize,
                   product.price,
                   product.product_img
