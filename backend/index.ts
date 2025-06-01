@@ -281,7 +281,8 @@ app.get("/orders", authenticateToken, async (req: Request, res: Response) => {
       `SELECT "Orders".id, "Orders".date, "Orders".price, "Orders".products, "Orders".address, "Users".id AS user_id, "Users".email
       FROM "Orders"
       JOIN "Users" ON "Orders".account_id = "Users".id
-      WHERE "Users".id = $1`,
+      WHERE "Users".id = $1
+      ORDER BY "Orders".date DESC`,
       [userId]
     );
     const orders = result.rows;
