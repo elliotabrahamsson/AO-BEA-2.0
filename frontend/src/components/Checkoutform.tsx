@@ -88,7 +88,7 @@ export default function CheckoutForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const { cartItems, clearShoppingCart } = useContext(ShoppingCartContext);
+  const { cartItems } = useContext(ShoppingCartContext);
   //Hämtar cartItems, addItemToCart och removeItemFromCart från ShoppingCartContext
 
   useEffect(() => {
@@ -98,10 +98,6 @@ export default function CheckoutForm() {
   useEffect(() => {
     setAddress(`${street}, ${zipcode}, ${city}`);
   }, [street, zipcode, city]);
-
-  function clearCart() {
-    clearShoppingCart();
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -420,7 +416,6 @@ export default function CheckoutForm() {
                 {/* Slutför köp-knapp */}
                 <button
                   type="submit"
-                  onClick={clearCart}
                   className="text-white bg-[#403d37]  hover:bg-blue-800 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
                 >
                   <h2>Slutför köp</h2>
