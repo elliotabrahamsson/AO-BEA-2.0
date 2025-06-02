@@ -107,46 +107,54 @@ export default function CheckoutForm() {
         const date = now.toISOString().slice(0, 19).replace('T', ' '); // Formaterar datumet till YYYY-MM-DD HH:MM:SS
         //Lägg en post här
 
+
+    console.log(date);
+    let price = cartItems
+      .map((item) => item.price * item.quantity)
+      .reduce((a, b) => a + b, 0);
+    console.log(price);
+
+    try {
+      const makeOrder = await fetch("http://localhost:3000/createOrder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: orderNumber,
+          name: fullname,
+          email,
+          address,
+          date,
+          phone,
+          price: price,
+          products: cartItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            size: item.size,
+            price: item.price,
+            color: item.color,
+            quantity: item.quantity,
+          })),
+        }),
+      });
+      console.log(email, address, date, phone);
+      if (!makeOrder.ok) {
+        throw new Error("Failed to create order");
+      }
+      navigate(`/orderconfirmation?orderNumber=${orderNumber}`, {
+        state: { email },
+      });
+      //Navigerar till orderconfirmation samt skickar med det dynamiska uuid numret via URL:en
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
         console.log(date);
         let price = cartItems
             .map((item) => item.price * item.quantity)
             .reduce((a, b) => a + b, 0);
         console.log(price);
-
-        try {
-            const makeOrder = await fetch('http://localhost:3000/createOrder', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: orderNumber,
-                    name: fullname,
-                    email,
-                    address,
-                    date,
-                    phone,
-                    price: price,
-                    products: cartItems.map((item) => ({
-                        id: item.id,
-                        name: item.name,
-                        size: item.size,
-                        quantity: item.quantity
-                    }))
-                })
-            });
-            console.log(email, address, date, phone);
-            if (!makeOrder.ok) {
-                throw new Error('Failed to create order');
-            }
-            navigate(`/orderconfirmation?orderNumber=${orderNumber}`, {
-                state: { email }
-            });
-            //Navigerar till orderconfirmation samt skickar med det dynamiska uuid numret via URL:en
-        } catch (error) {
-            console.error('Error creating order:', error);
-        }
-    };
     return (
         <>
             <Section>

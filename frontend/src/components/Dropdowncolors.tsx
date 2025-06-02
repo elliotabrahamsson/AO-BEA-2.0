@@ -1,13 +1,11 @@
-import { useState, useEffect, type JSX } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
 import arrowDown from "/src/assets/dropdown/arrow-down.svg";
 import xMark from "/src/assets/dropdown/x-mark.svg";
-
-//Props inteface
-interface Product {
-  product_id: number;
-  color: string[];
+interface DropdownColorsProps {
+  colors: string[];
+  selectedColor: string;
+  setSelectedColor: (color: string) => void;
 }
 
 // Define styled components for layout and styling.
@@ -76,53 +74,17 @@ const DropdownContent = styled.div<{ isOpen: boolean }>`
     align-items: center;
   }
 `;
-//Create a functional component for the color dropdown menu
-function Dropdowncolors() {
-  // `JSX.Element` indicates that this function will return a JSX element
-  const [isOpen, setIsOpen] = useState<boolean>(false); //Setting the type to boolean for type safety.
-  const [product, setColors] = useState<Product>();
 
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
-  const { id, selected_category } = useParams<{
-    id: string;
-    selected_category: string;
-  }>();
-
+/* Hämtningen samt nedsparning i state sker i föräldern istället för i komponenten (ProductPageRoute).
+Det resulterade i att renderingen fungerade.
+*/
+function Dropdowncolors({
+  colors,
+  selectedColor,
+  setSelectedColor,
+}: DropdownColorsProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleDropdown = () => setIsOpen((prev) => !prev);
-
-  //     useEffect(() => {
-  //         try {
-  //             fetch(
-  //                 `http://localhost:3000/products/${productId}`
-  //             )
-  //             .then ((res)=> res.json())
-  // .then ((data:Product)=>{setColors(data)})
-  //             const colorArray = productId
-  //                 ? productId.colors.split(',').map((c) => c.trim())
-  //                 : [];
-
-  //             setColors(colorArray);
-  //         } catch (error) {
-  //             console.error('Kunde inte hämta färger:', error);
-  //         }
-  //     }, [productId]);
-  useEffect(() => {
-    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Något gick fel med hämtningen");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setColors(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    setIsOpen(false);
-  }, [id]);
 
   return (
     <DropdownWrapper>
@@ -141,7 +103,7 @@ function Dropdowncolors() {
 
       <DropdownContent isOpen={isOpen}>
         <ul>
-          {product?.color.map((color) => (
+          {colors.map((color) => (
             <li key={color} onClick={() => setSelectedColor(color)}>
               {color}
             </li>

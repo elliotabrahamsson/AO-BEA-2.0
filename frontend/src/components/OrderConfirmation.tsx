@@ -20,11 +20,11 @@ export default function OrderConfirmation() {
         <p className="mt-5 text-[20px]">
           Ditt ordernummer:
           <br />
-          {orderNumber}
+          <p className="mt-1 !font-bold">{orderNumber}</p>
         </p>
         <p className="mt-5 text-[20px]">
           Har skickats till :<br />
-          {email}
+          <p className="mt-1 !font-bold">{email}</p>
         </p>
       </div>
 
