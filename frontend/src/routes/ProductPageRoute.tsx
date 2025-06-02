@@ -98,7 +98,7 @@ export default function ProductPageRoute() {
       </div>
 
       <div className="p-1">
-        <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
+        <div className="bg-[var(--dark3)] p-8 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
           <button
             className="text-white whitespace-nowrap text-[10px]"
             onClick={() => {
@@ -123,7 +123,9 @@ export default function ProductPageRoute() {
               }
             }}
           >
-            <p className="text-xl">Lägg till varukorg</p>
+            <h3 className="text-white whitespace-nowrap text-[10px]">
+              Lägg till i varukorg
+            </h3>
           </button>
         </div>
       </div>
