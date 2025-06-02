@@ -345,7 +345,7 @@ export default function CheckoutForm() {
                                                         (icon) => (
                                                             <img
                                                                 key={icon}
-                                                                src={`/public/checkout-icons${icon}`}
+                                                                src={`/checkout-icons${icon}`}
                                                                 alt={`icon of ${method.label}`}
                                                             />
                                                         )
@@ -428,7 +428,7 @@ export default function CheckoutForm() {
                                     {paymentMethodNames.map((method) => (
                                         <img
                                             key={method.name}
-                                            src={`/public/checkout-icons/payment-bar/${method.name}.png`}
+                                            src={`/checkout-icons/payment-bar/${method.name}.png`}
                                             alt={`icon of ${method.name}`}
                                         />
                                     ))}

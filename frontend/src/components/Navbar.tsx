@@ -1,12 +1,12 @@
-import homeOutline from '/public/navbar/home_outline.svg';
-import homeSolid from '/public/navbar/home_solid.svg';
-import cartOutline from '/public/navbar/cart_outline.svg';
-import cartSolid from '/public/navbar/cart_solid.svg';
-import logo from '/public/navbar/ao_bea_logo.svg';
-import favoritesOutline from '/public/navbar/heart_outline.svg';
-import favoritesSolid from '/public/navbar/heart_solid.svg';
-import userOutline from '/public/navbar/user_outline.svg';
-import userSolid from '/public/navbar/user_solid.svg';
+import homeOutline from '/navbar/home_outline.svg';
+import homeSolid from '/navbar/home_solid.svg';
+import cartOutline from '/navbar/cart_outline.svg';
+import cartSolid from '/navbar/cart_solid.svg';
+import logo from '/navbar/ao_bea_logo.svg';
+import favoritesOutline from '/navbar/heart_outline.svg';
+import favoritesSolid from '/navbar/heart_solid.svg';
+import userOutline from '/navbar/user_outline.svg';
+import userSolid from '/navbar/user_solid.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { isLoggedIn } from '../utils/auth';
 

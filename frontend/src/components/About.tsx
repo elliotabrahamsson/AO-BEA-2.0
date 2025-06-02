@@ -141,7 +141,7 @@ function About() {
                     <div className="relative-container">
                         <img
                             className="relative mt-4"
-                            src="/public/about-team-img/Antonia.jpeg"
+                            src="/about-team-img/Antonia.jpeg"
                             alt="Antonia"
                         />
                         <div className="letter-overlay-antonia">
@@ -164,7 +164,7 @@ function About() {
                     <div className="relative-container">
                         <img
                             className="relative mt-4"
-                            src="/public/about-team-img/Oliver.jpg"
+                            src="/about-team-img/Oliver.jpg"
                             alt="Oliver"
                         />
                         <div className="letter-overlay-oliver">
@@ -186,7 +186,7 @@ function About() {
                     <div className="relative-container">
                         <img
                             className="relative mt-4"
-                            src="/public/about-team-img/Brian.jpg"
+                            src="/about-team-img/Brian.jpg"
                             alt="Brian"
                         />
                         <div className="letter-overlay-brian">
@@ -208,7 +208,7 @@ function About() {
                     <div className="relative-container">
                         <img
                             className="relative mt-4"
-                            src="/public/about-team-img/Elliot.jpg"
+                            src="/about-team-img/Elliot.jpg"
                             alt="Elliot"
                         />
                         <div className="letter-overlay-elliot">
@@ -230,7 +230,7 @@ function About() {
                     <div className="relative-container">
                         <img
                             className="relative mt-4"
-                            src="/public/about-team-img/Alexander.jpg"
+                            src="/about-team-img/Alexander.jpg"
                             alt="Alexander"
                         />
                         <div className="letter-overlay-alexander">

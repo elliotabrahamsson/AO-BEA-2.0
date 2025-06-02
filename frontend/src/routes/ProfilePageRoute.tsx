@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getCurrentUser, logoutUser } from '../utils/auth';
-import PlaceholderImg from '/public/profile-page/profile-img-placeholder.svg';
+import PlaceholderImg from '/profile-page/profile-img-placeholder.svg';
 
 export default function ProfilePageRoute() {
     // useNavigate hook används för att navigera programatiskt
