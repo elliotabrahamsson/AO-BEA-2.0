@@ -153,7 +153,7 @@ export default function CheckoutForm() {
       console.error("Error creating order:", error);
     }
   };
-  console.log(date);
+  console.log(Date);
   let price = cartItems
     .map((item) => item.price * item.quantity)
     .reduce((a, b) => a + b, 0);
