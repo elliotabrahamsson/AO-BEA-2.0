@@ -24,8 +24,9 @@ function OrderhistoryRoute() {
     () => {
       /* if (!user) return; */
       const user = JSON.parse(localStorage.getItem("user") || "{}"); // Hämtar användaren från localStorage
+      const users = JSON.parse(localStorage.getItem("users") || "{}"); // Hämtar alla användare från localStorage
       console.log("Token:", user.token);
-      const token = user.token;
+      const token = user.token || users.token; // Hämtar token från användaren eller alla användare
 
       fetch(`http://localhost:3000/orders/`, {
         headers: {
