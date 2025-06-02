@@ -27,7 +27,6 @@ export default function SearchedResultRoute() {
   const searchTermCheck = searchParams.get("searchTerm");
   const searchTerm = searchTermCheck ? searchTermCheck : "";
 
-  const [products, setProducts] = useState<Product[]>([]);
   const [womenProducts, setWomenProducts] = useState<Product[]>([]);
   const [menProducts, setMenProducts] = useState<Product[]>([]);
   const [womensUniqueCategories, setUniqueWomensCategories] = useState<
@@ -41,7 +40,7 @@ export default function SearchedResultRoute() {
     fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data: Product[]) => {
-        setProducts(data);
+        let products = data;
 
         // Sets värden måste vara unika.
         const menUniqueCategories = new Set<string>();

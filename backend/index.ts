@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import pool from "./db";
-import { stringify } from "uuid";
+
 import cors from "cors";
-import { get } from "http";
+
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -67,9 +67,12 @@ function authenticateToken(req: Request, res: Response, next: Function) {
   });
 }
 
+const URL = "https://ao-bea-2-0-client.onrender.com";
+("http://localhost:5173");
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: URL,
     methods: ["get", "post", "delete", "put"],
     credentials: true,
   })
