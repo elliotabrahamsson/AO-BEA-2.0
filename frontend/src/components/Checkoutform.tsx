@@ -101,6 +101,7 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    alert("Skickas");
     const orderNumber = uuidv4();
     const now = new Date();
     now.setHours(now.getHours() + 2);
