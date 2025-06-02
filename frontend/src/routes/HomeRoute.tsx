@@ -7,7 +7,7 @@ const Women = styled.div`
     flex-direction: column;
     height: 41vh;
     background-color: var(--bg-women);
-    background-image: url('/public/main-img/arketwomen.jpg');
+    background-image: url('/main-img/arketwomen.jpg');
     background-repeat: no-repeat;
     background-size: 230px 300px;
     background-position: 90% 50%;
@@ -31,7 +31,7 @@ const Men = styled.div`
     flex-direction: column;
     height: 41vh;
     background-color: var(--bg-men);
-    background-image: url('/public/main-img/arketmen.jpg');
+    background-image: url('/main-img/arketmen.jpg');
     background-repeat: no-repeat;
     background-size: 230px 300px;
     background-position: 30px 40px;
@@ -72,7 +72,7 @@ export default function HomeRoute() {
             </Link>
             <MainContainer>
                 <Logo
-                    src="/public/footer/Icons/Ao-bea-icon2.png"
+                    src="/footer/Icons/Ao-bea-icon2.png"
                     alt="Ao Bea logotype"
                 />
             </MainContainer>
