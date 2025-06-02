@@ -125,18 +125,12 @@ export default function Searchbar() {
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
-
-        setCategories(
-          makeCategoryStringArr(makeUniqueCategoryArr(data, store_type))
-        );
       });
   }, []);
 
   // Denna use effect "reset:ar" alla checkboxes till checked när man byter store_type (dvs. byter mellan "båda", "dammode" och "herrmode")
   useEffect(() => {
-    setCategories(
-      makeCategoryStringArr(makeUniqueCategoryArr(products, store_type))
-    );
+    setCategories([]);
   }, [store_type]);
 
   // console.log("Categories: " + categories);
@@ -148,7 +142,17 @@ export default function Searchbar() {
     const searchParams = new URLSearchParams();
     searchParams.set("shop", store_type);
     // .join(",") behövs eftersom att categories är en array. .join(",") gör t.ex att [hej, då] blir en sträng "hej, då".
-    searchParams.set("categories", categories.join(","));
+    if (categories.length !== 0) {
+      searchParams.set("categories", categories.join(","));
+    } else {
+      searchParams.set(
+        "categories",
+        makeCategoryStringArr(makeUniqueCategoryArr(products, store_type)).join(
+          ","
+        )
+      );
+    }
+
     if (searchParams) {
       searchParams.set("searchTerm", userInput);
     }
