@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 /* import { useAuth } from "../context/AuthContext"; //// Hämtar auth-data från vår context */
 import { ShoppingCartContext } from "./ShoppingCartContext";
-import OrderConfirmation from "./OrderConfirmation";
 
 // Interface
 interface PaymentMethod {
@@ -154,6 +153,11 @@ export default function CheckoutForm() {
       console.error("Error creating order:", error);
     }
   };
+  console.log(date);
+  let price = cartItems
+    .map((item) => item.price * item.quantity)
+    .reduce((a, b) => a + b, 0);
+  console.log(price);
   return (
     <>
       <Section>
@@ -417,7 +421,7 @@ export default function CheckoutForm() {
                 <button
                   type="submit"
                   onClick={clearCart}
-                  className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
+                  className="text-white bg-[#403d37]  hover:bg-blue-800 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
                 >
                   <h2>Slutför köp</h2>
                 </button>
