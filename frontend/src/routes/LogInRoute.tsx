@@ -37,7 +37,12 @@ function LogIn() {
         return response.json();
       })
       .then((data) => {
-        const user = { name: data.name, email: data.email, id: data.id };
+        const user = {
+          name: data.name,
+          email: data.email,
+          id: data.id,
+          token: data.token,
+        };
         /*  login(user); // Sparar användaren i context */
         localStorage.setItem("user", JSON.stringify(user)); // Sparar användaren i localStorage
         console.log("Inloggad användare:", user);
