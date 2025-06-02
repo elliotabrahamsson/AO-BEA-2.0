@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ShoppingCartContext } from "./ShoppingCartContext";
 
 export default function OrderConfirmation() {
   const location = useLocation(); //Hämtar och återger URLen som ett objekt
   const queryParams = new URLSearchParams(location.search); //Läser URL-paramtetrar
   const orderNumber = queryParams.get("orderNumber"); //Hämtar det som står bakom orderNumber i URL:en
   const email = location.state?.email; //Hämtar e-post från state eller sätter en standardtext
+  const { clearShoppingCart } = useContext(ShoppingCartContext);
   console.log(email);
+
+  useEffect(() => {
+    clearShoppingCart();
+  }, [OrderConfirmation]);
+
   return (
     <div className="flex flex-col items-center justify-center pt-4 mt-7">
       <img
