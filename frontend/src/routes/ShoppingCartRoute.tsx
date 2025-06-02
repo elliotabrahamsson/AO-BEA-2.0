@@ -25,8 +25,8 @@ function ShoppingCartRoute() {
       {cartItems.length === 0 && (
         <p className="ml-4 !font-bold">Din varukorg är tom.</p>
       )}
-      {cartItems.map((item, index) => (
-        <section className="product grid grid-cols-2 gap-4 mb-2" key={index}>
+      {cartItems.map((item) => (
+        <section className="product grid grid-cols-2 gap-4 mb-2" key={item.id}>
           <img
             src={item.image}
             alt={item.id.toString()}
@@ -38,7 +38,7 @@ function ShoppingCartRoute() {
             </p>
             <p className="text-[18px] mb-2">{item.price} kr</p>
             <p className="font-bold text-[18px] mb-2">Storlek: {item.size}</p>
-            <p className="text[18px]">Färg: {item.color}</p>
+            <p className="text[18px] text-wrap">Färg: {item.color}</p>
 
             {/* Innehåll för knapparna */}
             <div className="button-container flex justify-start items-center">
@@ -83,6 +83,7 @@ function ShoppingCartRoute() {
           </div>
         </section>
       ))}
+
       <section className="mt-6">
         <button className="text-[18px] mb-5 ml-4" onClick={clearShoppingCart}>
           <p>Töm varukorg</p>
@@ -108,7 +109,7 @@ function ShoppingCartRoute() {
         )}
       </section>
       <Link to={"/checkout"}>
-        <div className="bg-[var(--dark3)] p-4 relative min-w-[190px] m-[1em] mt-20 mb-10 h-[44px] flex justify-center items-center rounded-[4px]">
+        <div className="bg-[var(--dark3)] p-8 relative min-w-[190px] m-[1em] mt-8 mb-10 h-[44px] flex justify-center items-center rounded-[4px]">
           <h3 className="text-white whitespace-nowrap text-[10px]">
             Fortsätt till kassan
           </h3>

@@ -89,7 +89,7 @@ export default function CheckoutForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const { cartItems } = useContext(ShoppingCartContext);
+  const { cartItems, clearShoppingCart } = useContext(ShoppingCartContext);
   //Hämtar cartItems, addItemToCart och removeItemFromCart från ShoppingCartContext
 
   useEffect(() => {
@@ -99,6 +99,10 @@ export default function CheckoutForm() {
   useEffect(() => {
     setAddress(`${street}, ${zipcode}, ${city}`);
   }, [street, zipcode, city]);
+
+  function clearCart() {
+    clearShoppingCart();
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -399,7 +403,7 @@ export default function CheckoutForm() {
                 )}
 
                 {/* Ikoner för betalmetoder längst ner */}
-                <div className="payment-methods-bar-container flex flex-row mt-12 mb-6 gap-4">
+                <div className="payment-methods-bar-container flex flex-wrap justify-center items-center mt-8">
                   {paymentMethodNames.map((method) => (
                     <img
                       key={method.name}
@@ -407,12 +411,12 @@ export default function CheckoutForm() {
                       alt={`icon of ${method.name}`}
                     />
                   ))}
-                  ;
                 </div>
 
                 {/* Slutför köp-knapp */}
                 <button
                   type="submit"
+                  onClick={clearCart}
                   className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
                 >
                   <h2>Slutför köp</h2>
