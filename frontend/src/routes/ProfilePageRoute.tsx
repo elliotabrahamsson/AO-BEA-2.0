@@ -59,7 +59,7 @@ export default function ProfilePageRoute() {
 
       {/* Visar användarens profilbild eller initialer */}
       <div className="mb-4">
-        <div className="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-4xl font-semibold mx-auto mb-8 overflow-hidden">
+        <div className="w-24 h-24 rounded-full bg-blue-900 flex items-center justify-center text-white text-4xl font-semibold mx-auto mb-8 overflow-hidden">
           {user?.name ? (
             <span>{getInitials(user.name)}</span>
           ) : (
