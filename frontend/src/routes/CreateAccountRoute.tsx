@@ -69,8 +69,6 @@ export default function CreateAccountRoute() {
       const users: { id: number; email: string }[] = await getId.json();
       console.log(userId);
 
-      userId =
-        users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1; // Enkelt sätt att generera unikt ID
       if (users.some((user) => user.email === email)) {
         setErrorMessage("E-postadressen är redan registrerad");
         console.error("E-postadressen är redan registrerad");
@@ -97,6 +95,10 @@ export default function CreateAccountRoute() {
         }),
       });
 
+      const data = await response.json();
+
+      const token = data.token;
+
       // Om svaret är OK, spara användardata i localStorage och navigera till profilen
       if (response.ok) {
         localStorage.setItem(
@@ -105,6 +107,7 @@ export default function CreateAccountRoute() {
             id: userId,
             name: fullName,
             email,
+            token: token,
           })
         );
         navigate("/profilePage");

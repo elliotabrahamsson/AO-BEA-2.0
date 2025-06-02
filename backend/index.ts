@@ -143,18 +143,18 @@ app.get("/category/:type/products/:id", async (req: Request, res: Response) => {
 });
 
 app.post("/createUser", async (req: Request, res: Response) => {
-  const { id, name, email, password, created, newsletter } = req.body;
+  const { name, email, password, created, newsletter } = req.body;
 
   const query = `
-  INSERT INTO "Users" (id, name, email, password, created, newsletter)
-  VALUES ($1, $2, $3, $4, $5, $6)`;
+  INSERT INTO "Users" (name, email, password, created, newsletter)
+  VALUES ($1, $2, $3, $4, $5)
+  RETURNING id, email`;
 
   try {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    await pool.query(query, [
-      id,
+    const result = await pool.query(query, [
       name,
       email,
       hashedPassword,
@@ -162,7 +162,13 @@ app.post("/createUser", async (req: Request, res: Response) => {
       newsletter,
     ]);
 
-    res.status(201).json({ message: "User created successfully" });
+    const user = result.rows[0];
+
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(201).json({ message: "User created successfully", token, user });
     await sendConfirmationMail(
       email,
       "Welcome to AOBEA!",
@@ -271,7 +277,7 @@ app.post("/createOrder", async (req: Request, res: Response) => {
     await sendConfirmationMail(
       email,
       "Order Confirmation",
-      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${formattedProducts}\nTotal Price: ${price}\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
+      `Hello,\n\nThank you for your order! Your order ID is ${id}.\n\nOrder Details:\nProducts: ${formattedProducts}\nTotal Price: ${price}kr\nShipping Address: ${address}\nOrder Date: ${date}\n\nBest regards,\nAOBEA Team`
     );
     res.status(201).json({ message: "Order created successfully" });
   } catch (error) {
