@@ -29,18 +29,18 @@ function AdminformRoute() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const product: Product = {
-      productName,
-      price: parseFloat(price),
-      description,
-      category,
-      brand,
-      img,
-      stock: parseInt(stock),
-      gender,
-      colors,
-      size: parseInt(size),
-    };
+    // const product: Product = {
+    //   productName,
+    //   price: parseFloat(price),
+    //   description,
+    //   category,
+    //   brand,
+    //   img,
+    //   stock: parseInt(stock),
+    //   gender,
+    //   colors,
+    //   size: parseInt(size),
+    // };
 
     setMessage("Produkten är nu tillagd");
   }

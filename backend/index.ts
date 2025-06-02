@@ -1,8 +1,6 @@
 import express, { Request, Response } from "express";
 import pool from "./db";
-
 import cors from "cors";
-
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -67,14 +65,23 @@ function authenticateToken(req: Request, res: Response, next: Function) {
   });
 }
 
-const URL = "https://ao-bea-2-0-client.onrender.com";
-("http://localhost:5173");
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ao-bea-2-0-client.onrender.com",
+];
 
 app.use(
   cors({
-    origin: URL,
-    methods: ["get", "post", "delete", "put"],
+    origin: function (origin, callback) {
+      console.log("🔍 Origin som försöker nå API:", origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 app.use(express.json());

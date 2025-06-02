@@ -148,7 +148,7 @@ export default function CheckoutForm() {
     }
   };
 
-  let price = cartItems
+  cartItems
     .map((item) => item.price * item.quantity)
     .reduce((a, b) => a + b, 0);
 
