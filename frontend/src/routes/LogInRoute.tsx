@@ -16,8 +16,6 @@ function LogIn() {
     if (isLoggedIn()) {
       navigate("/profilePage");
     }
-
-    console.log(isLoggedIn());
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +43,7 @@ function LogIn() {
         };
         /*  login(user); // Sparar användaren i context */
         localStorage.setItem("user", JSON.stringify(user)); // Sparar användaren i localStorage
-        console.log("Inloggad användare:", user);
+
         navigate("/profilePage");
       })
       .catch((error) => {

@@ -80,7 +80,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     price: number,
     image: string
   ) {
-    console.log("addItemToCart körs!");
     setCartItems((currentItems: CartItem[]) => {
       const existingItem = currentItems.find(
         (item: CartItem) =>

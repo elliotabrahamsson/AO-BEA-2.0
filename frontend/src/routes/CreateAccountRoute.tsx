@@ -62,12 +62,10 @@ export default function CreateAccountRoute() {
       .toISOString()
       .slice(0, 19)
       .replace("T", " "); // Formatera datumet till YYYY-MM-DD HH:MM:SS
-    console.log(created);
-    console.log(createdWithZone);
+
     try {
       const getId = await fetch("https://ao-bea-2-0.onrender.com/usersId");
       const users: { id: number; email: string }[] = await getId.json();
-      console.log(userId);
 
       if (users.some((user) => user.email === email)) {
         setErrorMessage("E-postadressen är redan registrerad");

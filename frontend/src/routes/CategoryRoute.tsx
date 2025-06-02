@@ -47,7 +47,6 @@ export default function CategoryRoute() {
           }
         });
         setProducts(uniqueCategoryData);
-        console.log(filteredData);
       });
   }, []);
 

@@ -104,14 +104,6 @@ export default function ProductPageRoute() {
           <button
             className="text-white whitespace-nowrap text-[10px]"
             onClick={() => {
-              console.log(
-                "Lägg till i varukorg",
-                product?.product_id,
-                selectedColor,
-                selectedSize,
-                product?.price,
-                product?.product_img
-              );
               if (product && selectedColor && selectedSize) {
                 addItemToCart(
                   product.product_id,

@@ -8,7 +8,6 @@ export default function OrderConfirmation() {
   const orderNumber = queryParams.get("orderNumber"); //Hämtar det som står bakom orderNumber i URL:en
   const email = location.state?.email; //Hämtar e-post från state eller sätter en standardtext
   const { clearShoppingCart } = useContext(ShoppingCartContext);
-  console.log(email);
 
   useEffect(() => {
     clearShoppingCart();

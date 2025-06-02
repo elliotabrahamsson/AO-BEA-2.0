@@ -107,11 +107,9 @@ export default function CheckoutForm() {
     const date = now.toISOString().slice(0, 19).replace("T", " "); // Formaterar datumet till YYYY-MM-DD HH:MM:SS
     //Lägg en post här
 
-    console.log(date);
     let price = cartItems
       .map((item) => item.price * item.quantity)
       .reduce((a, b) => a + b, 0);
-    console.log(price);
 
     try {
       const makeOrder = await fetch("http://localhost:3000/createOrder", {
@@ -137,7 +135,7 @@ export default function CheckoutForm() {
           })),
         }),
       });
-      console.log(email, address, date, phone);
+
       if (!makeOrder.ok) {
         throw new Error("Failed to create order");
       }
@@ -149,11 +147,11 @@ export default function CheckoutForm() {
       console.error("Error creating order:", error);
     }
   };
-  console.log(Date);
+
   let price = cartItems
     .map((item) => item.price * item.quantity)
     .reduce((a, b) => a + b, 0);
-  console.log(price);
+
   return (
     <>
       <Section>

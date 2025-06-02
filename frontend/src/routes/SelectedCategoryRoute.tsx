@@ -24,7 +24,6 @@ function SelectedCategoryRoute() {
     fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data: Product[]) => {
-        console.log("Hämtade produkter", data);
         const filteredProducts = data.filter((product) => {
           if (store_type === "herrmode") {
             if (
@@ -41,12 +40,7 @@ function SelectedCategoryRoute() {
               return true;
             }
           }
-          console.log(
-            "store_type",
-            store_type,
-            "selected_category",
-            selected_category
-          );
+
           return false;
         });
         setProducts(filteredProducts);
