@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface Product {
+/* interface Product {
   productName: string;
   price: number;
   description: string;
@@ -11,7 +11,7 @@ interface Product {
   gender: string;
   colors: string;
   size: number;
-}
+} */
 
 function AdminformRoute() {
   const [category, setCategory] = useState<string>("");
