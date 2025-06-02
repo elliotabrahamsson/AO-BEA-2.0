@@ -18,6 +18,9 @@ const app = express();
 const PORT = 3000;
 
 const transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   service: "gmail",
   auth: {
     user: "noreply.aobea@gmail.com",
