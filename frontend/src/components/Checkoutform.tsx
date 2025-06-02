@@ -113,29 +113,32 @@ export default function CheckoutForm() {
       .reduce((a, b) => a + b, 0);
 
     try {
-      const makeOrder = await fetch("http://localhost:3000/createOrder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: orderNumber,
-          name: fullname,
-          email,
-          address,
-          date,
-          phone,
-          price: price,
-          products: cartItems.map((item) => ({
-            id: item.id,
-            name: item.name,
-            size: item.size,
-            price: item.price,
-            color: item.color,
-            quantity: item.quantity,
-          })),
-        }),
-      });
+      const makeOrder = await fetch(
+        "https://ao-bea-2-0.onrender.com/createOrder",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: orderNumber,
+            name: fullname,
+            email,
+            address,
+            date,
+            phone,
+            price: price,
+            products: cartItems.map((item) => ({
+              id: item.id,
+              name: item.name,
+              size: item.size,
+              price: item.price,
+              color: item.color,
+              quantity: item.quantity,
+            })),
+          }),
+        }
+      );
 
       if (!makeOrder.ok) {
         throw new Error("Failed to create order");
