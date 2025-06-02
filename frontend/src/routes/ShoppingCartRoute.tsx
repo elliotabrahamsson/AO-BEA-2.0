@@ -86,7 +86,7 @@ function ShoppingCartRoute() {
 
       <section className="mt-6">
         <button className="text-[18px] mb-5 ml-4" onClick={clearShoppingCart}>
-          <p>Töm varukorg</p>
+          <p className="underline !font-bold text-[16px]">Töm varukorg</p>
         </button>
         {cartItems.length > 0 && (
           <div className="orderCost flex justify-between ml-4 mr-4">
