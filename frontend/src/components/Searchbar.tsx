@@ -123,7 +123,7 @@ export default function Searchbar() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);

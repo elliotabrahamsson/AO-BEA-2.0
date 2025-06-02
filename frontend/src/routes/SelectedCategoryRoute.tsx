@@ -21,7 +21,7 @@ function SelectedCategoryRoute() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data: Product[]) => {
         console.log("Hämtade produkter", data);

@@ -22,7 +22,7 @@ function LogIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch("http://localhost:3000/login", {
+    fetch("https://ao-bea-2-0.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

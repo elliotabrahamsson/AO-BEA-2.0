@@ -23,7 +23,9 @@ function DropdownProducts() {
 
   /* Fetch av data från databasen */
   useEffect(() => {
-    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
+    fetch(
+      `https://ao-bea-2-0.onrender.com/category/${selected_category}/products/${id}`
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Något gick fel med hämtningen");
