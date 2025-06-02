@@ -28,7 +28,7 @@ function OrderhistoryRoute() {
       console.log("Token:", user.token);
       const token = user.token || users.token; // Hämtar token från användaren eller alla användare
 
-      fetch(`http://localhost:3000/orders/`, {
+      fetch(`https://ao-bea-2-0.onrender.com/orders/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

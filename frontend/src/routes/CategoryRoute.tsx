@@ -21,7 +21,7 @@ export default function CategoryRoute() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data: Product[]) => {
         // Här kommer alla kategorier hamna. De kommer vara unika och komma från shoptypen som skickas med via params, dvs. herrmode eller dammode.

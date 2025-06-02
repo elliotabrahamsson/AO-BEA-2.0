@@ -38,7 +38,9 @@ export default function ProductPageRoute() {
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
-    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
+    fetch(
+      `https://ao-bea-2-0.onrender.com/category/${selected_category}/products/${id}`
+    )
       .then((response) => response.json())
       .then((data: Product) => {
         setProduct(data);
@@ -58,7 +60,7 @@ export default function ProductPageRoute() {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const res = await fetch("http://localhost:3000/products");
+        const res = await fetch("https://ao-bea-2-0.onrender.com/products");
         const data: Product[] = await res.json();
         setProducts(data);
       } catch (error) {

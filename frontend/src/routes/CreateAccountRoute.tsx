@@ -65,7 +65,7 @@ export default function CreateAccountRoute() {
     console.log(created);
     console.log(createdWithZone);
     try {
-      const getId = await fetch("http://localhost:3000/usersId");
+      const getId = await fetch("https://ao-bea-2-0.onrender.com/usersId");
       const users: { id: number; email: string }[] = await getId.json();
       console.log(userId);
 
@@ -80,20 +80,23 @@ export default function CreateAccountRoute() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/createUser", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          id: userId,
-          name: fullName,
-          email,
-          password,
-          newsletter,
-          created: createdWithZone,
-        }),
-      });
+      const response = await fetch(
+        "https://ao-bea-2-0.onrender.com/createUser",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            id: userId,
+            name: fullName,
+            email,
+            password,
+            newsletter,
+            created: createdWithZone,
+          }),
+        }
+      );
 
       const data = await response.json();
 
