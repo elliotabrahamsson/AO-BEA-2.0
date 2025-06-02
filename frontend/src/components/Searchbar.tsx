@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // $-tecknet innan menuStatus används inom styled-components för att signalera till React att prop:en enbart kommer användas för styling inom komponenten (den skickas alltså inte vidare till HTML:n).
 interface StyledContainerSettings {
@@ -35,6 +36,7 @@ export default function Searchbar() {
     size: string[];
   }
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   // Detta används för form:ens routing istället för action="".
@@ -132,6 +134,11 @@ export default function Searchbar() {
   useEffect(() => {
     setCategories([]);
   }, [store_type]);
+
+  // Gör att searchbaren stängs när man re-routas till en annan route.
+  useEffect(() => {
+    setMenuStatus(false);
+  }, [location]);
 
   // console.log("Categories: " + categories);
 
