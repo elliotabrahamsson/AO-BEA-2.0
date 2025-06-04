@@ -46,6 +46,11 @@ h4 {
   font-family: "Merriweather Sans", sans-serif;
 }
 
+h5 {
+  font-family: "Merriweather Sans", sans-serif;
+  font-weight: lighter;
+}
+
 p {
   font-family: "Merriweather Sans", sans-serif;
   font-weight: lighter;

@@ -78,6 +78,8 @@ export default function ProductPageRoute() {
       <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
         {product?.product_name}
       </h3>
+      <h5 className="text-center text-2xl">{product?.price} kr</h5>
+
       {/* Props till Dropdowncolors */}
       <Dropdowncolors
         colors={product?.color ?? []}
