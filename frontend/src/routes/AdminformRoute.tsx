@@ -216,7 +216,7 @@ function AdminformRoute() {
           onChange={(e) => setCategory(e.target.value)}
           required
         >
-          {makeUniqueCategoryArr(products, gender).map((category, index) => {
+          {makeUniqueCategoryArr(products, gender).map((category) => {
             return (
               <>
                 <option
