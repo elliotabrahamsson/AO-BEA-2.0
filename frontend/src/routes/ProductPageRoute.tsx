@@ -38,7 +38,9 @@ export default function ProductPageRoute() {
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
-    fetch(`http://localhost:3000/category/${selected_category}/products/${id}`)
+    fetch(
+      `https://ao-bea-2-0.onrender.com/category/${selected_category}/products/${id}`
+    )
       .then((response) => response.json())
       .then((data: Product) => {
         setProduct(data);
@@ -58,7 +60,7 @@ export default function ProductPageRoute() {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const res = await fetch("http://localhost:3000/products");
+        const res = await fetch("https://ao-bea-2-0.onrender.com/products");
         const data: Product[] = await res.json();
         setProducts(data);
       } catch (error) {
@@ -102,14 +104,6 @@ export default function ProductPageRoute() {
           <button
             className="text-white whitespace-nowrap text-[10px]"
             onClick={() => {
-              console.log(
-                "Lägg till i varukorg",
-                product?.product_id,
-                selectedColor,
-                selectedSize,
-                product?.price,
-                product?.product_img
-              );
               if (product && selectedColor && selectedSize) {
                 addItemToCart(
                   product.product_id,

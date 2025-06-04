@@ -1,8 +1,6 @@
 import express, { Request, Response } from "express";
 import pool from "./db";
-import { stringify } from "uuid";
 import cors from "cors";
-import { get } from "http";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -20,6 +18,9 @@ const app = express();
 const PORT = 3000;
 
 const transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   service: "gmail",
   auth: {
     user: "noreply.aobea@gmail.com",
@@ -67,11 +68,23 @@ function authenticateToken(req: Request, res: Response, next: Function) {
   });
 }
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ao-bea-2-0-client.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["get", "post", "delete", "put"],
+    origin: function (origin, callback) {
+      console.log("🔍 Origin som försöker nå API:", origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 app.use(express.json());

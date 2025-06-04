@@ -5,7 +5,6 @@ import { ShoppingCartContext } from "../components/ShoppingCartContext";
 function ShoppingCartRoute() {
   const { cartItems, addItemToCart, removeItemFromCart, clearShoppingCart } =
     useContext(ShoppingCartContext);
-  console.log(cartItems);
 
   /* Leveranskostnad */
   const deliveryCost = 79;

@@ -123,7 +123,7 @@ export default function Searchbar() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("https://ao-bea-2-0.onrender.com/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -183,7 +183,7 @@ export default function Searchbar() {
               setMenuStatus(true);
               setUserInput(event.target.value);
             }}
-            className="h-[60%] w-[90%] px-[3em] rounded-full text-[var(--bright1)] bg-[var(--dark3)] bg-no-repeat bg-left bg-[url(/src/assets/Searchbar/magnifyingglas.png)]"
+            className="h-[60%] w-[90%] px-[3em] rounded-full text-[var(--bright1)] bg-[var(--dark3)] bg-no-repeat bg-left bg-[url(/Searchbar/magnifyingglas.png)]"
           />
         </form>
       </section>

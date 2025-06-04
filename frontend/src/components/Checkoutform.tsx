@@ -25,7 +25,7 @@ interface PaymentMethodName {
 const paymentMethodNames: PaymentMethodName[] = [
   { name: "mastercard" },
   { name: "visa" },
-  { name: "klarna" },
+  { name: "Klarna" },
   { name: "GooglePay" },
   { name: "Paypal" },
   { name: "ApplePay" },
@@ -77,7 +77,7 @@ export default function CheckoutForm() {
   const navigate = useNavigate(); //En funktion från react som hjälper en att navigera programmatiskt
   /* const { user } = useAuth(); //Hämtar den inloggade användaren */
   const [showPaymentSection, setShowPaymentSection] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState("klarna");
+  const [selectedMethod, setSelectedMethod] = useState("Klarna");
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [fullname, setFullName] = useState("");
@@ -101,43 +101,45 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const orderNumber = uuidv4();
     const now = new Date();
     now.setHours(now.getHours() + 2);
     const date = now.toISOString().slice(0, 19).replace("T", " "); // Formaterar datumet till YYYY-MM-DD HH:MM:SS
     //Lägg en post här
 
-    console.log(date);
     let price = cartItems
       .map((item) => item.price * item.quantity)
       .reduce((a, b) => a + b, 0);
-    console.log(price);
 
     try {
-      const makeOrder = await fetch("http://localhost:3000/createOrder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: orderNumber,
-          name: fullname,
-          email,
-          address,
-          date,
-          phone,
-          price: price,
-          products: cartItems.map((item) => ({
-            id: item.id,
-            name: item.name,
-            size: item.size,
-            price: item.price,
-            color: item.color,
-            quantity: item.quantity,
-          })),
-        }),
-      });
-      console.log(email, address, date, phone);
+      const makeOrder = await fetch(
+        "https://ao-bea-2-0.onrender.com/createOrder",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: orderNumber,
+            name: fullname,
+            email,
+            address,
+            date,
+            phone,
+            price: price,
+            products: cartItems.map((item) => ({
+              id: item.id,
+              name: item.name,
+              size: item.size,
+              price: item.price,
+              color: item.color,
+              quantity: item.quantity,
+            })),
+          }),
+        }
+      );
+
       if (!makeOrder.ok) {
         throw new Error("Failed to create order");
       }
@@ -149,11 +151,11 @@ export default function CheckoutForm() {
       console.error("Error creating order:", error);
     }
   };
-  console.log(Date);
-  let price = cartItems
+
+  cartItems
     .map((item) => item.price * item.quantity)
     .reduce((a, b) => a + b, 0);
-  console.log(price);
+
   return (
     <>
       <Section>
@@ -325,7 +327,7 @@ export default function CheckoutForm() {
                           {method.icons.map((icon) => (
                             <img
                               key={icon}
-                              src={`/src/assets/checkout-icons${icon}`}
+                              src={`/checkout-icons${icon}`}
                               alt={`icon of ${method.label}`}
                             />
                           ))}
@@ -407,7 +409,7 @@ export default function CheckoutForm() {
                   {paymentMethodNames.map((method) => (
                     <img
                       key={method.name}
-                      src={`/src/assets/checkout-icons/payment-bar/${method.name}.png`}
+                      src={`/checkout-icons/payment-bar/${method.name}.png`}
                       alt={`icon of ${method.name}`}
                     />
                   ))}

@@ -16,13 +16,11 @@ function LogIn() {
     if (isLoggedIn()) {
       navigate("/profilePage");
     }
-
-    console.log(isLoggedIn());
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch("http://localhost:3000/login", {
+    fetch("https://ao-bea-2-0.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +43,7 @@ function LogIn() {
         };
         /*  login(user); // Sparar användaren i context */
         localStorage.setItem("user", JSON.stringify(user)); // Sparar användaren i localStorage
-        console.log("Inloggad användare:", user);
+
         navigate("/profilePage");
       })
       .catch((error) => {

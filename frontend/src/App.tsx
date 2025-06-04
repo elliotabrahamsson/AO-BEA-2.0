@@ -18,14 +18,9 @@ import LogInRoute from "./routes/LogInRoute";
 import AdminformRoute from "./routes/AdminformRoute";
 import SearchedResultRoute from "./routes/SearchedResultRoute";
 import OrderhistoryRoute from "./routes/OrderhistoryRoute";
-import {
-  createHashRouter,
-  Link,
-  Outlet,
-  RouterProvider,
-} from "react-router-dom";
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import DropdownProducts from "./components/DropdownProducts";
+
 import { ShoppingCartProvider } from "./components/ShoppingCartContext";
 
 function App() {
