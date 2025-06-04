@@ -323,6 +323,81 @@ app.get("/orders", authenticateToken, async (req: Request, res: Response) => {
   }
 });
 
+app.post("/createProduct", async (req: Request, res: Response) => {
+  const {
+    productName,
+    price,
+    description,
+    category,
+    brand,
+    product_img,
+    stock,
+    gender,
+    colors,
+    size,
+  } = req.body;
+
+  try {
+    // 1. Kontrollera eller skapa kategori
+    let categoryResult = await pool.query(
+      `SELECT id FROM "Category" WHERE type = $1`,
+      [category]
+    );
+    let categoryId: number;
+    if (categoryResult.rows.length === 0) {
+      // Skapa ny kategori
+      const insertCategory = await pool.query(
+        `INSERT INTO "Category" (type) VALUES ($1) RETURNING id`,
+        [category]
+      );
+      categoryId = insertCategory.rows[0].id;
+    } else {
+      categoryId = categoryResult.rows[0].id;
+    }
+
+    // 2. Kontrollera eller skapa brand
+    let brandResult = await pool.query(
+      `SELECT id FROM "Brands" WHERE name = $1`,
+      [brand]
+    );
+    let brandId: number;
+    if (brandResult.rows.length === 0) {
+      // Skapa nytt brand
+      const insertBrand = await pool.query(
+        `INSERT INTO "Brands" (name) VALUES ($1) RETURNING id`,
+        [brand]
+      );
+      brandId = insertBrand.rows[0].id;
+    } else {
+      brandId = brandResult.rows[0].id;
+    }
+
+    // 3. Lägg till produkten med rätt categoryId och brandId
+    const productQuery = `
+      INSERT INTO "Products" (product_name, price, product_description, category, brands, product_img, stock, gender, colors, size)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING id, product_name, price, product_description, category, brands, product_img, stock
+    `;
+    const productResult = await pool.query(productQuery, [
+      productName,
+      price,
+      description,
+      categoryId,
+      brandId,
+      product_img,
+      stock,
+      gender,
+      colors,
+      size,
+    ]);
+
+    res.status(201).json(productResult.rows[0]);
+  } catch (error) {
+    console.error("Error creating product:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
