@@ -206,35 +206,64 @@ app.get("/usersId", async (req: Request, res: Response) => {
 });
 app.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const query = `SELECT id, name, email, password FROM "Users" WHERE email = $1`;
   try {
-    const result = await pool.query(query, [email]);
+    const adminQuery = `SELECT id, name, email, password FROM "Admin" WHERE email = $1`;
 
-    if (result.rows.length === 0) {
-      res.status(404).json({ error: "User not found" });
-      return;
+    const adminResult = await pool.query(adminQuery, [email]);
+
+    if (adminResult.rows.length > 0) {
+      const admin = adminResult.rows[0];
+
+      const isPasswordValid = await bcrypt.compare(password, admin.password);
+      if (!isPasswordValid) {
+        res.status(401).json({ error: "Invalid password" });
+        return;
+      }
+
+      const token = jwt.sign(
+        { id: admin.id, email: admin.email, name: admin.name, isAdmin: true },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({
+        token: token,
+        id: admin.id,
+        email: admin.email,
+        name: admin.name,
+        isAdmin: true,
+      });
+    } else {
+      const query = `SELECT id, name, email, password FROM "Users" WHERE email = $1`;
+
+      const result = await pool.query(query, [email]);
+
+      if (result.rows.length === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      const user = result.rows[0];
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        res.status(401).json({ error: "Invalid password" });
+        return;
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email, name: user.name },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({
+        token: token,
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      });
     }
-
-    const user = result.rows[0];
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      res.status(401).json({ error: "Invalid password" });
-      return;
-    }
-
-    const token = jwt.sign(
-      { id: user.id, email: user.email, name: user.name },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    res.status(200).json({
-      token: token,
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
