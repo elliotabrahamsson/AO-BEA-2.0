@@ -1,0 +1,124 @@
+.create-account-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.create-account-form h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.create-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-validation-msg {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.create-validation-msg.red {
+  color: #dc2626;
+}
+
+.create-validation-msg.green {
+  color: #16a34a;
+}
+
+.requirements-list {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.requirements-list li {
+  margin-bottom: 0.25rem;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: start;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.checkbox-group input {
+  margin-right: 1rem;
+  margin-top: 0.3rem;
+  accent-color: black;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.checkbox-group p {
+  line-height: 1.4;
+}
+
+.policy-link {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2563eb;
+}
+.create-btn {
+  width: 100%;
+  background-color: #403d37;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.create-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-wrapper {
+  position: relative;
+}
+
+.btn-overlay {
+  position: absolute;
+  inset: 0;
+  cursor: not-allowed;
+  background: transparent;
+  z-index: 2;
+}
+
+.already-account {
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.already-account span {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.green {
+  color: #16a34a; /* Tailwind's green-600 */
+  font-weight: 500;
+}
+
+/* DESKTOP: 768px och uppåt */
+@media screen and (min-width: 768px) {
+  .already-account span:hover {
+    color: #1e40af;
+  }
+  .policy-link:hover {
+    color: #1e40af;
+  }
+  .create-btn:hover {
+    opacity: 0.6;
+    transition: ease-in 0.1s;
+    cursor: pointer;
+  }
+}

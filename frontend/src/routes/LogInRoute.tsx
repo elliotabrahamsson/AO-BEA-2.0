@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 /* import { useAuth } from "../context/AuthContext"; */
 import { isLoggedIn } from "../utils/auth";
 import { getCurrentUser } from "../utils/auth";
+import "../css/LoginRoute.css";
+import eyeOff from "../assets/password/eye-off.svg";
+import eyeOn from "../assets/password/eye-on.svg";
 
 function LogIn() {
   /* const { login } = useAuth(); */
@@ -52,15 +55,12 @@ function LogIn() {
   };
 
   return (
-    <div className=" p-4 flex justify-center">
-      <div className="bg-white p-8  w-full max-w-md mt-8">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Logga in</h1>
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">Logga in</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
+            <label htmlFor="email" className="login-label">
               E-post
             </label>
             <input
@@ -68,15 +68,13 @@ function LogIn() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2.5 border border-black rounded text-sm"
+              className="login-input"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
+
+          <div className="mb-4" style={{ position: "relative" }}>
+            <label htmlFor="password" className="login-label">
               Lösenord
             </label>
             <input
@@ -84,30 +82,32 @@ function LogIn() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2.5 border border-black rounded text-sm"
+              className="login-input"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-9 text-gray-600"
-              aria-label={showPassword ? "Dölj lösenord" : "Visa lösenord"}
-            ></button>
+              className="toggle-password-button"
+              aria-label={showPassword ? "Visa lösenord" : "Dölj lösenord"}
+            >
+              <img
+                src={showPassword ? eyeOn : eyeOff}
+                alt={showPassword ? "Visa lösenord" : "Dölj lösenord"}
+                className="toggle-password-icon"
+              />
+            </button>
           </div>
-          {error && <p className="text-red-600 text-center mb-4">{error}</p>}
-          <p className="text-center text-sm mb-6">
-            Har du glömt ditt lösenord?
-          </p>
-          <p className="text-center text-sm mb-6">
+
+          {error && <p className="login-error">{error}</p>}
+
+          <p className="login-hint">Har du glömt ditt lösenord?</p>
+          <p className="login-link">
             Har du inget konto?{" "}
-            <Link to="/create-account" className="text-blue-600 underline">
-              Registrera dig här!
-            </Link>
+            <Link to="/create-account">Registrera dig här!</Link>
           </p>
-          <button
-            type="submit"
-            className="w-full bg-[#403d37] hover:bg-[#5a564d] text-white py-2.5 rounded text-sm font-medium transition"
-          >
+
+          <button type="submit" className="login-button">
             Logga in
           </button>
         </form>

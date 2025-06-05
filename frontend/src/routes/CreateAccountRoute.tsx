@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PrivacyModal from "../components/PrivacyModal";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../utils/auth";
+import "../css/CreateAccountRoute.css";
 
 export default function CreateAccountRoute() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function CreateAccountRoute() {
   const [showModal, setShowModal] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showDisabledMessage, setShowDisabledMessage] = useState(false);
 
   useEffect(() => {
     setFullName(`${firstName} ${lastName}`);
@@ -132,9 +134,20 @@ export default function CreateAccountRoute() {
   // Kontrollera om lösenordet matchar i båda fälten
   const matchPasswords = password === confirmPassword;
 
+  const formNotReady = !termsAccepted || !isPasswordValid || !matchPasswords;
+
+  // Meddelar användaren att submit-knapp inaktiv tills allt är ifyllt
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (formNotReady) {
+      e.preventDefault(); // hindra submit
+      setShowDisabledMessage(true);
+      setTimeout(() => setShowDisabledMessage(false), 3000); // dölj efter 3 sek
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-center mb-6">SKAPA KONTO</h1>
+    <form onSubmit={handleSubmit} className="create-account-form">
+      <h1>SKAPA KONTO</h1>
 
       {/* För- & Efternamn */}
       <input
@@ -143,7 +156,7 @@ export default function CreateAccountRoute() {
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
         required
-        className="w-full mb-4 px-4 py-2 border rounded"
+        className="create-input"
       />
       <input
         type="text"
@@ -151,9 +164,8 @@ export default function CreateAccountRoute() {
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
         required
-        className="w-full mb-4 px-4 py-2 border rounded"
+        className="create-input"
       />
-
       {/* Emailadress */}
       <input
         type="email"
@@ -161,15 +173,14 @@ export default function CreateAccountRoute() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full mb-4 px-4 py-2 border rounded"
+        className="create-input"
       />
       {/* Validering av e-postadress */}
       {!emailValid && email && (
-        <p className="text-red-600 text-sm mb-4">Ange en giltig e-postadress</p>
+        <p className="create-validation-msg red">Ange en giltig e-postadress</p>
       )}
-      {/* Felmeddelande: e-postadress existerar redan */}
       {errorMessage && (
-        <p className="text-red-600 text-sm mb-4">{errorMessage}</p>
+        <p className="create-validation-msg red">{errorMessage}</p>
       )}
 
       {/* Lösenord */}
@@ -179,48 +190,35 @@ export default function CreateAccountRoute() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        className="w-full mb-1 px-4 py-2 border rounded"
+        className="create-input"
       />
 
-      <ul className="text-sm mb-4">
-        <li
-          className={passwordValid.length ? "text-green-600" : "text-gray-500"}
-        >
-          Minst 6 tecken
-        </li>
-        <li
-          className={
-            passwordValid.uppercase ? "text-green-600" : "text-gray-500"
-          }
-        >
+      <ul className="requirements-list">
+        <li className={passwordValid.length ? "green" : ""}>Minst 6 tecken</li>
+        <li className={passwordValid.uppercase ? "green" : ""}>
           En stor bokstav
         </li>
-        <li
-          className={passwordValid.number ? "text-green-600" : "text-gray-500"}
-        >
-          En siffra
-        </li>
+        <li className={passwordValid.number ? "green" : ""}>En siffra</li>
       </ul>
+
       <input
-        className="w-full mb-4 px-4 py-2 border rounded"
         type="password"
         placeholder="Bekräfta lösenord"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
+        className="create-input"
       />
       {!matchPasswords && confirmPassword && (
-        <p className="text-red-600 text-sm mb-4">Lösenorden matchar inte</p>
+        <p className="create-validation-msg red">Lösenorden matchar inte</p>
       )}
 
       {/* Newsletter */}
-      <div className="flex items-start text-sm mb-4">
+      <div className="checkbox-group">
         <input
           type="checkbox"
           checked={newsletter}
           onChange={() => setNewsletter(!newsletter)}
-          className="w-7 h-7 mr-4 mt-1 accent-black"
-          id="newsletter"
         />
         <p>
           Anmäl mig till nyhetsbrevet för att få exklusiva erbjudanden och
@@ -229,45 +227,50 @@ export default function CreateAccountRoute() {
       </div>
 
       {/* Terms and Conditions */}
-      <div className="flex items-start text-sm mb-4 accent-black">
+      <div className="checkbox-group">
         <input
           type="checkbox"
           checked={termsAccepted}
           onChange={() => setTermsAccepted(!termsAccepted)}
-          className="w-10 h-7 mr-4 mt-1"
-          id="terms"
         />
-        <p className="inline">
+        <p>
           Jag godkänner{" "}
-          <span
-            onClick={() => setShowModal(true)}
-            className="underline cursor-pointer text-blue-700 hover:text-blue-900"
-          >
+          <span onClick={() => setShowModal(true)} className="policy-link">
             användarvillkoren och integritetspolicyn
           </span>{" "}
           och bekräftar att jag läst och förstått integritetspolicyn
           <span className="font-bold"> (Obligatorisk)</span>
         </p>
       </div>
+
       {showModal && (
         <PrivacyModal isOpen={showModal} onClose={() => setShowModal(false)} />
       )}
 
-      <button
-        type="submit"
-        disabled={!termsAccepted || !isPasswordValid() || !matchPasswords}
-        className="w-full bg-[#403d37] text-white py-2 rounded disabled:opacity-50 mb-4"
-      >
-        SKAPA KONTO
-      </button>
-      <p className="text-sm text-center mt-4">
+      <div className="btn-wrapper" style={{ position: "relative" }}>
+        <button type="submit" disabled={formNotReady} className="create-btn">
+          SKAPA KONTO
+        </button>
+
+        {formNotReady && (
+          <div
+            className="btn-overlay"
+            onClick={() => {
+              setShowDisabledMessage(true);
+              setTimeout(() => setShowDisabledMessage(false), 3000);
+            }}
+          ></div>
+        )}
+      </div>
+
+      {showDisabledMessage && (
+        <p className="create-validation-msg red text-center">
+          Vänligen fyll i alla fält och acceptera användarvillkoren
+        </p>
+      )}
+      <p className="already-account">
         Har du redan ett konto?{" "}
-        <span
-          onClick={() => navigate("/login")}
-          className="underline cursor-pointer text-blue-700 hover:text-blue-900"
-        >
-          Logga in här
-        </span>
+        <span onClick={() => navigate("/login")}>Logga in här</span>
       </p>
     </form>
   );
