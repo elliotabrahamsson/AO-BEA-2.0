@@ -71,17 +71,22 @@ export default function CategoryRoute() {
               <>
                 <Link
                   to="/shop/dammode/Outerware/16"
-                  className="mx-auto shadow-md"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
                 >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/82/c4/82c477c8e32273fa02d2fac24f257cf61066578e_lg-1.jpg"
                     alt="Dubbelknäppt kavaj i bomull"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
-                <Link to="/shop/dammode/Pants/18" className="mx-auto shadow-md">
+                <Link
+                  to="/shop/dammode/Pants/18"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
+                >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/b4/16/b416338c0a0cd3b1c0ea09749fff402818193ced_lg-1.jpg"
                     alt="SNOW raka jeans"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
               </>
@@ -89,20 +94,22 @@ export default function CategoryRoute() {
               <>
                 <Link
                   to="/shop/herrmode/Skjorta/2"
-                  className="mx-auto shadow-md"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
                 >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/29/37/29378d0c252a52a4b11b23c92e9b74393ac245b1_lg-1.jpg"
                     alt="Manchesterskjorta"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
                 <Link
                   to="/shop/herrmode/Skjorta/4"
-                  className="mx-auto shadow-md"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
                 >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/4f/2e/4f2e3e6e0f9f58e674c24f244569291ad2fac638_lg-1.jpg"
                     alt="Overshirt i canvas"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
               </>
@@ -117,16 +124,24 @@ export default function CategoryRoute() {
           >
             {store_type === "dammode" ? (
               <>
-                <Link to="/shop/dammode/Tröja/17" className="mx-auto shadow-md">
+                <Link
+                  to="/shop/dammode/Tröja/17"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
+                >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/bd/a8/bda89898702cf7007e3fa898ce324cf8c54fbb88_lg-1.jpg"
                     alt="LILY T-shirt i lätt bomullstrikå"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
-                <Link to="/shop/dammode/Tröja/19" className="mx-auto shadow-md">
+                <Link
+                  to="/shop/dammode/Tröja/19"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
+                >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/b7/fe/b7fee7dff4db821b4749d60437dd10d3086c0130_lg-1.jpg"
                     alt="Tröja i alpacka och ull"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
               </>
@@ -134,11 +149,12 @@ export default function CategoryRoute() {
               <>
                 <Link
                   to="/shop/herrmode/Skjorta/1"
-                  className="mx-auto shadow-md"
+                  className="mx-auto shadow-md md:w-[85%] w-full"
                 >
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/32/27/322715c179eb482ac12d859844e98642c48c17bd_lg-1.jpg"
                     alt="Overshirt i bomull"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
                 <Link
@@ -148,6 +164,7 @@ export default function CategoryRoute() {
                   <img
                     src="https://public.assets.hmgroup.com/assets/006/9d/54/9d54e68c932f1c67c63cfaa31587b455a8216841_lg-1.jpg"
                     alt="Poplinskjorta med avslappnad passform"
+                    className="w-full h-auto object-cover"
                   ></img>
                 </Link>
               </>
@@ -158,7 +175,7 @@ export default function CategoryRoute() {
         <section id="categories_section" className="mb-20">
           <h2 className="text-center mt-20 mb-14">KATEGORIER</h2>
 
-          <div className="grid grid-cols-2 justify-items-center gap-[1rem]">
+          <div className="grid grid-cols-2 justify-items-center gap-[1rem] md:grid-cols-4">
             {products.map((product) => (
               <CategoryCard
                 category={product.category_type}

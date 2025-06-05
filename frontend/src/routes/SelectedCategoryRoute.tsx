@@ -59,12 +59,15 @@ function SelectedCategoryRoute() {
         {store_type === "herrmode" ? "Herrmode" : "Dammode"}
       </h1>
       <h2 className="text-center">{selected_category}</h2>
-      <section className="product-section-container grid grid-cols-2 min-w-[190px] min-h-[240px] gap-[1rem] m-4">
+      <section className="product-section-container grid grid-cols-2 min-w-[190px] min-h-[240px] gap-[1rem] m-4 md:w-full md:grid-cols-4">
         {products.length === 0 ? (
           <p className="text-center">Inga produkter hittades.</p>
         ) : (
           products.map((product) => (
-            <div className="product-card" key={product.product_id}>
+            <div
+              className="product-card md:w-[90%] w-full"
+              key={product.product_id}
+            >
               <SelectedCategoryCard
                 clothingImage={[product.product_img]}
                 productName={product.product_name}
