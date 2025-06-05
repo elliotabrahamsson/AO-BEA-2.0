@@ -364,7 +364,7 @@ app.post("/createProduct", async (req: Request, res: Response) => {
     if (brandResult.rows.length === 0) {
       // Skapa nytt brand
       const insertBrand = await pool.query(
-        `INSERT INTO "Brands" (name) VALUES ($1) RETURNING id`,
+        `INSERT INTO "Brands" (name, stock) VALUES ($1, 0) RETURNING id`,
         [brand]
       );
       brandId = insertBrand.rows[0].id;
