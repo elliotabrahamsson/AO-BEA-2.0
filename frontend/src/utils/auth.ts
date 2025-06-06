@@ -12,7 +12,7 @@ export const isLoggedIn = (): boolean => {
 // Returnerar användarobjektet om det finns, annars null.
 export const getCurrentUser = () => {
   const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+  return user ? JSON.parse(user) : false;
 };
 
 // Raderar användaren från localStorage

@@ -40,7 +40,9 @@ function LogIn() {
           email: data.email,
           id: data.id,
           token: data.token,
+          isAdmin: data.isAdmin,
         };
+
         /*  login(user); // Sparar användaren i context */
         localStorage.setItem("user", JSON.stringify(user)); // Sparar användaren i localStorage
 

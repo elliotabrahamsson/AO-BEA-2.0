@@ -8,7 +8,8 @@ import favoritesSolid from "/navbar/heart_solid.svg";
 import userOutline from "/navbar/user_outline.svg";
 import userSolid from "/navbar/user_solid.svg";
 import { Link, useLocation } from "react-router-dom";
-import { isLoggedIn } from "../utils/auth";
+import { getCurrentUser, isLoggedIn } from "../utils/auth";
+
 
 export default function Navbar() {
   //
@@ -19,18 +20,20 @@ export default function Navbar() {
 
   return (
     <div className="nav-container">
+
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-400 shadow-md z-100 md:top-0 md:relative md:min-h-19">
         <ul className="flex justify-between items-center m-2 md:gap-x-6">
           {/* Desktop logo */}
           <li className="hidden md:block md:mr-auto">
             <Link to="/" className="hidden md:block">
               <img
-                src={logo}
+                src={location.pathname === "/" ? homeSolid : homeOutline}
                 alt="icon of AO BEA logo"
                 className="h-14 w-auto"
               />
             </Link>
           </li>
+
 
           {/* #1 Home icon */}
           <li className="">
@@ -60,6 +63,27 @@ export default function Navbar() {
               {/* <p className="md:text-[8px] md:text-center">Varukorg</p> */}
             </Link>
           </li>
+        
+         <li>
+            {getCurrentUser().isAdmin ? (
+              <>
+                <Link to="/admin">
+                  <p className="text-5xl">+</p>
+                </Link>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Link to="/">
+                  <img
+                    src={logo}
+                    alt="icon of AO BEA logo"
+                    className="h-14 w-auto"
+                  />
+                </Link>
+              </>
+            )}
+          </li>
 
           {/* #4 AO BEA Logo */}
           <li className="block md:hidden">
@@ -71,6 +95,7 @@ export default function Navbar() {
               />
             </Link>
           </li>
+
 
           {/* #5 Favorites icon */}
           <li className="">
@@ -91,13 +116,19 @@ export default function Navbar() {
 
           {/* #6 User icon */}
           <li className="">
+
+          {/* #6 User icon */}
+          <li>
+
             <Link to={isLoggedIn() ? "/profilePage" : "/login"}>
               <img
                 src={isUserPage ? userSolid : userOutline}
                 alt="user icon"
                 className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
               />
+
               {/*  <p className="md:text-[8px] md:text-center">Profil</p> */}
+
             </Link>
           </li>
         </ul>

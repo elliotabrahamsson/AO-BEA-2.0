@@ -72,6 +72,7 @@ export default function ProductPageRoute() {
 
   return (
     <div>
+
       <div className="main-container md:flex md:flex-1/2">
         <div className="img-container p-5 w-full md:w-1/2 md:flex md:justify-center md:items-center">
           <img src={product?.product_img} alt="Main" className="md:w-[70%] " />
@@ -81,6 +82,7 @@ export default function ProductPageRoute() {
           <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
             {product?.product_name}
           </h3>
+           <h5 className="text-center text-2xl">{product?.price} kr</h5>
           <div className="dropdowncolors">
             <Dropdowncolors
               colors={product?.color ?? []}
