@@ -27,7 +27,7 @@ function SelectedCategoryCard({
             src={img}
             key={index}
             id="card"
-            className={`min-h-[auto] bg-cover bg-center shadow-md `}
+            className={`min-h-[auto] bg-cover bg-center shadow-md w-full h-auto object-cover`}
             style={{ backgroundImage: `url(${img})` }}
           ></img>
         </Link>
