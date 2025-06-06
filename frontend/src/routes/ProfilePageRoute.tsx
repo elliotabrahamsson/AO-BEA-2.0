@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logoutUser } from "../utils/auth";
 import PlaceholderImg from "/profile-page/profile-img-placeholder.svg";
 import "../css/ProfilePageRoute.css";
@@ -48,14 +48,12 @@ export default function ProfilePageRoute() {
   };
 
   return (
-
     <div className="profile-page">
       <h1>PROFIL</h1>
       <p>{user ? `Välkommen ${user.name}` : "Laddar..."}</p>
 
       <div>
         <div className="profile-avatar">
-
           {user?.name ? (
             <span>{getInitials(user.name)}</span>
           ) : (
@@ -69,12 +67,11 @@ export default function ProfilePageRoute() {
 
         <p className="profile-email">{user?.email}</p>
       </div>
-      
+
       <div className="profile-buttons">
         <button onClick={() => navigate("/favorites")}> FAVORITER</button>
         <button onClick={() => navigate("/orderhistory")}>ORDERHISTORIK</button>
         <button onClick={handleLogout}>LOGGA UT</button>
-
       </div>
     </div>
   );
