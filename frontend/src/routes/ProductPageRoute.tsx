@@ -72,57 +72,62 @@ export default function ProductPageRoute() {
 
   return (
     <div>
-      <div className="p-5">
-        <img src={product?.product_img} alt="Main" />
-      </div>
-      <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
-        {product?.product_name}
-      </h3>
-      <h5 className="text-center text-2xl">{product?.price} kr</h5>
 
-      {/* Props till Dropdowncolors */}
-      <Dropdowncolors
-        colors={product?.color ?? []}
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
-      />
-
-      <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
-        {product?.size.map((size) => (
-          <p
-            key={size}
-            className={`border w-[4.3rem] h-[2rem] p-1 min-w-max ${
-              selectedSize === size ? "bg-blue-200" : ""
-            }`}
-            onClick={() => setSelectedSize(size)}
-          >
-            {size}
-          </p>
-        ))}
-      </div>
-
-      <div className="p-1">
-        <div className="bg-[var(--dark3)] p-8 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
-          <button
-            className="text-white whitespace-nowrap text-[10px]"
-            onClick={() => {
-              if (product && selectedColor && selectedSize) {
-                addItemToCart(
-                  product.product_id,
-                  product.product_name,
-                  selectedColor,
-                  selectedSize,
-                  product.price,
-                  product.product_img
-                );
-                navigate("/shoppingcart");
-              }
-            }}
-          >
-            <h3 className="text-white whitespace-nowrap text-[10px]">
-              Lägg till i varukorg
-            </h3>
-          </button>
+      <div className="main-container md:flex md:flex-1/2">
+        <div className="img-container p-5 w-full md:w-1/2 md:flex md:justify-center md:items-center">
+          <img src={product?.product_img} alt="Main" className="md:w-[70%] " />
+        </div>
+        {/* högerkolumnen */}
+        <div className="right-container md:flex md:flex-col md:flex-1/2 md:justify-around md:items-center">
+          <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
+            {product?.product_name}
+          </h3>
+           <h5 className="text-center text-2xl">{product?.price} kr</h5>
+          <div className="dropdowncolors">
+            <Dropdowncolors
+              colors={product?.color ?? []}
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+            />
+          </div>
+          {/* Props till Dropdowncolors */}
+          <div className="flex flex-wrap text-center justify-center items-center gap-3 p-1 ">
+            {product?.size.map((size) => (
+              <p
+                key={size}
+                className={`border w-[4.3rem] h-[2rem] p-1 min-w-max ${
+                  selectedSize === size ? "bg-[var(--bg-women)]" : ""
+                }`}
+                onClick={() => setSelectedSize(size)}
+              >
+                {size}
+              </p>
+            ))}
+          </div>
+          <div className="p-1">
+            <div className="bg-[var(--dark3)] p-8 relative min-w-[190px] m-[1em] h-[44px] flex justify-center items-center">
+              <button
+                className="text-white whitespace-nowrap text-[10px]"
+                onClick={() => {
+                  if (product && selectedColor && selectedSize) {
+                    addItemToCart(
+                      product.product_id,
+                      product.product_name,
+                      selectedColor,
+                      selectedSize,
+                      product.price,
+                      product.product_img
+                    );
+                    navigate("/shoppingcart");
+                  }
+                }}
+              >
+                <h3 className="text-white whitespace-nowrap text-[10px]">
+                  Lägg till i varukorg
+                </h3>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
