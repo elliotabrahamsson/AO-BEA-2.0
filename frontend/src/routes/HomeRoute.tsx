@@ -1,11 +1,10 @@
-
 /* import styled from "styled-components"; */
 import "../css/HomeRoute.css";
-import styled from "styled-components";
+/* import styled from "styled-components"; */
 import { Link } from "react-router-dom";
 
 // Del för dammode
-const Women = styled.div`
+/* const Women = styled.div`
   display: flex;
   flex-direction: column;
   height: 41vh;
@@ -63,7 +62,7 @@ const Logo = styled.img`
   z-index: 2;
   width: 100px;
   height: 100px;
-`;
+`; */
 
 export default function HomeRoute() {
   return (
@@ -85,7 +84,6 @@ export default function HomeRoute() {
         <div className="men-section">
           <h2>Herrmode</h2>
         </div>
-
       </Link>
     </>
   );
