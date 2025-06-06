@@ -56,6 +56,12 @@ export default function CreateAccountRoute() {
     e.preventDefault();
     if (!termsAccepted || !matchPasswords || !isPasswordValid()) return;
 
+    if (formNotReady) {
+      e.preventDefault(); // hindra submit
+      setShowDisabledMessage(true);
+      setTimeout(() => setShowDisabledMessage(false), 3000); // dölj efter 3 sek
+    }
+
     setErrorMessage(""); // Nollställ felmeddelandet
 
     let userId = 0; // Placeholder för användar-ID
@@ -137,13 +143,6 @@ export default function CreateAccountRoute() {
   const formNotReady = !termsAccepted || !isPasswordValid || !matchPasswords;
 
   // Meddelar användaren att submit-knapp inaktiv tills allt är ifyllt
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (formNotReady) {
-      e.preventDefault(); // hindra submit
-      setShowDisabledMessage(true);
-      setTimeout(() => setShowDisabledMessage(false), 3000); // dölj efter 3 sek
-    }
-  };
 
   return (
     <form onSubmit={handleSubmit} className="create-account-form">
