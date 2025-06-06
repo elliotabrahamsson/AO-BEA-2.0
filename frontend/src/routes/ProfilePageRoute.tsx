@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser, logoutUser } from "../utils/auth";
 import PlaceholderImg from "/profile-page/profile-img-placeholder.svg";
+import "../css/ProfilePageRoute.css";
 
 export default function ProfilePageRoute() {
   // useNavigate hook används för att navigera programatiskt
@@ -34,7 +35,6 @@ export default function ProfilePageRoute() {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      console.log(storedUser);
     } else {
       navigate("/create-account");
       // Om ingen användare finns, navigera till skapa konto
@@ -48,19 +48,14 @@ export default function ProfilePageRoute() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 flex flex-col items-center text-center min-h-screen">
-      <Link to="/" className="text-sm text-left w-full text-gray-600 mb-4">
-        ← Startsida
-      </Link>
 
-      <h1 className="text-2xl font-bold mb-4">PROFIL</h1>
-      <p className="mb-8 text-gray-800">
-        {user ? `Välkommen ${user.name}` : "Laddar..."}
-      </p>
+    <div className="profile-page">
+      <h1>PROFIL</h1>
+      <p>{user ? `Välkommen ${user.name}` : "Laddar..."}</p>
 
-      {/* Visar användarens profilbild eller initialer */}
-      <div className="mb-4">
-        <div className="w-24 h-24 rounded-full bg-blue-900 flex items-center justify-center text-white text-4xl font-semibold mx-auto mb-8 overflow-hidden">
+      <div>
+        <div className="profile-avatar">
+
           {user?.name ? (
             <span>{getInitials(user.name)}</span>
           ) : (
@@ -72,29 +67,14 @@ export default function ProfilePageRoute() {
           )}
         </div>
 
-        {/* Visar användaren e-postadress */}
-        <p className="font-bold text-black mb-5">{user?.email}</p>
+        <p className="profile-email">{user?.email}</p>
       </div>
+      
+      <div className="profile-buttons">
+        <button onClick={() => navigate("/favorites")}> FAVORITER</button>
+        <button onClick={() => navigate("/orderhistory")}>ORDERHISTORIK</button>
+        <button onClick={handleLogout}>LOGGA UT</button>
 
-      <div className="flex flex-col gap-3 w-full max-w-xs">
-        <button
-          className="bg-[#403d37] text-white py-2 rounded mb-5"
-          onClick={() => navigate("/favorites")}
-        >
-          DINA FAVORITER
-        </button>
-        <button
-          className="bg-[#403d37] text-white py-2 rounded mb-5"
-          onClick={() => navigate("/orderhistory")}
-        >
-          ORDERHISTORIK
-        </button>
-        <button
-          className="bg-[#403d37] text-white py-2 rounded mb-5"
-          onClick={handleLogout}
-        >
-          LOGGA UT
-        </button>
       </div>
     </div>
   );

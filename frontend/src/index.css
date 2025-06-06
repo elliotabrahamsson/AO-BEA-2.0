@@ -24,6 +24,10 @@
   --dark3: #403d37;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1 {
   font-family: "Nexa Rust Sans", sans-serif;
   font-weight: 900;

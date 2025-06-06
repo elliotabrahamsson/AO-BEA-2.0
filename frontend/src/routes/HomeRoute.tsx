@@ -1,3 +1,6 @@
+
+/* import styled from "styled-components"; */
+import "../css/HomeRoute.css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -66,17 +69,23 @@ export default function HomeRoute() {
   return (
     <>
       <Link to="/shop/dammode">
-        <Women>
+        <div className="women-section">
           <h2>Dammode</h2>
-        </Women>
+        </div>
       </Link>
-      <MainContainer>
-        <Logo src="/footer/Icons/Ao-bea-icon2.png" alt="Ao Bea logotype" />
-      </MainContainer>
+
+      <div className="main-container">
+        <img
+          src="/footer/Icons/Ao-bea-icon2.png"
+          alt="Ao Bea logotype"
+          className="logo"
+        />
+      </div>
       <Link to="/shop/herrmode">
-        <Men>
+        <div className="men-section">
           <h2>Herrmode</h2>
-        </Men>
+        </div>
+
       </Link>
     </>
   );
