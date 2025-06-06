@@ -19,7 +19,7 @@ function ShoppingCartRoute() {
   const totalCost = deliveryCost + orderCost;
 
   return (
-    <div className="main-container md:flex md:items-start">
+    <div className="main-container flex flex-col md:flex-row md:p-4">
       <div className="w-full md:w-2/3">
         <h1 className="ml-4 mt-2 mb-8">Varukorg</h1>
         {cartItems.length === 0 && (

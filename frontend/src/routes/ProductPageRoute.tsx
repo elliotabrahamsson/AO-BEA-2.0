@@ -72,17 +72,20 @@ export default function ProductPageRoute() {
 
   return (
     <div>
-
-      <div className="main-container md:flex md:flex-1/2">
-        <div className="img-container p-5 w-full md:w-1/2 md:flex md:justify-center md:items-center">
-          <img src={product?.product_img} alt="Main" className="md:w-[70%] " />
+      <div className="main-container flex-col md:flex md:flex-row">
+        <div className="img-container p-4 w-full md:w-1/2 md:flex md:justify-center md:items-center ">
+          <img
+            src={product?.product_img}
+            alt="Main"
+            className="w-full md:max-w-full md:w-[70%]"
+          />
         </div>
         {/* högerkolumnen */}
         <div className="right-container md:flex md:flex-col md:flex-1/2 md:justify-around md:items-center">
           <h3 className="flex justify-center items-center text-center p-2 mt-2 mb-2">
             {product?.product_name}
           </h3>
-           <h5 className="text-center text-2xl">{product?.price} kr</h5>
+          <h5 className="text-center text-2xl">{product?.price} kr</h5>
           <div className="dropdowncolors">
             <Dropdowncolors
               colors={product?.color ?? []}
