@@ -87,6 +87,7 @@ export default function CheckoutForm() {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   const { cartItems } = useContext(ShoppingCartContext);
   //Hämtar cartItems, addItemToCart och removeItemFromCart från ShoppingCartContext
@@ -148,6 +149,9 @@ export default function CheckoutForm() {
       });
       //Navigerar till orderconfirmation samt skickar med det dynamiska uuid numret via URL:en
     } catch (error) {
+      setError(
+        "Ett fel uppstod vid skapandet av din order. Är mailen kopplat till ett konto?."
+      );
       console.error("Error creating order:", error);
     }
   };
@@ -422,6 +426,9 @@ export default function CheckoutForm() {
                 >
                   <h2>Slutför köp</h2>
                 </button>
+                <div className="mt-4">
+                  {error && <p className="login-error">{error}</p>}
+                </div>
               </div>
             )}
           </div>
