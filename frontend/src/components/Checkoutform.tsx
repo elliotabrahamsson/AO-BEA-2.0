@@ -162,7 +162,7 @@ export default function CheckoutForm() {
         <h1 className="ml-6 mt-4">LEVERANS</h1>
         {/* Samma form för både leverans och betalning */}
         <form onSubmit={handleSubmit}>
-          <div className="form-container">
+          <div className="form-container md:flex md:justify-center md:flex-col md:w-[700px] mx-auto">
             {/* Leveransformulär */}
             <div>
               <div className="first-row-container">
@@ -293,7 +293,7 @@ export default function CheckoutForm() {
                 <button
                   type="button"
                   onClick={() => setShowPaymentSection(true)}
-                  className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
+                  className="text-white bg-[#403d37] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px] md:w-full"
                 >
                   <h2>Fortsätt till betalning</h2>
                 </button>
@@ -418,7 +418,7 @@ export default function CheckoutForm() {
                 {/* Slutför köp-knapp */}
                 <button
                   type="submit"
-                  className="text-white bg-[#403d37]  hover:bg-blue-800 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px]"
+                  className="text-white bg-[#403d37]  hover:bg-blue-800 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 mt-8 h-[44px] md:w-full"
                 >
                   <h2>Slutför köp</h2>
                 </button>
